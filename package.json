@@ -1,0 +1,17 @@
+{
+  "name": "wrocketbot",
+  "version": "1.0.0",
+  "description": "a line bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "author": "Wasu Sonthichai",
+  "license": "ISC",
+  "dependencies": {
+    "@line/bot-sdk": "^6.8.4",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  }
+}
