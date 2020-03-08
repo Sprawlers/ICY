@@ -12,10 +12,11 @@ const config = {
     channelSecret: "98e5f2a6b1aecfb43b6116ee6046ea3d"
 };
 
+app.use(express.json());
 app.use(middleware(config));
 
 app.post("/webhook", (req, res) => {
-    console.log(res.json(req.body.events)); // req.body will be webhook event object
+    res.json(req.body.events); // req.body will be webhook event object
 });
 
 app.use((err, req, res, next) => {
