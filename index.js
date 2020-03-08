@@ -15,8 +15,21 @@ const config = {
 app.use(middleware(config));
 
 app.post("/webhook", (req, res) => {
-    res.json(req.body.events); // req.body will be webhook event object
-    console.log(req.body.events[0]);
+    const events = res.json(req.body.events); // req.body will be webhook event object
+    const client = new line.Client(config);
+      
+      const message = {
+        type: 'text',
+        text: 'Hello World!'
+      };
+      
+      client.replyMessage(events[0].replyToken, message)
+        .then(() => {
+          
+        })
+        .catch((err) => {
+          // error handling
+        });
 });
 
 app.use((err, req, res, next) => {
