@@ -13,7 +13,11 @@ const config = {
 };
 
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(
+    express.urlencoded({
+        extended: false
+    })
+);
 app.use(middleware(config));
 
 app.post("/webhook", (req, res) => {
