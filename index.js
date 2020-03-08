@@ -22,6 +22,7 @@ app.use(
 
 app.post("/webhook", (req, res) => {
     res.json(req.body.events); // req.body will be webhook event object
+    console.log(req.body.events[0]);
 });
 
 app.use((err, req, res, next) => {
