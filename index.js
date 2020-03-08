@@ -15,7 +15,7 @@ const config = {
 app.use(middleware(config));
 
 app.post("/webhook", (req, res) => {
-    res.json(req.body); // req.body will be webhook event object
+    res.json(req.body.events.message); // req.body will be webhook event object
 });
 
 app.use((err, req, res, next) => {
