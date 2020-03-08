@@ -14,11 +14,6 @@ const config = {
 
 app.use(middleware(config));
 app.use(express.json());
-app.use(
-    express.urlencoded({
-        extended: false
-    })
-);
 
 app.post("/webhook", (req, res) => {
     res.json(req.body.events); // req.body will be webhook event object
