@@ -9,8 +9,8 @@ const app = express();
 
 const config = {
     channelAccessToken:
-        "hkhfGu6/eGHuFrth06Ut4BpqYMUelqNHzTXEj51D2eykgilO8/MxwIyBfeMSd7QdtMgaN9bL+snBl4V0abEcF2tQNukW9wpI8MBFW7peqvRhV5zqaK7S+/WCtl6x0JbK84T5QIULb/D4gEm2O5mZuwdB04t89/1O/w1cDnyilFU=",
-    channelSecret: "98e5f2a6b1aecfb43b6116ee6046ea3d"
+        "HOqcUq5EL4moJ6XL5BDfnrlPKtVzwPBtvA3q8ULZoetFya2BT3Sqzl00W4xIz7naewbcBlvGqyhghPw9SxVLWw4Cd7/bzRWS2pvuU9DrXHi6FTgseJrpcIm7nvg+0aPPTkrGfkUTHxaN39mVeDNZ4wdB04t89/1O/w1cDnyilFU=",
+    channelSecret: "66eb8d541baf9dabbc16953c104988a7"
 };
 
 app.use(middleware(config));
@@ -32,7 +32,7 @@ app.post("/webhook", (req, res) => {
 
     const message = {
         type: "text",
-        text: "You just said " + req.body.events[0].message.text + "!"
+        text: "Message: " + req.body.events[0].message.text
     };
 
     client
