@@ -31,8 +31,8 @@ app.post("/webhook", (req, res) => {
 
     switch (event.type) {
         case "postback":
-            console.log(`Action: Pressed ${event.postback.label} button`);
-            message.text = event.postback.data;
+            console.log(`Action: Pressed <${event.postback.data}> button`);
+            message.text = "Service unavailable";
 
             client
                 .replyMessage(req.body.events[0].replyToken, message)
