@@ -23,28 +23,31 @@ app.post("/webhook", (req, res) => {
         text: null
     };
     const event = req.body.events[0];
-    console.log(event);
+
+    client
+        .getProfile(req.body.events[0].source.userId)
+        .then(profile => console.log(`User: ${profile.displayName}`))
+        .catch(console.error);
 
     switch (event.type) {
         case "postback":
+            console.log(`Action: Pressed ${event.postback.label} button`);
             message.text = event.postback.data;
 
             client
                 .replyMessage(req.body.events[0].replyToken, message)
                 .then(() => {})
-                .catch(err => {
-                    // error handling
-                });
+                .catch(console.error);
             break;
         case "message":
-            message.text = "Thank you for your feedback. We will contact you back if necessary.";
+            console.log(`Action: Sent message "${event.message.text}"`);
+            message.text =
+                "Thank you for your feedback. We will contact you back if necessary :)";
 
             client
                 .replyMessage(req.body.events[0].replyToken, message)
                 .then(() => {})
-                .catch(err => {
-                    // error handling
-                });
+                .catch(console.error);
             break;
     }
 });

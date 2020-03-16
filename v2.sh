@@ -34,7 +34,7 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
           "action": {
                 "type":"postback",
                 "label":"Event",
-                "data":"Service unavailable."
+                "data":"Service unavailable"
           }
       },
       {
@@ -47,7 +47,7 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
           "action": {
                 "type":"postback",
                 "label":"Event",
-                "data":"Service unavailable."
+                "data":"Service unavailable"
           }
       }
   ]
