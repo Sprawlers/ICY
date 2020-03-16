@@ -25,10 +25,10 @@ app.post("/webhook", (req, res) => {
     switch (event.type) {
         case "postback":
             console.log(event.postback.data);
-        case "text":
+        case "message":
             const message = {
                 type: "text",
-                text: "Message: " + req.body.events[0].message.text
+                text: "Thank you for your feedback. We will contact you back if necessary."
             };
 
             client
