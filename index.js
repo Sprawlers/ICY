@@ -20,6 +20,7 @@ app.post("/webhook", (req, res) => {
     const client = new line.Client(config);
 
     const event = req.body.events[0];
+    console.log(event);
 
     switch (event.type) {
         case "postback":
