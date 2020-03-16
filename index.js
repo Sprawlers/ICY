@@ -18,16 +18,16 @@ app.use(middleware(config));
 app.post("/webhook", (req, res) => {
     res.json(req.body.events[0]); // req.body will be webhook event object
     const client = new line.Client(config);
-
+    const message = {
+        type: "text",
+        text: null
+    };
     const event = req.body.events[0];
     console.log(event);
 
     switch (event.type) {
         case "postback":
-            const message = {
-                type: "text",
-                text: event.postback.data
-            };
+            message.text = event.postback.data;
 
             client
                 .replyMessage(req.body.events[0].replyToken, message)
@@ -37,10 +37,7 @@ app.post("/webhook", (req, res) => {
                 });
             break;
         case "message":
-            const message = {
-                type: "text",
-                text: "Thank you for your feedback. We will contact you back if necessary."
-            };
+            message.text = "Thank you for your feedback. We will contact you back if necessary.";
 
             client
                 .replyMessage(req.body.events[0].replyToken, message)
