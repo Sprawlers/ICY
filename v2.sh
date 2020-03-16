@@ -21,7 +21,7 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
           "action": {
               "type": "uri",
               "label": "Homework",
-              "uri": "https://www.dropbox.com/s/0rih0shpj8s3yi0/108_HW4_2019-1.pdf?dl=0"
+              "uri": "http://bit.ly/3b1wOSk"
           }
       },
       {
@@ -32,9 +32,9 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
               "height": 843
           },
           "action": {
-                "type":"message",
-                "label":"Service unavailable",
-                "text":"Service unavailable"
+                "type":"postback",
+                "label":"Event",
+                "data":"Service unavailable."
           }
       },
       {
@@ -45,9 +45,9 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
               "height": 843
           },
           "action": {
-                "type":"message",
-                "label":"Service unavailable",
-                "text":"Service unavailable"
+                "type":"postback",
+                "label":"Event",
+                "data":"Service unavailable."
           }
       }
   ]

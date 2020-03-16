@@ -24,7 +24,18 @@ app.post("/webhook", (req, res) => {
 
     switch (event.type) {
         case "postback":
-            console.log(event.postback.data);
+            const message = {
+                type: "text",
+                text: event.postback.data
+            };
+
+            client
+                .replyMessage(req.body.events[0].replyToken, message)
+                .then(() => {})
+                .catch(err => {
+                    // error handling
+                });
+            break;
         case "message":
             const message = {
                 type: "text",
@@ -37,6 +48,7 @@ app.post("/webhook", (req, res) => {
                 .catch(err => {
                     // error handling
                 });
+            break;
     }
 });
 
