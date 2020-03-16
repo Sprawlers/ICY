@@ -19,19 +19,24 @@ app.post("/webhook", (req, res) => {
     res.json(req.body.events[0]); // req.body will be webhook event object
     const client = new line.Client(config);
 
-    console.log(req.body.events[0]);
+    const event = req.body.events[0];
 
-    const message = {
-        type: "text",
-        text: "Message: " + req.body.events[0].message.text
-    };
+    switch (event.type) {
+        case "postback":
+            console.log(event.postback.data);
+        case "text":
+            const message = {
+                type: "text",
+                text: "Message: " + req.body.events[0].message.text
+            };
 
-    client
-        .replyMessage(req.body.events[0].replyToken, message)
-        .then(() => {})
-        .catch(err => {
-            // error handling
-        });
+            client
+                .replyMessage(req.body.events[0].replyToken, message)
+                .then(() => {})
+                .catch(err => {
+                    // error handling
+                });
+    }
 });
 
 app.use((err, req, res, next) => {
