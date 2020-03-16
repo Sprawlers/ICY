@@ -19,16 +19,7 @@ app.post("/webhook", (req, res) => {
     res.json(req.body.events[0]); // req.body will be webhook event object
     const client = new line.Client(config);
 
-    client
-        .getProfile(req.body.events[0].source.userId)
-        .then(profile => {
-            console.log(profile.displayName);
-            console.log(profile.userId);
-            console.log(profile.statusMessage);
-        })
-        .catch(err => {
-            // error handling
-        });
+    console.log(req.body.events[0]);
 
     const message = {
         type: "text",

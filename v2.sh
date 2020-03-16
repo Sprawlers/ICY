@@ -1,8 +1,8 @@
 curl -v -X POST https://api.line.me/v2/bot/richmenu \
--H 'Authorization: Bearer hkhfGu6/eGHuFrth06Ut4BpqYMUelqNHzTXEj51D2eykgilO8/MxwIyBfeMSd7QdtMgaN9bL+snBl4V0abEcF2tQNukW9wpI8MBFW7peqvRhV5zqaK7S+/WCtl6x0JbK84T5QIULb/D4gEm2O5mZuwdB04t89/1O/w1cDnyilFU=' \
--H 'Content-Type: application/json' \
--d \
-'{
+    -H 'Authorization: Bearer HOqcUq5EL4moJ6XL5BDfnrlPKtVzwPBtvA3q8ULZoetFya2BT3Sqzl00W4xIz7naewbcBlvGqyhghPw9SxVLWw4Cd7/bzRWS2pvuU9DrXHi6FTgseJrpcIm7nvg+0aPPTkrGfkUTHxaN39mVeDNZ4wdB04t89/1O/w1cDnyilFU=' \
+    -H 'Content-Type: application/json' \
+    -d \
+    '{
   "size":{
       "width":2500,
       "height":843
@@ -20,7 +20,8 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
           },
           "action": {
               "type": "uri",
-              "uri": "https://developers.line.biz/en/news/"
+              "label": "Homework",
+              "uri": "https://www.dropbox.com/s/0rih0shpj8s3yi0/108_HW4_2019-1.pdf?dl=0"
           }
       },
       {
@@ -31,8 +32,9 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
               "height": 843
           },
           "action": {
-              "type": "uri",
-              "uri": "https://www.line-community.me/"
+                "type":"message",
+                "label":"Service unavailable",
+                "text":"Service unavailable"
           }
       },
       {
@@ -43,11 +45,10 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
               "height": 843
           },
           "action": {
-              "type": "uri",
-              "uri": "https://www.google.com/"
+                "type":"message",
+                "label":"Service unavailable",
+                "text":"Service unavailable"
           }
       }
   ]
 }'
-
-// richmenu-ca23cfac9b51a9a12b6fa27104496493
