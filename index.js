@@ -42,7 +42,7 @@ app.post("/webhook", (req, res) => {
         case "message":
             console.log(`Action: Sent message "${event.message.text}"`);
             message.text =
-                "Thank you for your feedback. We will contact you back if necessary :)";
+                "Thank you for your feedback. We'll contact you back if necessary";
 
             client
                 .replyMessage(req.body.events[0].replyToken, message)
