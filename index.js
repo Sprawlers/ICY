@@ -24,30 +24,22 @@ app.post("/webhook", async (req, res) => {
     };
     const event = req.body.events[0];
 
-    await client
-        .getProfile(req.body.events[0].source.userId)
-        .then(profile => console.log(`User: ${profile.displayName}`))
-        .catch(console.error);
+    const profile = await client.getProfile(event.source.userId)
+    console.log(`User: ${profile.displayName}`);
 
     switch (event.type) {
         case "postback":
             console.log(`Action: Pressed <${event.postback.data}> button`);
             message.text = "Service unavailable";
 
-            client
-                .replyMessage(req.body.events[0].replyToken, message)
-                .then(() => {})
-                .catch(console.error);
+            await client.replyMessage(req.body.events[0].replyToken, message)
             break;
         case "message":
             console.log(`Action: Sent message "${event.message.text}"`);
             message.text =
                 "Thank you for your feedback. We'll contact you back if necessary";
 
-            client
-                .replyMessage(req.body.events[0].replyToken, message)
-                .then(() => {})
-                .catch(console.error);
+            await client.replyMessage(req.body.events[0].replyToken, message)
             break;
     }
 });
