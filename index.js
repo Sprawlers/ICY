@@ -15,7 +15,7 @@ const config = {
 
 app.use(middleware(config));
 
-app.post("/webhook", (req, res) => {
+app.post("/webhook", async (req, res) => {
     res.json(req.body.events[0]); // req.body will be webhook event object
     const client = new line.Client(config);
     const message = {
@@ -24,7 +24,7 @@ app.post("/webhook", (req, res) => {
     };
     const event = req.body.events[0];
 
-    client
+    await client
         .getProfile(req.body.events[0].source.userId)
         .then(profile => console.log(`User: ${profile.displayName}`))
         .catch(console.error);
