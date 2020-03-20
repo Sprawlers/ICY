@@ -19,9 +19,9 @@ curl -v -X POST https://api.line.me/v2/bot/richmenu \
               "height": 843
           },
           "action": {
-              "type": "uri",
-              "label": "Homework",
-              "uri": "http://bit.ly/3b1wOSk"
+                "type":"postback",
+                "label":"Homework",
+                "data":"Homework"
           }
       },
       {
