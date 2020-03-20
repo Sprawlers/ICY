@@ -34,7 +34,7 @@ app.post("/webhook", async (req, res) => {
             console.log(`Action: Pressed <${event.postback.data}> button`);
             switch (event.postback.data) {
                 case "Homework":
-                    message.text = "https://drive.google.com/file/d/1VOluchLTU2T8-MsvTtECEQLdjrbpO5wU/view";
+                    message.text = "https://bit.ly/2xWifBc";
                     break;
                 default:
                     message.text = "Service unavailable";
