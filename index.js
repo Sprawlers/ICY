@@ -15,6 +15,8 @@ const config = {
 
 app.use(middleware(config));
 
+app.get("/", (_req, res) => res.sendStatus(200));
+
 app.post("/webhook", async (req, res) => {
     res.json(req.body.events[0]); // req.body will be webhook event object
     const client = new line.Client(config);
