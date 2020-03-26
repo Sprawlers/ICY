@@ -1,25 +1,19 @@
 const express = require("express");
+const config = require("./config")
 const line = require("@line/bot-sdk");
 const middleware = require("@line/bot-sdk").middleware;
 const JSONParseError = require("@line/bot-sdk").JSONParseError;
-const SignatureValidationFailed = require("@line/bot-sdk")
-    .SignatureValidationFailed;
+const SignatureValidationFailed = require("@line/bot-sdk").SignatureValidationFailed;
 
 const app = express();
 
-const config = {
-    channelAccessToken:
-        "HOqcUq5EL4moJ6XL5BDfnrlPKtVzwPBtvA3q8ULZoetFya2BT3Sqzl00W4xIz7naewbcBlvGqyhghPw9SxVLWw4Cd7/bzRWS2pvuU9DrXHi6FTgseJrpcIm7nvg+0aPPTkrGfkUTHxaN39mVeDNZ4wdB04t89/1O/w1cDnyilFU=",
-    channelSecret: "66eb8d541baf9dabbc16953c104988a7"
-};
-
-app.use(middleware(config));
+app.use(middleware(config.line));
 
 app.get("/", (_req, res) => res.sendStatus(200));
 
 app.post("/webhook", async (req, res) => {
     res.json(req.body.events[0]); // req.body will be webhook event object
-    const client = new line.Client(config);
+    const client = new line.Client(config.line);
     const message = {
         type: "text",
         text: null
@@ -63,4 +57,4 @@ app.use((err, req, res, next) => {
     next(err); // will throw default 500
 });
 
-app.listen(process.env.PORT);
+app.listen(config.port);
