@@ -17,6 +17,11 @@ app.get('/', (req, res) => {
   })
 })
 
+app.get('/test', (req, res) => {
+  res.send('Hello Test')
+  console.log('Hi There')
+})
+
 app.post('/webhook', (req, res) => {
   console.log('POST: /')
   console.log('Body: ', req.body)
