@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
-require('dotenv').config()
 const port = process.env.PORT || 4000
 
 // Import the appropriate class
