@@ -1,18 +1,29 @@
 {
-  "name": "wrocketbot",
+  "name": "icy",
   "version": "1.0.0",
-  "description": "a line bot",
+  "description": "Utility App for ISE",
   "main": "index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "server": "nodemon src/index.js"
-  },
-  "author": "Wasu Sonthichai",
-  "license": "ISC",
   "dependencies": {
-    "@line/bot-sdk": "^6.8.4",
+    "actions-on-google": "^2.12.0",
+    "dialogflow": "^1.2.0",
+    "dialogflow-fulfillment": "^0.6.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "nodemon": "^2.0.2"
-  }
+    "mongodb": "^3.5.5",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sprawlers/ICY.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sprawlers/ICY/issues"
+  },
+  "homepage": "https://github.com/sprawlers/ICY#readme"
 }
