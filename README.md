@@ -1,17 +1,15 @@
-# Utility App for ISE
+# ICY Bot
 
 A stack of services and APIs that is designed to work together as an application providing comfortability for ISE student amidst an intense, as well as competitive, studying environment.
 
-**Important:** Currently, this README.md is completely deprecated and required for an update.
+## Technology stack
 
-## Getting started
+In the current release, we have built a bot that implement Dialogflow and LINE Messaging API to provide study solution for students. We also use containerisation and CI/CD pipelines as a pathway to robust deployment on DigitalOcean Kubernetes as well.
 
-To setup a development environment, you can simply run `docker-compose up -d` at the project's home folder to initiate the compose file above. After a few minutes of the installation, two application instances will be deployed: MongoDB  on `localhost:27017` and Mongo Express on `localhost:8081`. The DB default username and password in development environment are `administrator` and `12345` respectively.
+## Contribution
 
-**Important:** Keep in mind that the database IP address of within the production ecosystem might be different from that of development environment.
+Since this project has a sole purpose on improving studying environment for ISE students, we are happy to let anyone who are interested to contribute to the project. The contact channel will be announced soon.
 
-## Directory structure
+## CI/CD
 
-Currently, as a guideline, the maintainer thinks that the structure of the project should be organized as followed.
-- `/homework/` for homework solution service
-- `/linebot/` for LINE messaging API integration service
+At this stage, we have not develop the CI yet because our application is still small and manageable. On the other hand, we have implemented a simple CD pipelines for building and pushing Docker image to Docker Hub. That being said, the container registry name is `sprawlers/icy`.
