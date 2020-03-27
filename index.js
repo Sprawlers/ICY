@@ -42,6 +42,7 @@ app.post('/webhook', (req, res) => {
   //Function Location
   function homework(agent) {
     agent.add('Please select a subject...')
+    agent.add('##########')
   }
 
   // Run the proper function handler based on the matched Dialogflow intent name
