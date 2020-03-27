@@ -6,15 +6,18 @@ jobs:
     executor: docker/docker
     resource_class: small
     steps:
+      - run: |
+          echo '$CIRCLE_TAG'
+          echo '$CIRCLE_SHA1,$CIRCLE_TAG,latest'
       - setup_remote_docker
       - checkout
       - docker/check
       - docker/build:
           image: $DOCKER_ORG/$DOCKER_REPO
-          tag: '$CIRCLE_SHA1,$CIRCLE_TAG,latest'
+          tag: $CIRCLE_SHA1,$CIRCLE_TAG,latest
       - docker/push:
           image: $DOCKER_ORG/$DOCKER_REPO
-          tag: '$CIRCLE_SHA1,$CIRCLE_TAG,latest'
+          tag: $CIRCLE_SHA1,$CIRCLE_TAG,latest
 
 workflows:
   version: 2
