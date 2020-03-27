@@ -6,7 +6,7 @@ require('dotenv').config()
 const port = process.env.PORT || 4000
 
 // Import the appropriate class
-const { WebhookClient } = require('dialogflow-fulfillment')
+const { WebhookClient, Payload } = require('dialogflow-fulfillment')
 
 app.use(morgan('dev'))
 app.use(bodyParser.json())
