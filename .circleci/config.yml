@@ -11,12 +11,8 @@ jobs:
           image: $DOCKER_ORG/$DOCKER_REPO
           tag: latest
       - docker/push:
-          digest-path: /tmp/digest.txt
           image: $DOCKER_ORG/$DOCKER_REPO
           tag: latest
-      - run:
-          command: |
-            echo "Digest is: $(</tmp/digest.txt>)"
 
 orbs:
   docker: circleci/docker@1.0.0
