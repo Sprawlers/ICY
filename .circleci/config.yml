@@ -5,7 +5,8 @@ jobs:
   build-and-push:
     executor: docker/docker
     branches:
-      only: master
+      only:
+        - master
     resource_class: small
     steps:
       - run: |
