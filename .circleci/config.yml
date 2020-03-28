@@ -4,9 +4,6 @@ orbs:
 jobs:
   build-and-push:
     executor: docker/docker
-    branches:
-      only:
-        - master
     resource_class: small
     steps:
       - run: |
@@ -28,5 +25,7 @@ workflows:
     jobs:
       - build-and-push:
           filters:
+            branches:
+              ignore: /.*/
             tags:
               only: /^v.*/
