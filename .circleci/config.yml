@@ -4,7 +4,7 @@ orbs:
 jobs:
   build-and-push:
     executor: docker/docker
-    braches:
+    branches:
       only: master
     resource_class: small
     steps:
