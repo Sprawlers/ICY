@@ -13,7 +13,7 @@ app.use(morgan('dev'))
 app.use(bodyParser.json())
 
 // Connect to database
-const mongoDB = process.env.db_host
+const mongoDB = process.env.DB_HOST
 const db = mongoose.connection
 
 // Bind connection to error event (to get notification of connection errors)
