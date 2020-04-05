@@ -12,6 +12,9 @@ require('dotenv').config({path: './.env'});
 const {WebhookClient, Payload} = require('dialogflow-fulfillment');
 const {generateHomework} = require('./controller/functions.js');
 
+// Import database functions
+const {getAllHomework} = require("./model/functions");
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
@@ -48,6 +51,8 @@ app.post('/webhook', (req, res) => {
     //Function Location
     function homework(agent) {
         agent.add('Please select a subject...');
+        const homeworkList = getAllHomework();
+        console.log(homeworkList);
         const payloadJSON = generateHomework({
             Calculus: {
                 deadline: new Date(),
@@ -59,7 +64,7 @@ app.post('/webhook', (req, res) => {
             },
         });
         console.log(payloadJSON);
-        payload = new Payload(`LINE`, payloadJSON, {sendAsMessage: true});
+        let payload = new Payload(`LINE`, payloadJSON, {sendAsMessage: true});
         agent.add(payload)
     }
 
