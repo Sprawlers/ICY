@@ -37,7 +37,7 @@ app.post('/webhook', (req, res) => {
   //Function Location
   function homework(agent) {
     agent.add('Please select a subject...')
-    const payloadJSON = generateHomework({
+    const payloadJSON = JSON.stringify(generateHomework({
       Calculus: {
         deadline: new Date(),
         link: 'google.com',
@@ -46,7 +46,7 @@ app.post('/webhook', (req, res) => {
         deadline: new Date(),
         link: 'google.com',
       },
-    })
+    }))
     payload = new Payload(`LINE`, payloadJSON, { sendAsMessage: true })
     agent.add(payload)
   }
