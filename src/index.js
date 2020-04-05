@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const port = process.env.PORT || 4000
-// const Homework = require('./model/schema/Homework')
 
 // Import environmental variables
 require('dotenv').config({ path: '../.env' })
@@ -14,7 +13,7 @@ const { WebhookClient, Payload } = require('dialogflow-fulfillment')
 const { generateHomework } = require('./controller/functions.js')
 
 // Import database functions
-const { homeworks } = require('./model/functions')
+const { hw } = require('./model/functions')
 
 app.use(morgan('dev'))
 app.use(bodyParser.json())
@@ -52,7 +51,7 @@ app.post('/webhook', (req, res) => {
   function homework(agent) {
     agent.add('Please select a subject...')
     console.log('----------')
-    console.log(homeworks)
+    console.log(hw)
     const payloadJSON = generateHomework({
       Calculus: {
         deadline: new Date(),
