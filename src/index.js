@@ -5,6 +5,9 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const port = process.env.PORT || 4000
 
+// Import environmental variables
+require('dotenv').config({ path: './.env'})
+
 // Import the appropriate class
 const { WebhookClient, Payload } = require('dialogflow-fulfillment')
 const { generateHomework } = require('./functions.js')
