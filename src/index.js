@@ -47,6 +47,7 @@ app.post('/webhook', (req, res) => {
         link: 'google.com',
       },
     }))
+    console.log(payloadJSON)
     payload = new Payload(`LINE`, payloadJSON, { sendAsMessage: true })
     agent.add(payload)
   }
