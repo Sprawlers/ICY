@@ -22,13 +22,13 @@ app.use(bodyParser.json())
 // Connect to database
 const mongoDB = process.env.DB_HOST
 const db = mongoose
-  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
   .then(console.log('Connected to database'))
   .catch((err) => console.error(err))
 
 app.get('/', async (req, res) => {
   const hw = await Homework.find({})
-  res.render({ hw })
+  res.json(hw)
   // res.send({
   //   success: true,
   // })

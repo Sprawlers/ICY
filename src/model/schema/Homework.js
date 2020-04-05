@@ -14,5 +14,5 @@ const homeworkSchema = new Schema({
   deadline: Date,
   links: Object,
 })
-const homeworkModel = mongoose.model('homework', homeworkSchema)
+const homeworkModel = mongoose.model('homework', homeworkSchema, 'homework')
 module.exports = homeworkModel
