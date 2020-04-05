@@ -2,7 +2,7 @@
  * a function that constructs a carousel message for homework
  * @param obj: an object containing objects of each subject's title, deadline, and link
  *
- * Example obj:
+ * Example object:
  * {
  *     "Calculus": {
  *         "deadline": (DateTime Object),

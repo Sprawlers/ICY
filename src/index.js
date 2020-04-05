@@ -10,14 +10,14 @@ require('dotenv').config({ path: './.env'});
 
 // Import the appropriate class
 const { WebhookClient, Payload } = require('dialogflow-fulfillment');
-const { generateHomework } = require('./functions.js');
+const { generateHomework } = require('./controller/functions.js');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 // Connect to database
 const mongoDB = process.env.DB_HOST;
-const db = mongoose.connection;
+const db = mongoose.connect(mongoDB, {useNewUrlParser: true});
 
 // Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
