@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const port = process.env.PORT || 4000
-const Homework = require('./models/schema/Homework')
+const Homework = require('./model/schema/Homework')
 
 // Import environmental variables
 require('dotenv').config({ path: '../.env' })
