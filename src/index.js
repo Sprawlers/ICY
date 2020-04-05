@@ -36,6 +36,8 @@ app.post('/webhook', async (req, res) => {
   console.log('POST: /')
   console.log('Body: ', req.body)
   const homeworks = await Homework.find({})
+  console.log('##########')
+  console.log(homeworks)
   //Create an instance
   const agent = new WebhookClient({
     request: req,
