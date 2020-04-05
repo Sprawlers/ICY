@@ -5,11 +5,14 @@
   "main": "index.js",
   "dependencies": {
     "actions-on-google": "^2.12.0",
+    "axios": "^0.19.2",
     "dialogflow": "^1.2.0",
     "dialogflow-fulfillment": "^0.6.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongodb": "^3.5.5",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "newman": "^4.6.0"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
