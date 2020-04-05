@@ -33,7 +33,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"size\":{\n      \"width\":2500,\n      \"height\":843\n  },\n  \"selected\": true,\n  \"name\": \"ISERichMenu\",\n  \"chatBarText\": \"Menu\",\n  \"areas\": [\n      {\n          \"bounds\": {\n              \"x\": 150,\n              \"y\": 102,\n              \"width\": 640,\n              \"height\": 640\n          },\n          \"action\": {\n                \"type\":\"postback\",\n                \"label\":\"Homework\",\n                \"data\":\"Homework\"\n          }\n      },\n      {\n          \"bounds\": {\n              \"x\": 930,\n              \"y\": 0,\n              \"width\": 640,\n              \"height\": 640\n          },\n          \"action\": {\n                \"type\":\"postback\",\n                \"label\":\"Event\",\n                \"data\":\"Event\"\n          }\n      },\n      {\n          \"bounds\": {\n              \"x\": 1710,\n              \"y\": 0,\n              \"width\": 640,\n              \"height\": 640\n          },\n          \"action\": {\n                \"type\":\"postback\",\n                \"label\":\"More\",\n                \"data\":\"More\"\n          }\n      }\n  ]\n}"
+          "raw": "%RICHMENU%"
         },
         "url": {
           "raw": "https://api.line.me/v2/bot/richmenu",

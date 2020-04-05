@@ -1,0 +1,50 @@
+{
+  "size": {
+    "width": 2500,
+    "height": 843
+  },
+  "selected": true,
+  "name": "ISERichMenu",
+  "chatBarText": "Menu",
+  "areas": [
+    {
+      "bounds": {
+        "x": 150,
+        "y": 102,
+        "width": 640,
+        "height": 640
+      },
+      "action": {
+        "type": "postback",
+        "label": "Homework",
+        "data": "Homework"
+      }
+    },
+    {
+      "bounds": {
+        "x": 930,
+        "y": 0,
+        "width": 640,
+        "height": 640
+      },
+      "action": {
+        "type": "postback",
+        "label": "Event",
+        "data": "Event"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1710,
+        "y": 0,
+        "width": 640,
+        "height": 640
+      },
+      "action": {
+        "type": "postback",
+        "label": "More",
+        "data": "More"
+      }
+    }
+  ]
+}
