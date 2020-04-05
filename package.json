@@ -13,10 +13,16 @@
     "mongodb": "^3.5.5",
     "morgan": "^1.10.0",
     "newman": "^4.6.0"
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
     "mongoose": "^5.9.7"
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   },
   "scripts": {
     "start": "node src/index.js",
