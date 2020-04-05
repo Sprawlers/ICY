@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const mongoose = require('mongoose')
 const port = process.env.PORT || 4000
 
 // Import the appropriate class
@@ -10,6 +11,13 @@ const { generateHomework } = require('./functions.js')
 
 app.use(morgan('dev'))
 app.use(bodyParser.json())
+
+// Connect to database
+const mongoDB = process.env.db_host
+const db = mongoose.connection
+
+// Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.get('/', (req, res) => {
   res.send({
@@ -42,7 +50,7 @@ app.post('/webhook', (req, res) => {
         deadline: new Date(),
         link: 'https://alligator.io/js/json-parse-stringify/',
       },
-      Phys: {
+      Physics: {
         deadline: new Date(),
         link: 'https://alligator.io/js/json-parse-stringify/',
       },
