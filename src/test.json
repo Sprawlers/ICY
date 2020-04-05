@@ -1,0 +1,179 @@
+{
+  "type": "flex",
+  "altText": "homework",
+  "contents": {
+    "type": "carousel",
+    "contents": [
+      {
+        "type": "bubble",
+        "direction": "ltr",
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "Calculus",
+              "weight": "bold",
+              "size": "xxl",
+              "align": "center",
+              "gravity": "center",
+              "color": "#000000",
+              "wrap": true
+            }
+          ],
+          "backgroundColor": "#FFFFFF",
+          "cornerRadius": "0px"
+        },
+        "hero": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "📅 Deadline April 5",
+              "size": "lg",
+              "align": "center",
+              "gravity": "center",
+              "contents": [
+                {
+                  "type": "span",
+                  "text": "📅 Deadline: "
+                },
+                {
+                  "type": "span",
+                  "text": "April 5",
+                  "weight": "regular"
+                }
+              ]
+            }
+          ]
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "separator"
+            }
+          ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "button",
+              "action": {
+                "type": "uri",
+                "uri": "https://alligator.io/js/json-parse-stringify/",
+                "label": "View Solution"
+              },
+              "gravity": "center",
+              "style": "secondary"
+            }
+          ],
+          "backgroundColor": "#FFFFFF"
+        },
+        "size": "kilo",
+        "styles": {
+          "header": {
+            "backgroundColor": "#ffaaaa",
+            "separator": false
+          },
+          "body": {
+            "backgroundColor": "#ffffff"
+          },
+          "footer": {
+            "backgroundColor": "#aaaaff"
+          }
+        }
+      },
+      {
+        "type": "bubble",
+        "direction": "ltr",
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "Phys",
+              "weight": "bold",
+              "size": "xxl",
+              "align": "center",
+              "gravity": "center",
+              "color": "#000000",
+              "wrap": true
+            }
+          ],
+          "backgroundColor": "#FFFFFF",
+          "cornerRadius": "0px"
+        },
+        "hero": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "📅 Deadline April 5",
+              "size": "lg",
+              "align": "center",
+              "gravity": "center",
+              "contents": [
+                {
+                  "type": "span",
+                  "text": "📅 Deadline: "
+                },
+                {
+                  "type": "span",
+                  "text": "April 5",
+                  "weight": "regular"
+                }
+              ]
+            }
+          ]
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "separator"
+            }
+          ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "button",
+              "action": {
+                "type": "uri",
+                "uri": "https://alligator.io/js/json-parse-stringify/",
+                "label": "View Solution"
+              },
+              "gravity": "center",
+              "style": "secondary"
+            }
+          ],
+          "backgroundColor": "#FFFFFF"
+        },
+        "size": "kilo",
+        "styles": {
+          "header": {
+            "backgroundColor": "#ffaaaa",
+            "separator": false
+          },
+          "body": {
+            "backgroundColor": "#ffffff"
+          },
+          "footer": {
+            "backgroundColor": "#aaaaff"
+          }
+        }
+      }
+    ]
+  }
+}

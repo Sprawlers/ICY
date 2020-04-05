@@ -37,7 +37,7 @@ app.post('/webhook', (req, res) => {
   //Function Location
   function homework(agent) {
     agent.add('Please select a subject...')
-    const payloadJSON = JSON.stringify(generateHomework({
+    const payloadJSON = generateHomework({
       Calculus: {
         deadline: new Date(),
         link: 'https://alligator.io/js/json-parse-stringify/',
@@ -46,7 +46,7 @@ app.post('/webhook', (req, res) => {
         deadline: new Date(),
         link: 'https://alligator.io/js/json-parse-stringify/',
       },
-    }))
+    })
     console.log(payloadJSON)
     payload = new Payload(`LINE`, payloadJSON, { sendAsMessage: true })
     agent.add(payload)
