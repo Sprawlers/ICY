@@ -51,7 +51,7 @@ app.post('/webhook', (req, res) => {
   async function homework(agent) {
     agent.add('Please select a subject...')
     console.log('----------')
-    console.log(hw)
+    console.log(await hw())
     const payloadJSON = generateHomework({
       Calculus: {
         deadline: new Date(),
