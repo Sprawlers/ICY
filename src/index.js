@@ -40,11 +40,11 @@ app.post('/webhook', (req, res) => {
     const payloadJSON = JSON.stringify(generateHomework({
       Calculus: {
         deadline: new Date(),
-        link: 'google.com',
+        link: 'https://alligator.io/js/json-parse-stringify/',
       },
       Phys: {
         deadline: new Date(),
-        link: 'google.com',
+        link: 'https://alligator.io/js/json-parse-stringify/',
       },
     }))
     console.log(payloadJSON)
