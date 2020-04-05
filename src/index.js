@@ -13,7 +13,7 @@ const { WebhookClient, Payload } = require('dialogflow-fulfillment')
 const { generateHomework } = require('./controller/functions.js')
 
 // Import database functions
-const { getAllHomework } = require('./model/functions')
+const { hw } = require('./model/functions')
 
 app.use(morgan('dev'))
 app.use(bodyParser.json())
@@ -48,10 +48,10 @@ app.post('/webhook', (req, res) => {
   console.log('session: ', agent.session)
 
   //Function Location
-  function homework(agent) {
+  async function homework(agent) {
     agent.add('Please select a subject...')
     console.log('----------')
-    console.log(getAllHomework())
+    console.log(hw)
     const payloadJSON = generateHomework({
       Calculus: {
         deadline: new Date(),

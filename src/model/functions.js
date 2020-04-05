@@ -2,10 +2,9 @@ const Homework = require('./schema/Homework')
 
 // Gets all homework documents
 async function getAllHomework() {
-  const data = await Homework.find({})
-  return data
+  return await Homework.find({})
 }
 
 module.exports = {
-  getAllHomework,
+  hw: getAllHomework,
 }
