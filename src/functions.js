@@ -22,7 +22,7 @@ const generateHomework = (obj) => ({
 
 const getDeadlineFromObject = (dateTimeObject) => {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return `${monthNames[dateTimeObject.getMonth()]} + ${dateTimeObject.getDate()}`
+    return `${monthNames[dateTimeObject.getMonth()]} ${dateTimeObject.getDate()}`
 };
 
 const generateBubbles = (obj) =>
@@ -35,7 +35,7 @@ const generateBubbles = (obj) =>
             "contents": [
                 {
                     "type": "text",
-                    "text": "key",
+                    "text": key,
                     "weight": "bold",
                     "size": "xxl",
                     "align": "center",
@@ -88,7 +88,7 @@ const generateBubbles = (obj) =>
                     "type": "button",
                     "action": {
                         "type": "uri",
-                        "uri": obj[key]['url'],
+                        "uri": obj[key]['link'],
                         "label": "View Solution",
                     },
                     "gravity": "center",
