@@ -52,6 +52,7 @@ app.post('/webhook', (req, res) => {
     function homework(agent) {
         agent.add('Please select a subject...');
         const homeworkList = getAllHomework();
+        console.log("----------");
         console.log(homeworkList);
         const payloadJSON = generateHomework({
             Calculus: {
@@ -63,7 +64,6 @@ app.post('/webhook', (req, res) => {
                 link: 'https://alligator.io/js/json-parse-stringify/',
             },
         });
-        console.log(payloadJSON);
         let payload = new Payload(`LINE`, payloadJSON, {sendAsMessage: true});
         agent.add(payload)
     }
