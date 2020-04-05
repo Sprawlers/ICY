@@ -1,9 +1,8 @@
-const Homework = require('./schema/Homework');
-
+const Homework = require('./schema/Homework')
 
 // Gets all homework documents
-const getAllHomework = () => Homework.find({});
+const getAllHomework = await Homework.find({})
 
 module.exports = {
-    getAllHomework
-};
+  homework: getAllHomework,
+}

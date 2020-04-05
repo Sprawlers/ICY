@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 /**
  * Homework Model
@@ -10,9 +10,9 @@ const Schema = mongoose.Schema;
  *
  */
 const homeworkSchema = new Schema({
-    title: String,
-    deadline: Date,
-    links: Object
-});
-
-module.exports = Homework = mongoose.model("homework", homeworkSchema, "homework");
+  title: String,
+  deadline: Date,
+  links: Object,
+})
+const homeworkModel = mongoose.model('Homework', homeworkSchema)
+module.exports = homeworkModel
