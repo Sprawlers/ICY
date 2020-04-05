@@ -26,10 +26,12 @@ const db = mongoose
   .then(console.log('Connected to database'))
   .catch((err) => console.error(err))
 
-app.get('/', (req, res) => {
-  res.send({
-    success: true,
-  })
+app.get('/', async (req, res) => {
+  const hw = await Homework.find({})
+  res.render({ hw })
+  // res.send({
+  //   success: true,
+  // })
 })
 
 app.post('/webhook', async (req, res) => {
