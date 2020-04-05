@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const port = process.env.PORT || 4000
-const Homework = require('./model/schema/Homework')
+// const Homework = require('./model/schema/Homework')
 
 // Import environmental variables
 require('dotenv').config({ path: '../.env' })
@@ -14,7 +14,7 @@ const { WebhookClient, Payload } = require('dialogflow-fulfillment')
 const { generateHomework } = require('./controller/functions.js')
 
 // Import database functions
-// const { homeworks } = require('./model/functions')
+const { homeworks } = require('./model/functions')
 
 app.use(morgan('dev'))
 app.use(bodyParser.json())
@@ -26,20 +26,15 @@ const db = mongoose
   .then(console.log('Connected to database'))
   .catch((err) => console.error(err))
 
-app.get('/', async (req, res) => {
-  const hw = await Homework.find({})
-  res.json(hw)
-  // res.send({
-  //   success: true,
-  // })
+app.get('/', (req, res) => {
+  res.send({
+    success: true,
+  })
 })
 
-app.post('/webhook', async (req, res) => {
+app.post('/webhook', (req, res) => {
   console.log('POST: /')
   console.log('Body: ', req.body)
-  const homeworks = await Homework.find({})
-  console.log('##########')
-  console.log(homeworks)
   //Create an instance
   const agent = new WebhookClient({
     request: req,
