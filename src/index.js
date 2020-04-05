@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 app.post('/webhook', async (req, res) => {
   console.log('POST: /')
   console.log('Body: ', req.body)
-
+  const homeworks = await Homework.find({})
   //Create an instance
   const agent = new WebhookClient({
     request: req,
@@ -53,7 +53,6 @@ app.post('/webhook', async (req, res) => {
   function homework(agent) {
     agent.add('Please select a subject...')
     console.log('----------')
-    const homeworks = await Homework.find({})
     console.log(homeworks)
     const payloadJSON = generateHomework({
       Calculus: {
