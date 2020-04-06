@@ -1,6 +1,6 @@
 const Homework = require('./schema/Homework')
 
-// Gets all homework documents
+// Gets all homework documents, called with hw()
 function getAllHomework() {
   return Homework.find({})
 }
