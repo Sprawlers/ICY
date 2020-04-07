@@ -51,6 +51,8 @@ app.post('/webhook', (req, res) => {
   async function homework(agent) {
     agent.add('Please select a subject...')
     const homeworkObjectArr = await hw();
+    console.log("MONGO FIND:")
+    console.log(homeworkObjectArr);
     const payloadJSON = generateHomework(homeworkObjectArr)
     let payload = new Payload(`LINE`, payloadJSON, { sendAsMessage: true })
     agent.add(payload)

@@ -88,7 +88,7 @@ const generateBubbles = (arr) =>
                     "type": "button",
                     "action": {
                         "type": "uri",
-                        "uri": obj['link'],
+                        "uri": Object.keys(obj['links'])[0],
                         "label": "View Solution",
                     },
                     "gravity": "center",
