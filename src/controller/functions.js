@@ -1,8 +1,7 @@
 /**
  * a function that constructs a carousel message for homework
- * @param obj: an object containing objects of each subject's title, deadline, and link
  *
- * Example object:
+ * Example homework object:
  * {
  *     "Calculus": {
  *         "deadline": (DateTime Object),
@@ -10,13 +9,14 @@
  *     }
  * }
  *
+ * @param arr Array containing homework objects
  */
-const generateHomework = (obj) => ({
+const generateHomework = (arr) => ({
     "type": "flex",
     "altText": "homework",
     "contents": {
         "type": "carousel",
-        "contents": generateBubbles(obj),
+        "contents": generateBubbles(arr),
     },
 });
 
@@ -25,8 +25,8 @@ const getDeadlineFromObject = (dateTimeObject) => {
     return `${monthNames[dateTimeObject.getMonth()]} ${dateTimeObject.getDate()}`
 };
 
-const generateBubbles = (obj) =>
-    Object.keys(obj).map((key) => ({
+const generateBubbles = (arr) =>
+    arr.map(obj => ({
         "type": "bubble",
         "direction": "ltr",
         "header": {
@@ -35,7 +35,7 @@ const generateBubbles = (obj) =>
             "contents": [
                 {
                     "type": "text",
-                    "text": key,
+                    "text": obj['title'],
                     "weight": "bold",
                     "size": "xxl",
                     "align": "center",
@@ -53,7 +53,7 @@ const generateBubbles = (obj) =>
             "contents": [
                 {
                     "type": "text",
-                    "text": `📅 Deadline ${getDeadlineFromObject(obj[key]['deadline'])}`,
+                    "text": `📅 Deadline ${getDeadlineFromObject(obj['deadline'])}`,
                     "size": "lg",
                     "align": "center",
                     "gravity": "center",
@@ -64,7 +64,7 @@ const generateBubbles = (obj) =>
                         },
                         {
                             "type": "span",
-                            "text": getDeadlineFromObject(obj[key]['deadline']),
+                            "text": getDeadlineFromObject(obj['deadline']),
                             "weight": "regular",
                         },
                     ],
@@ -88,7 +88,7 @@ const generateBubbles = (obj) =>
                     "type": "button",
                     "action": {
                         "type": "uri",
-                        "uri": obj[key]['link'],
+                        "uri": obj['link'],
                         "label": "View Solution",
                     },
                     "gravity": "center",

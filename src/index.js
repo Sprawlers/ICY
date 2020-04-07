@@ -50,18 +50,8 @@ app.post('/webhook', (req, res) => {
   //Function Location
   async function homework(agent) {
     agent.add('Please select a subject...')
-    console.log('----------')
-    console.log(await hw())
-    const payloadJSON = generateHomework({
-      Calculus: {
-        deadline: new Date(),
-        link: 'https://alligator.io/js/json-parse-stringify/',
-      },
-      Physics: {
-        deadline: new Date(),
-        link: 'https://alligator.io/js/json-parse-stringify/',
-      },
-    })
+    const homeworkObjectArr = await hw();
+    const payloadJSON = generateHomework(homeworkObjectArr)
     let payload = new Payload(`LINE`, payloadJSON, { sendAsMessage: true })
     agent.add(payload)
   }
@@ -69,7 +59,7 @@ app.post('/webhook', (req, res) => {
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map()
   intentMap.set('Homework', homework) // "Homework" is once Intent Name of Dialogflow Agent
-  agent.handleRequest(intentMap)
+  agent.handleRequest(intentMap).catch(e => console.error(e))
 })
 
 app.listen(port, () => {
