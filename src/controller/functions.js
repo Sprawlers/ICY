@@ -24,8 +24,8 @@ const generateHomework = (arr) => ({
 const sortByDeadline = (arr) => {
     const arrCopy = [...arr]
     arrCopy.sort((a, b) => {
-        let dateA = new Date(a.date);
-        let dateB = new Date(b.date);
+        let dateA = new Date(a['deadline']);
+        let dateB = new Date(b['deadline']);
         return dateA - dateB;
     })
     console.log("DEBUGGING SORT FUNCTION:")
@@ -42,10 +42,6 @@ const getDeadlineFromDate = (dateTimeObject) => {
 // Generates array of Line Flex Bubble message JSON
 const generateBubbles = (arr) =>
     arr.map(obj => {
-        console.log("DEBUG:")
-        console.log("Title: " + obj['title'])
-        console.log("Deadline: " + obj['deadline'])
-        console.log("Links: " + obj['links'][Object.keys(obj['links'])[0]])
         return ({
             "type": "bubble",
             "direction": "ltr",
