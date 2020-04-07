@@ -28,6 +28,8 @@ const sortByDeadline = (arr) => {
         let dateB = new Date(b.date);
         return dateA - dateB;
     })
+    console.log("DEBUGGING SORT FUNCTION:")
+    console.log(arrCopy)
     return arrCopy
 };
 
