@@ -30,7 +30,7 @@ const generateBubbles = (arr) =>
         console.log("DEBUG:")
         console.log("Title: " + obj['title'])
         console.log("Deadline: " + obj['deadline'])
-        console.log("Links: " + Object.keys(obj['links'])[0])
+        console.log("Links: " + obj['links'][Object.keys(obj['links'])[0]])
         return ({
             "type": "bubble",
             "direction": "ltr",
@@ -93,7 +93,7 @@ const generateBubbles = (arr) =>
                         "type": "button",
                         "action": {
                             "type": "uri",
-                            "uri": Object.keys(obj['links'])[0],
+                            "uri": obj['links'][Object.keys(obj['links'])[0]], // Need to fix this to be more elegant!!
                             "label": "View Solution",
                         },
                         "gravity": "center",
