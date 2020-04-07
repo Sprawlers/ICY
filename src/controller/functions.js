@@ -16,15 +16,26 @@ const generateHomework = (arr) => ({
     "altText": "homework",
     "contents": {
         "type": "carousel",
-        "contents": generateBubbles(arr),
+        "contents": generateBubbles(sortByDeadline(arr)),
     },
 });
 
+// Function to sort homeworkObjectArray by deadline
+const sortByDeadline = (arr) =>
+    arr.sort((a, b) => {
+        let dateA = new Date(a.date);
+        let dateB = new Date(b.date);
+        return dateA - dateB;
+    })
+;
+
+// Returns deadline from JS DateTime Object
 const getDeadlineFromDate = (dateTimeObject) => {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return `${monthNames[dateTimeObject.getMonth()]} ${dateTimeObject.getDate()}`
 };
 
+// Generates array of Line Flex Bubble message JSON
 const generateBubbles = (arr) =>
     arr.map(obj => {
         console.log("DEBUG:")
@@ -118,4 +129,5 @@ const generateBubbles = (arr) =>
         })
     });
 
+// Function exports
 module.exports = {generateHomework};
