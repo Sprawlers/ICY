@@ -21,13 +21,15 @@ const generateHomework = (arr) => ({
 });
 
 // Function to sort homeworkObjectArray by deadline
-const sortByDeadline = (arr) =>
-    arr.sort((a, b) => {
+const sortByDeadline = (arr) => {
+    const arrCopy = [...arr]
+    arrCopy.sort((a, b) => {
         let dateA = new Date(a.date);
         let dateB = new Date(b.date);
         return dateA - dateB;
     })
-;
+    return arrCopy
+};
 
 // Returns deadline from JS DateTime Object
 const getDeadlineFromDate = (dateTimeObject) => {
