@@ -13,7 +13,7 @@ function getUserByID(userID) {
 
 // Adds a new user to the table
 async function addUser(userID, profileName) {
-  return await User.insertOne({ userID, profileName, isAdmin: false })
+  return await User.create({ userID, profileName, isAdmin: false })
 }
 
 module.exports = {
