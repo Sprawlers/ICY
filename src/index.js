@@ -35,7 +35,8 @@ const sessionClient = new dialogflow.SessionsClient({
 app.post('/webhook', async (req, res) => {
   const lineConfig = config.line
   // Set a new client
-  const client = new line.Client(lineCoinfig)
+  const text = JSON.stringify(req.body)
+  const client = new line.Client(lineConfig)
   // Generate signature for comparing with line headers
   const signature = crypto.createHmac('SHA256', lineConfig.channelSecret).update(text).digest('base64').toString()
   if (signature != req.headers['x-line-signature']) {
