@@ -33,6 +33,7 @@ app.post('/webhook', async (req, res) => {
   console.log(`User: ${profile.displayName}`)
   console.log(userMsg)
   console.log(replyToken)
+  console.log(userId)
   const intentResponse = await detectIntent(userId, userMsg, 'en-US')
   console.log(intentResponse)
   res.status(200).end()
