@@ -14,7 +14,9 @@ app.get('/', (req, res) => {
     success: true,
   })
 })
-const sessionClient = new dialogflow.SessionsClient()
+const sessionClient = new dialogflow.SessionsClient({
+  keyFilename: '../icy-gujbgu-d5b39af2ac68.json',
+})
 
 app.post('/webhook', async (req, res) => {
   res.json(req.body.events[0]) // req.body will be webhook event object
