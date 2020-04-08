@@ -12,12 +12,12 @@ function getUserByID(userID) {
 }
 
 // Adds a new user to the table
-async function addUser(userID, profileName) {
-  return await User.create({ userID, profileName, isAdmin: false })
+function addUser(userID, profileName) {
+  return User.create({ userID, profileName, isAdmin: false })
 }
 
 module.exports = {
   hw: getAllHomework,
   getUserByID,
-  addUser
+  addUser,
 }
