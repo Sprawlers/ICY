@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const dialogflow = require('dialogflow')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+const crypto = require('crypto')
 const projectId = config.projectId
 const app = express()
 
@@ -32,9 +33,14 @@ const sessionClient = new dialogflow.SessionsClient({
 })
 
 app.post('/webhook', async (req, res) => {
+  const lineConfig = config.line
   // Set a new client
-  const client = new line.Client(config.line)
-
+  const client = new line.Client(lineCoinfig)
+  // Generate signature for comparing with line headers
+  const signature = crypto.createHmac('SHA256', lineConfig.channelSecret).update(text).digest('base64').toString()
+  if (signature != req.headers['x-line-signature']) {
+    return res.status(401).send('Unauthorized')
+  }
   // Set reply message
   const replyMsg = {
     type: 'text',
@@ -86,7 +92,6 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(replyToken, replyMsg)
           break
       }
-      res.status(200).end()
       break
     case 'follow':
       break
@@ -97,6 +102,7 @@ app.post('/webhook', async (req, res) => {
       console.log(feedback)
       break
   }
+  res.status(200).end()
 })
 
 const detectIntent = async (userID, message, languageCode) => {
