@@ -89,7 +89,9 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(replyToken, payloadJSON)
           break
         default:
-          postToDialogflow(req)
+          console.log(`Intent ${intent}`)
+          const log = await postToDialogflow(req)
+          console.log(log)
           break
       }
       break
