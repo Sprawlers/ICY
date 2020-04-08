@@ -15,9 +15,8 @@
         "height": 640
       },
       "action": {
-        "type": "postback",
-        "label": "Homework",
-        "data": "Homework"
+        "type": "message",
+        "text": "Homework"
       }
     },
     {
@@ -28,9 +27,8 @@
         "height": 640
       },
       "action": {
-        "type": "postback",
-        "label": "Event",
-        "data": "Event"
+        "type": "message",
+        "text": "Notes"
       }
     },
     {
@@ -41,9 +39,8 @@
         "height": 640
       },
       "action": {
-        "type": "postback",
-        "label": "More",
-        "data": "More"
+        "type": "message",
+        "text": "Ask"
       }
     }
   ]
