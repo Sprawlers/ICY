@@ -1,5 +1,6 @@
 const Homework = require('./schema/Homework')
 const User = require('./schema/User')
+const Feedback = require('./schema/Feedback')
 
 // Gets all homework documents, called with hw()
 function getAllHomework() {
@@ -16,8 +17,13 @@ function addUser(userID, profileName) {
   return User.create({ userID, profileName, isAdmin: false })
 }
 
+function getFeedback(userID, profileName, type, text) {
+  return Feedback.create({ userID, profileName, type, text })
+}
+
 module.exports = {
-  hw: getAllHomework,
+  getAllHomework,
   getUserByID,
   addUser,
+  getFeedback,
 }

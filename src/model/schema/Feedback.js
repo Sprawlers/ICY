@@ -4,13 +4,17 @@ const Schema = mongoose.Schema
 /**
  * Feedback Model
  *
+ * userID: UUID of the user
+ * profileName: profile name of the user as it appears in Line
  * type: Feedback type - either 'message' (normal feedback) or 'block' (indicates the action of blocking the bot)
  * text: (Only for 'message' feedback) Feedback text
  *
  */
 const feedbackSchema = new Schema({
-    type: String,
-    text: String
+  userID: String,
+  profileName: String,
+  type: String,
+  text: String,
 })
 
 // Prepares schema as a model
