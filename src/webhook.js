@@ -2,7 +2,7 @@ const express = require('express')
 const config = require('./config')
 const line = require('@line/bot-sdk')
 const bodyParser = require('body-parser')
-const dialogflow = require('dialogflow')
+const dialogflow = require('dialogflow').v2beta1
 const morgan = require('morgan')
 const projectId = config.projectId
 const app = express()
@@ -15,7 +15,6 @@ app.get('/', (req, res) => {
   })
 })
 const sessionClient = new dialogflow.SessionsClient({
-  projectId,
   keyFilename: '../icy-gujbgu-d5b39af2ac68.json',
 })
 
@@ -34,7 +33,8 @@ app.post('/webhook', async (req, res) => {
   console.log(`User: ${profile.displayName}`)
   console.log(userMsg)
   console.log(replyToken)
-  const intentResponse = await detectIntent(userId, userMsg, 'en')
+  console.log(userId)
+  const intentResponse = await detectIntent(userId, userMsg, 'en-US')
   console.log(intentResponse)
   res.status(200).end()
 })
@@ -45,8 +45,12 @@ const detectIntent = async (userId, message, languageCode) => {
   const request = {
     session: sessionPath,
     queryInput: {
-      text: message,
-      languageCode: languageCode,
+      text: {
+        // The query to send to the dialogflow agent
+        text: message,
+        // The language used by the client (en-US)
+        languageCode: languageCode,
+      },
     },
   }
   const responses = await sessionClient.detectIntent(request)
