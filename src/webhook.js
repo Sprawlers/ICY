@@ -27,8 +27,9 @@ app.get('/', (req, res) => {
     success: true,
   })
 })
+console.log(typeof config.keyFilename)
 const sessionClient = new dialogflow.SessionsClient({
-  keyFilename: config.keyFilename,
+  keyFilename: '../icy-gujbgu-d5b39af2ac68.json',
 })
 
 app.post('/webhook', async (req, res) => {
@@ -57,8 +58,8 @@ app.post('/webhook', async (req, res) => {
       replyMsg.text = 'Please select a subject...'
       const homeworkObjectArr = await hw()
       const payloadJSON = generateHomework(homeworkObjectArr)
-      const replyJSON = JSON.stringify(replyMsg) + JSON.stringify(payloadJSON)
-      await client.replyMessage(replyToken, JSON.parse(replyJSON))
+      console.log(payloadJSON)
+      await client.replyMessage(replyToken, payloadJSON)
       break
     default:
       console.log(`Intent ${intent}`)
