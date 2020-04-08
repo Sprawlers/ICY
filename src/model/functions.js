@@ -8,7 +8,7 @@ function getAllHomework() {
 
 // Gets a user by UUID
 function getUserByID(userID) {
-  return User.find({ userID })
+  return User.findOne({ userID })
 }
 
 module.exports = {
