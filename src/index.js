@@ -42,8 +42,8 @@ app.post('/webhook', async (req, res) => {
     const userID = event.source.userID
     const userMsg = event.message.text
     const replyToken = event.replyToken
-    const profile = await client.getProfile(event.source.userID)
-    console.log(`User: ${profile.displayName}`)
+    // const profile = await client.getProfile(event.source.userID)
+    //console.log(`User: ${profile.displayName}`)
     console.log(userMsg)
     console.log(replyToken)
     const intentResponse = await detectIntent(userID, userMsg, 'en-US')
