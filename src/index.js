@@ -52,18 +52,25 @@ app.post('/webhook', async (req, res) => {
     const replyToken = event.replyToken
     const profile = await client.getProfile(event.source.userId)
 
+    // Checks if the user exists. If not, adds a new user to the collection
+    const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
+    console.log(userObject)
+
     // Log information
     console.log(`User: ${profile.displayName}`)
     console.log(userMsg)
     console.log(replyToken)
 
+    // Switch for event type
+    switch(event.type) {
+        case 'message':
+        case 'follow':
+        case 'unfollow':
+    }
+
     // Dialogflow stuff
     const intentResponse = await detectIntent(userID, userMsg, 'en-US')
     console.log(intentResponse)
-
-    // Checks if the user exists. If not, adds a new user to the collection
-    const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
-    console.log(userObject)
 
     const query = intentResponse.queryResult
     const intent = query.intent.displayName
