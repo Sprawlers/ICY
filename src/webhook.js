@@ -1,16 +1,13 @@
 const express = require('express')
 const config = require('./config')
 const line = require('@line/bot-sdk')
-const middleware = require('@line/bot-sdk').middleware
 const bodyParser = require('body-parser')
 const dialogflow = require('dialogflow')
-const morgan = require('morgan')
 const projectId = config.projectId
 const app = express()
 
-app.use(middleware(config.line))
 app.use(bodyParser.json())
-app.use(morgan('dev'))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.get('/', (req, res) => {
   res.send({
     success: true,
@@ -34,7 +31,7 @@ app.post('/webhook', async (req, res) => {
   const replyToken = event.replyToken
   const profile = await client.getProfile(event.source.userId)
   console.log(`User: ${profile.displayName}`)
-  const intentResponse = await detectIntent(userId, message, 'en')
+  const intentResponse = await detectIntent(userId, userMsg, 'en')
   console.log(userMsg)
   console.log(replyToken)
   console.log(intentResponse)
