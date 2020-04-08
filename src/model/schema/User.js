@@ -16,5 +16,8 @@ const userSchema = new Schema({
     email: String,
     isAdmin: Boolean,
 })
-const userModel = mongoose.model('user', userSchema, 'user')
+
+// Prepares schema as a model
+const userModel = mongoose.model('users', userSchema, 'users')
+
 module.exports = userModel
