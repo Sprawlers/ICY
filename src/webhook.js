@@ -4,18 +4,31 @@ const line = require('@line/bot-sdk')
 const bodyParser = require('body-parser')
 const dialogflow = require('dialogflow').v2beta1
 const morgan = require('morgan')
+const mongoose = require('mongoose')
 const projectId = config.projectId
 const app = express()
+
+// Import the appropriate class
+const { generateHomework } = require('./controller/functions.js')
+
+// Import database functions
+const { hw } = require('./model/functions')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
+
+const mongoDB = config.db_host
+const db = mongoose
+  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+  .then(console.log('Connected to database')).cat
+
 app.get('/', (req, res) => {
   res.send({
     success: true,
   })
 })
 const sessionClient = new dialogflow.SessionsClient({
-  keyFilename: '../icy-gujbgu-d5b39af2ac68.json',
+  keyFilename: `../${config.filename}`,
 })
 
 app.post('/webhook', async (req, res) => {
@@ -33,9 +46,25 @@ app.post('/webhook', async (req, res) => {
   console.log(`User: ${profile.displayName}`)
   console.log(userMsg)
   console.log(replyToken)
-  console.log(userId)
   const intentResponse = await detectIntent(userId, userMsg, 'en-US')
   console.log(intentResponse)
+  const query = intentResponse.queryResult
+  const intent = query.intent.displayName
+  switch (intent) {
+    case 'Homework':
+      console.log(`Intent ${intent}`)
+      replyMsg.text = 'Please select a subject...'
+      const homeworkObjectArr = await hw()
+      const payloadJSON = generateHomework(homeworkObjectArr)
+      console.log(payloadJSON)
+      await client.replyMessage(replyToken, payloadJSON)
+      break
+    default:
+      console.log(`Intent ${intent}`)
+      replyMsg.text = query.fulfillmentText
+      await client.replyMessage(replyToken, replyMsg)
+      break
+  }
   res.status(200).end()
 })
 
@@ -46,9 +75,7 @@ const detectIntent = async (userId, message, languageCode) => {
     session: sessionPath,
     queryInput: {
       text: {
-        // The query to send to the dialogflow agent
         text: message,
-        // The language used by the client (en-US)
         languageCode: languageCode,
       },
     },
