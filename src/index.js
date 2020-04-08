@@ -47,15 +47,16 @@ app.post('/webhook', async (req, res) => {
 
   // Obtain user information and message information
   const userID = event.source.userId
-  const profile = await client.getProfile(event.source.userId)
+  if (event.type != 'unfollow') {
+    const profile = await client.getProfile(event.source.userId)
 
-  // Checks if the user exists. If not, adds a new user to the collection
-  const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
-  console.log(userObject)
+    // Checks if the user exists. If not, adds a new user to the collection
+    const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
+    console.log(userObject)
 
-  // Log information
-  console.log(`User: ${profile.displayName}`)
-
+    // Log information
+    console.log(`User: ${profile.displayName}`)
+  }
   // Switch for event type
   switch (event.type) {
     case 'message':
@@ -90,7 +91,8 @@ app.post('/webhook', async (req, res) => {
     case 'follow':
       break
     case 'unfollow':
-      const feedback = await getFeedback(userID, profile.displayName, event.type, null)
+      const userObject = await getUserByID(userID)
+      const feedback = await getFeedback(userID, userObject.profileName, event.type, null)
       console.log(feedback)
       break
   }
