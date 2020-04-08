@@ -12,7 +12,7 @@ const app = express()
 const { generateHomework } = require('./controller/functions.js')
 
 // Import database functions
-const { getAllHomework, getUserByID, addUser, delUser, getFeedback } = require('./model/functions')
+const { getAllHomework, getUserByID, addUser, delUser, addFeedback } = require('./model/functions')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
@@ -92,7 +92,7 @@ app.post('/webhook', async (req, res) => {
       break
     case 'unfollow':
       const userObject = await getUserByID(userID)
-      const feedback = await getFeedback(userID, userObject.profileName, event.type, null)
+      const feedback = await addFeedback(userID, userObject.profileName, event.type, null)
       await delUser(userID)
       console.log(feedback)
       break
