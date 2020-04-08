@@ -49,7 +49,7 @@ app.post('/webhook', async (req, res) => {
     const intentResponse = await detectIntent(userID, userMsg, 'en-US')
     console.log(intentResponse)
     console.log("DEBUG: Checking if user exists...")
-    const userObject = getUserByID(userID)
+    const userObject = await getUserByID(userID)
     console.log(userObject)
     const query = intentResponse.queryResult
     const intent = query.intent.displayName
