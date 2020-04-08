@@ -17,6 +17,10 @@ function addUser(userID, profileName) {
   return User.create({ userID, profileName, isAdmin: false })
 }
 
+function delUser(userID) {
+  return User.deleteOne({ userID })
+}
+
 function getFeedback(userID, profileName, type, text) {
   return Feedback.create({ userID, profileName, type, text })
 }
@@ -26,4 +30,5 @@ module.exports = {
   getUserByID,
   addUser,
   getFeedback,
+  delUser,
 }
