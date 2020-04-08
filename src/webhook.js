@@ -6,7 +6,6 @@ const dialogflow = require('dialogflow')
 const morgan = require('morgan')
 const projectId = config.projectId
 const app = express()
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
@@ -33,13 +32,15 @@ app.post('/webhook', async (req, res) => {
   const replyToken = event.replyToken
   const profile = await client.getProfile(event.source.userId)
   console.log(`User: ${profile.displayName}`)
-  const intentResponse = await detectIntent(userId, userMsg, 'en')
   console.log(userMsg)
   console.log(replyToken)
+  const intentResponse = await detectIntent(userId, userMsg, 'en')
   console.log(intentResponse)
+  res.status(200).end()
 })
 
 const detectIntent = async (userId, message, languageCode) => {
+  console.log(projectId, userId)
   const sessionPath = sessionClient.sessionPath(projectId, userId)
   const request = {
     session: sessionPath,
