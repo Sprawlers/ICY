@@ -14,10 +14,7 @@ app.get('/', (req, res) => {
     success: true,
   })
 })
-const sessionClient = new dialogflow.SessionsClient({
-  projectId,
-  keyFilename: '../icy-gujbgu-d5b39af2ac68.json',
-})
+const sessionClient = new dialogflow.SessionsClient()
 
 app.post('/webhook', async (req, res) => {
   res.json(req.body.events[0]) // req.body will be webhook event object
@@ -34,7 +31,7 @@ app.post('/webhook', async (req, res) => {
   console.log(`User: ${profile.displayName}`)
   console.log(userMsg)
   console.log(replyToken)
-  const intentResponse = await detectIntent(userId, userMsg, 'en')
+  const intentResponse = await detectIntent(userId, userMsg, 'en-US')
   console.log(intentResponse)
   res.status(200).end()
 })
@@ -45,8 +42,12 @@ const detectIntent = async (userId, message, languageCode) => {
   const request = {
     session: sessionPath,
     queryInput: {
-      text: message,
-      languageCode: languageCode,
+      text: {
+        // The query to send to the dialogflow agent
+        text: message,
+        // The language used by the client (en-US)
+        languageCode: languageCode,
+      },
     },
   }
   const responses = await sessionClient.detectIntent(request)
