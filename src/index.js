@@ -6,6 +6,7 @@ const dialogflow = require('dialogflow')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const crypto = require('crypto')
+const request = require('request-promise')
 const projectId = config.projectId
 const app = express()
 
@@ -13,7 +14,7 @@ const app = express()
 const { generateHomework } = require('./controller/functions.js')
 
 // Import database functions
-const { getAllHomework, getUserByID, addUser, delUser, addFeedback } = require('./model/functions')
+const { getAllHomework, getUserByID, addUser, delUser, getFeedback } = require('./model/functions')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
@@ -88,17 +89,14 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(replyToken, payloadJSON)
           break
         default:
-          console.log(`Intent ${intent}`)
-          replyMsg.text = query.fulfillmentText
-          await client.replyMessage(replyToken, replyMsg)
+          postToDialogflow(req)
           break
       }
-      break
     case 'follow':
       break
     case 'unfollow':
       const userObject = await getUserByID(userID)
-      const feedback = await addFeedback(userID, userObject.profileName, event.type, null)
+      const feedback = await getFeedback(userID, userObject.profileName, event.type, null)
       await delUser(userID)
       console.log(feedback)
       break
@@ -120,6 +118,19 @@ const detectIntent = async (userID, message, languageCode) => {
   }
   const responses = await sessionClient.detectIntent(request)
   return responses[0]
+}
+
+const postToDialogflow = (req) => {
+  const body = JSON.stringify({
+    destination: req.body.destination,
+    events: req.body.events,
+  })
+  req.headers.host = 'dialogflow.cloud.google.com'
+  return request.post({
+    uri: `https://dialogflow.cloud.google.com/v1/integrations/line/webhook/${config.webhookid}`,
+    headers: req.headers,
+    body,
+  })
 }
 
 app.listen(config.port, () => {

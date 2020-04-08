@@ -15,7 +15,9 @@
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.7",
     "morgan": "^1.10.0",
-    "newman": "^4.6.0"
+    "newman": "^4.6.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5"
   },
   "devDependencies": {},
   "scripts": {
