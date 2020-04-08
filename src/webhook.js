@@ -3,11 +3,13 @@ const config = require('./config')
 const line = require('@line/bot-sdk')
 const bodyParser = require('body-parser')
 const dialogflow = require('dialogflow')
+const morgan = require('morgan')
 const projectId = config.projectId
 const app = express()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(morgan('dev'))
 app.get('/', (req, res) => {
   res.send({
     success: true,
@@ -15,7 +17,7 @@ app.get('/', (req, res) => {
 })
 const sessionClient = new dialogflow.SessionsClient({
   projectId,
-  keyFilename: './icy-gujbgu-d5b39af2ac68.json',
+  keyFilename: '../icy-gujbgu-d5b39af2ac68.json',
 })
 
 app.post('/webhook', async (req, res) => {
