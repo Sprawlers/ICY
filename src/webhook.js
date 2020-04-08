@@ -2,14 +2,20 @@ const express = require('express')
 const config = require('./config')
 const line = require('@line/bot-sdk')
 const middleware = require('@line/bot-sdk').middleware
-const JSONParseError = require('@line/bot-sdk').JSONParseError
-const SignatureValidationFailed = require('@line/bot-sdk').SignatureValidationFailed
+const bodyParser = require('body-parser')
 const dialogflow = require('dialogflow')
+const morgan = require('morgan')
 const projectId = config.projectId
 const app = express()
 
 app.use(middleware(config.line))
-app.get('/', (req, res) => res.sendStatus(200))
+app.use(bodyParser.json())
+app.use(morgan('dev'))
+app.get('/', (req, res) => {
+  res.send({
+    success: true,
+  })
+})
 const sessionClient = new dialogflow.SessionsClient({
   projectId,
   keyFilename: './icy-gujbgu-d5b39af2ac68.json',
@@ -46,17 +52,6 @@ const detectIntent = async (userId, message, languageCode) => {
   const responses = await sessionClient.detectIntent(request)
   return responses[0]
 }
-
-app.use((err, req, res, next) => {
-  if (err instanceof SignatureValidationFailed) {
-    res.status(401).send(err.signature)
-    return
-  } else if (err instanceof JSONParseError) {
-    res.status(400).send(err.raw)
-    return
-  }
-  next(err) // will throw default 500
-})
 
 app.listen(config.port, () => {
   console.log(`Server is running at port ${config.port}`)
