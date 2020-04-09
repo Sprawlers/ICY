@@ -11,7 +11,7 @@
  *
  * @param arr Array containing homework objects
  */
-const generateHomework = (arr) => ({
+const generateHomework = arr => ({
     "type": "flex",
     "altText": "homework",
     "contents": {
@@ -21,7 +21,7 @@ const generateHomework = (arr) => ({
 });
 
 // Function to sort homeworkObjectArray by deadline
-const sortByDeadline = (arr) => {
+const sortByDeadline = arr => {
     const arrCopy = [...arr]
     arrCopy.sort((a, b) => {
         let dateA = new Date(a['deadline']);
@@ -32,13 +32,13 @@ const sortByDeadline = (arr) => {
 };
 
 // Returns deadline from JS DateTime Object
-const getDeadlineFromDate = (dateTimeObject) => {
+const getDeadlineFromDate = dateTimeObject => {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return `${monthNames[dateTimeObject.getMonth()]} ${dateTimeObject.getDate()}`
 };
 
 // Generates array of Line Flex Bubble message JSON
-const generateBubbles = (arr) =>
+const generateBubbles = arr =>
     arr.map(obj => {
         return ({
             "type": "bubble",
@@ -127,5 +127,8 @@ const generateBubbles = (arr) =>
         })
     });
 
+// Gets the local datetime from a UTC datetime
+const getLocalFromUTC = UTCDateTime => new Date(UTCDateTime + ' UTC')
+
 // Function exports
-module.exports = {generateHomework};
+module.exports = {generateHomework, getLocalFromUTC};

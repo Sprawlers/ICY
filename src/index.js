@@ -20,7 +20,7 @@ app.use(morgan('dev'))
 const mongoDB = config.db_host
 const db = mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
-  .then(console.log('Connected to database')).cat
+  .then(console.log('Connected to database')).catch(e => console.error(e))
 
 app.get('/', (req, res) => {
   res.send({
