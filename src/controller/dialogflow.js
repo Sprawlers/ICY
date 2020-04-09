@@ -1,5 +1,6 @@
 const config = require('../config')
 const request = require('request-promise')
+const dialogflow = require('dialogflow')
 const projectId = config.projectId
 
 const sessionClient = new dialogflow.SessionsClient({
