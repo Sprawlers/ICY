@@ -1,3 +1,5 @@
+const moment = require('moment-timezone')
+
 /**
  * a function that constructs a carousel message for homework
  *
@@ -126,6 +128,9 @@ const generateBubbles = arr =>
             },
         })
     });
+
+// Gets the local datetime from a UTC datetime
+const getLocalFromUTC = UTCDateTime => moment(UTCDateTime).tz('Asia/Bangkok')
 
 // Function exports
 module.exports = {generateHomework, getLocalFromUTC};
