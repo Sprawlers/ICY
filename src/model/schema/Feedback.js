@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const moment = require('moment-timezone')
 const Schema = mongoose.Schema
 
 /**
@@ -10,11 +11,13 @@ const Schema = mongoose.Schema
  * text: (Only for 'message' feedback) Feedback text
  *
  */
+const dateThailand = moment.tz(Date.now(), 'Asia/Bangkok')
 const feedbackSchema = new Schema({
   userID: String,
   profileName: String,
   type: String,
   text: String,
+  date: { type: Date, default: dateThailand },
 })
 
 // Prepares schema as a model
