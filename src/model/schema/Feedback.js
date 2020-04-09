@@ -10,12 +10,15 @@ const Schema = mongoose.Schema
  * text: (Only for 'message' feedback) Feedback text
  *
  */
-const feedbackSchema = new Schema({
-  userID: String,
-  profileName: String,
-  type: String,
-  text: String,
-})
+const feedbackSchema = new Schema(
+  {
+    userID: String,
+    profileName: String,
+    type: String,
+    text: String,
+  },
+  { timestamps: true, versionKey: false }
+)
 
 // Prepares schema as a model
 const feedbackModel = mongoose.model('feedback', feedbackSchema, 'feedback')

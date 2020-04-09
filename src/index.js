@@ -103,8 +103,8 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(replyToken, replyMsg)
           break
         case 'Annouce':
-          const userObject = await getUserByID(userID)
-          if (!userObject.isAdmin) {
+          const userObj = await getUserByID(userID)
+          if (!userObj.isAdmin) {
             replyMsg.text = 'Only admin can broadcast!'
             const clear = await clearContext(userID)
             console.log(clear)
