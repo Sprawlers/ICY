@@ -6,8 +6,6 @@ const dialogflow = require('dialogflow')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const crypto = require('crypto')
-const request = require('request-promise')
-const projectId = config.projectId
 const app = express()
 
 // Import the appropriate class
@@ -29,9 +27,6 @@ app.get('/', (req, res) => {
   res.send({
     success: true,
   })
-})
-const sessionClient = new dialogflow.SessionsClient({
-  keyFilename: `../${config.filename}`,
 })
 
 app.post('/webhook', async (req, res) => {
