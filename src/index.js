@@ -35,7 +35,7 @@ app.post('/webhook', async (req, res) => {
   const client = new line.Client(lineConfig)
   // Generate signature for comparing with line headers
   const signature = crypto.createHmac('SHA256', lineConfig.channelSecret).update(text).digest('base64').toString()
-  if (signature != req.headers['x-line-signature']) {
+  if (signature !== req.headers['x-line-signature']) {
     return res.status(401).send('Unauthorized')
   }
   // Set reply message
@@ -50,7 +50,7 @@ app.post('/webhook', async (req, res) => {
 
   // Obtain user information and message information
   const userID = event.source.userId
-  if (event.type != 'unfollow') {
+  if (event.type !== 'unfollow') {
     const profile = await client.getProfile(event.source.userId)
 
     // Checks if the user exists. If not, adds a new user to the collection
@@ -67,7 +67,7 @@ app.post('/webhook', async (req, res) => {
       const replyToken = event.replyToken
       console.log(userMsg)
       console.log(replyToken)
-      if (event.message.type != 'text') {
+      if (event.message.type !== 'text') {
         replyMsg.text = 'Only text input!'
         return await client.replyMessage(replyToken, replyMsg)
       }
