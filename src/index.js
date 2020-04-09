@@ -10,9 +10,10 @@ const app = express()
 // Import the appropriate class
 const { generateHomework } = require('./controller/functions')
 const { detectIntent } = require('./controller/dialogflow')
+const { pushFeedback } = require('./controller/admin')
 
 // Import database functions
-const { getAllHomework, getUserByID, addUser, delUser, addFeedback } = require('./model/functions')
+const { getAllHomework, getUserByID, getAdminID, addUser, delUser, addFeedback } = require('./model/functions')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
@@ -94,6 +95,13 @@ app.post('/webhook', async (req, res) => {
           const feedback = query.outputContexts[0].parameters.fields.details.stringValue
           const userObject = await getUserByID(userID)
           await addFeedback(userID, userObject.profileName, event.type, feedback)
+          const admin = await getAdminID()
+          console.log(admin)
+          const test = {
+            type: 'text',
+            text: 'push message test',
+          }
+          await client.multicast(admin, test)
           await client.replyMessage(replyToken, replyMsg)
           break
         default:
