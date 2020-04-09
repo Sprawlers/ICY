@@ -102,7 +102,7 @@ app.post('/webhook', async (req, res) => {
           await client.multicast(admin, feedbackMsg)
           await client.replyMessage(replyToken, replyMsg)
           break
-        case 'Annouce':
+        case 'Announce':
           const userObj = await getUserByID(userID)
           if (!userObj.isAdmin) {
             replyMsg.text = 'Only admin can broadcast!'
