@@ -11,7 +11,8 @@ const projectId = config.projectId
 const app = express()
 
 // Import the appropriate class
-const { generateHomework } = require('./controller/functions.js')
+const { generateHomework } = require('./controller/functions')
+const { detectIntent } = require('./controller/dialogflow')
 
 // Import database functions
 const { getAllHomework, getUserByID, addUser, delUser, addFeedback } = require('./model/functions')
@@ -107,8 +108,6 @@ app.post('/webhook', async (req, res) => {
           break
       }
       break
-    case 'follow':
-      break
     case 'unfollow':
       const userObject = await getUserByID(userID)
       const feedback = await addFeedback(userID, userObject.profileName, event.type, null)
@@ -118,35 +117,6 @@ app.post('/webhook', async (req, res) => {
   }
   res.status(200).end()
 })
-
-const detectIntent = async (userID, message, languageCode) => {
-  console.log(projectId, userID)
-  const sessionPath = sessionClient.sessionPath(projectId, userID)
-  const request = {
-    session: sessionPath,
-    queryInput: {
-      text: {
-        text: message,
-        languageCode: languageCode,
-      },
-    },
-  }
-  const responses = await sessionClient.detectIntent(request)
-  return responses[0]
-}
-
-const postToDialogflow = (req) => {
-  const body = JSON.stringify({
-    destination: req.body.destination,
-    events: req.body.events,
-  })
-  req.headers.host = 'dialogflow.cloud.google.com'
-  return request.post({
-    uri: `https://dialogflow.cloud.google.com/v1/integrations/line/webhook/${config.webhookid}`,
-    headers: req.headers,
-    body,
-  })
-}
 
 app.listen(config.port, () => {
   console.log(`Server is running at port ${config.port}`)
