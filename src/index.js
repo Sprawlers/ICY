@@ -10,7 +10,6 @@ const app = express()
 // Import the appropriate class
 const { generateHomework } = require('./controller/functions')
 const { detectIntent } = require('./controller/dialogflow')
-const { pushFeedback } = require('./controller/admin')
 
 // Import database functions
 const { getAllHomework, getUserByID, getAdminID, addUser, delUser, addFeedback } = require('./model/functions')
@@ -96,12 +95,11 @@ app.post('/webhook', async (req, res) => {
           const userObject = await getUserByID(userID)
           await addFeedback(userID, userObject.profileName, event.type, feedback)
           const admin = await getAdminID()
-          console.log(admin)
-          const test = {
+          const feedbackMsg = {
             type: 'text',
-            text: 'push message test',
+            text: feedback,
           }
-          await client.multicast(admin, test)
+          await client.multicast(admin, feedbackMsg)
           await client.replyMessage(replyToken, replyMsg)
           break
         default:
