@@ -72,10 +72,16 @@ app.post('/webhook', async (req, res) => {
       const replyToken = event.replyToken
       console.log(userMsg)
       console.log(replyToken)
+      if (event.message.type != 'text') {
+        replyMsg.text = 'Only text input!'
+        return await client.replyMessage(replyToken, replyMsg)
+      }
 
       // Dialogflow stuff
       const intentResponse = await detectIntent(userID, userMsg, 'en-US')
       console.log(intentResponse)
+      console.log(intentResponse.queryResult.fulfillmentMessages)
+      console.log(intentResponse.queryResult.outputContexts)
       const query = intentResponse.queryResult
       const intent = query.intent.displayName
 
@@ -88,10 +94,16 @@ app.post('/webhook', async (req, res) => {
           console.log(payloadJSON)
           await client.replyMessage(replyToken, payloadJSON)
           break
+        case 'save_feedback - yes':
+          replyMsg.text = query.fulfillmentText
+          const feedback = query.outputContexts[0].parameters.fields.details.stringValue
+          const userObject = await getUserByID(userID)
+          await addFeedback(userID, userObject.profileName, event.type, feedback)
+          await client.replyMessage(replyToken, replyMsg)
+          break
         default:
-          console.log(`Intent ${intent}`)
-          const log = await postToDialogflow(req)
-          console.log(log)
+          replyMsg.text = query.fulfillmentText
+          await client.replyMessage(replyToken, replyMsg)
           break
       }
       break
