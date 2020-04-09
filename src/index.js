@@ -102,6 +102,12 @@ app.post('/webhook', async (req, res) => {
           await client.multicast(admin, feedbackMsg)
           await client.replyMessage(replyToken, replyMsg)
           break
+        case 'Broadcast - yes':
+          replyMsg.text = query.fulfillmentText
+          const broadcastMsg = query.outputContexts[0].parameters.fields.message.stringValue
+          await client.broadcast(broadcastMsg)
+          await client.replyMessage(replyToken, replyMsg)
+          break
         default:
           replyMsg.text = query.fulfillmentText
           await client.replyMessage(replyToken, replyMsg)
