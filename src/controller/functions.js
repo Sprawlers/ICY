@@ -127,8 +127,5 @@ const generateBubbles = arr =>
         })
     });
 
-// Gets the local datetime from a UTC datetime
-const getLocalFromUTC = UTCDateTime => new Date(UTCDateTime + ' UTC')
-
 // Function exports
 module.exports = {generateHomework, getLocalFromUTC};
