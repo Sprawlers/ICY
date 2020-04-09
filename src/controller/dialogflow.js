@@ -7,6 +7,10 @@ const sessionClient = new dialogflow.SessionsClient({
   keyFilename: `../${config.filename}`,
 })
 
+const contextClient = new dialogflow.ContextsClient({
+  keyFilename: `../${config.filename}`,
+})
+
 const detectIntent = async (userID, message, languageCode) => {
   console.log(projectId, userID)
   const sessionPath = sessionClient.sessionPath(projectId, userID)
@@ -23,6 +27,13 @@ const detectIntent = async (userID, message, languageCode) => {
   return responses[0]
 }
 
+const clearContext = async (userID) => {
+  const sessionPath = contextClient.sessionPath(projectId, userID)
+  return await contextClient.deleteAllContexts({ parent: sessionPath }).catch((err) => {
+    console.log(err)
+  })
+}
+
 const postToDialogflow = (req) => {
   const body = JSON.stringify({
     destination: req.body.destination,
@@ -37,5 +48,6 @@ const postToDialogflow = (req) => {
 }
 module.exports = {
   detectIntent,
+  clearContext,
   postToDialogflow,
 }
