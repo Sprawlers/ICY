@@ -137,14 +137,13 @@ const generateSubjectList = courses => ({
     "text": "Select from the following:\n" + courses.map(course => "- " + course["title"]).join("\n")
 })
 
-
 // Gets the local datetime from a UTC datetime
 const getLocalFromUTC = UTCDateTime => moment(UTCDateTime).tz('Asia/Bangkok')
 
-// Download the PDF from URL (Must catch error)
-const downloadPDFFromURL = async (pdfURL, outputFileName) => {
-    let pdfBuffer = await request.get({uri: pdfURL, encoding: null})
-    fs.writeFile(outputFileName, pdfBuffer, e => e ? console.error(e) : null)
+// Download the file from URL (Must catch error)
+const downloadFileFromURL = async (URL, outputFileName) => {
+    let buffer = await request.get({uri: URL, encoding: null})
+    fs.writeFile(outputFileName, buffer, e => e ? console.error(e) : null)
 }
 
 // Remove file from specified path
@@ -155,6 +154,6 @@ module.exports = {
     generateHomework,
     generateSubjectList,
     getLocalFromUTC,
-    downloadPDFFromURL,
+    downloadFileFromURL,
     removeFile
 };
