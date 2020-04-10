@@ -137,7 +137,6 @@ const generateSubjectList = courses => ({
     "text": "Select from the following:\n" + courses.map(course => "- " + course["title"]).join("\n")
 })
 
-
 // Gets the local datetime from a UTC datetime
 const getLocalFromUTC = UTCDateTime => moment(UTCDateTime).tz('Asia/Bangkok')
 
