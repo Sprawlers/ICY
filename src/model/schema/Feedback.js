@@ -11,8 +11,6 @@ const Schema = mongoose.Schema
  * text: (Only for 'message' feedback) Feedback text
  *
  */
-const dateThailand = moment(Date.now()).tz('Asia/Bangkok')
-console.log(dateThailand._d)
 const feedbackSchema = new Schema(
   {
     userID: String,
