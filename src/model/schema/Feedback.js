@@ -13,13 +13,18 @@ const Schema = mongoose.Schema
  */
 const dateThailand = moment(Date.now()).tz('Asia/Bangkok')
 console.log(dateThailand._d)
-const feedbackSchema = new Schema({
-  userID: String,
-  profileName: String,
-  type: String,
-  text: String,
-  date: { type: Date, default: dateThailand },
-})
+const feedbackSchema = new Schema(
+  {
+    userID: String,
+    profileName: String,
+    type: String,
+    text: String,
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+)
 
 // Prepares schema as a model
 const feedbackModel = mongoose.model('feedback', feedbackSchema, 'feedback')
