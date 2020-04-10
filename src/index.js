@@ -170,7 +170,7 @@ app.post('/webhook', async (req, res) => {
         case 'Url - yes':
           const params = query.outputContexts[0].parameters.fields
           const subject = params.subject.stringValue
-          const deadline = params.deadline.stringValue
+          const deadline = new Date(params.deadline.stringValue)
           const filename = params.filename.stringValue
           const url = params.url.stringValue
           replyMsg.text = query.fulfillmentText
