@@ -1,7 +1,6 @@
 const moment = require('moment-timezone')
 const fs = require('fs')
 const request = require('request-promise')
-const watermark = require('image-watermark')
 
 /**
  * a function that constructs a carousel message for homework
