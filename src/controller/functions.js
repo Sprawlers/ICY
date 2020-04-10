@@ -137,9 +137,11 @@ const getLocalFromUTC = UTCDateTime => moment(UTCDateTime).tz('Asia/Bangkok')
 // Download the PDF from URL
 const downloadPDFFromURL = async (pdfURL, outputFileName) => {
     let pdfBuffer = await request.get({uri: pdfURL, encoding: null})
-    console.log("DEBUG DOWNLOAD FUNCTION: Writing file to " + outputFileName)
-    fs.writeFileSync(outputFileName, pdfBuffer)
+    fs.writeFile(outputFileName, pdfBuffer, e => console.error(e))
 }
+
+// Remove file from specified path
+const removeFile = path => fs.unlink(path, e => console.error(e))
 
 // Function exports
 module.exports = {generateHomework, getLocalFromUTC, downloadPDFFromURL};
