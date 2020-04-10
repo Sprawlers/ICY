@@ -23,8 +23,6 @@ const db = mongoose
   .then(console.log('Connected to database'))
   .catch((e) => console.error(e))
 
-// console.log((async () => generateSubjectList(await getAllCourses()))())
-
 app.get('/', (req, res) => {
   res.send({
     success: true,
@@ -49,7 +47,7 @@ app.post('/webhook', async (req, res) => {
 
   // Set event
   const event = req.body.events[0]
-  console.log(event)
+  // console.log(event)
 
   // Obtain user information and message information
   const userID = event.source.userId
@@ -71,13 +69,11 @@ app.post('/webhook', async (req, res) => {
     case 'message':
       const userMsg = event.message.text
       const replyToken = event.replyToken
-      console.log(userMsg)
-      console.log(replyToken)
       if (event.message.type !== 'text') {
         replyMsg.text = 'Only text input!'
         return await client.replyMessage(replyToken, replyMsg)
       }
-      if (userMsg === 'clear') {
+      if (userMsg === '/clear') {
         replyMsg.text = 'Clear Context!'
         await clearContext(userID)
         return await client.replyMessage(replyToken, replyMsg)
@@ -130,8 +126,7 @@ app.post('/webhook', async (req, res) => {
         case 'Upload':
           if (!userObject.isAdmin) {
             replyMsg.text = 'Only admin can upload!'
-            const clear = await clearContext(userID)
-            console.log(clear)
+            await clearContext(userID)
             return await client.replyMessage(replyToken, replyMsg)
           }
           replyMsg.text = query.fulfillmentText
@@ -161,14 +156,12 @@ app.post('/webhook', async (req, res) => {
           break
         case 'Url - yes':
           const params = query.outputContexts[0].parameters.fields
-          console.log(params)
           const subject = params.subject.stringValue
           const deadline = params.deadline.stringValue
           const filename = params.filename.stringValue
           const url = params.url.stringValue
           replyMsg.text = query.fulfillmentText
-          const hw = await addHomework(subject, deadline, filename, url)
-          console.log(hw)
+          await addHomework(subject, deadline, filename, url)
           await client.replyMessage(replyToken, replyMsg)
           break
         default:
@@ -196,9 +189,8 @@ app.post('/webhook', async (req, res) => {
       await client.replyMessage(event.replyToken, [date, replyMsg])
       break
     case 'unfollow':
-      const feedback = await addFeedback(userID, userObject.profileName, event.type, null)
+      await addFeedback(userID, userObject.profileName, event.type, null)
       await delUser(userID)
-      console.log(feedback)
       break
   }
   res.status(200).end()
