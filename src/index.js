@@ -4,7 +4,7 @@ const line = require('@line/bot-sdk')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
-const moment = require('moment-timezone')
+const moment = require('moment')
 const crypto = require('crypto')
 const app = express()
 
@@ -171,7 +171,7 @@ app.post('/webhook', async (req, res) => {
         case 'Url - yes':
           const params = query.outputContexts[0].parameters.fields
           const subject = params.subject.stringValue
-          const deadline = moment.tz(new Date(params.deadline.stringValue), 'Asia/Bangkok').utc()
+          const deadline = moment(new Date(params.deadline.stringValue)).subtract(7, 'hours')
           const filename = params.filename.stringValue
           const url = params.url.stringValue
           replyMsg.text = query.fulfillmentText
