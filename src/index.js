@@ -23,7 +23,7 @@ const db = mongoose
   .then(console.log('Connected to database'))
   .catch((e) => console.error(e))
 
-console.log((async () => generateSubjectList(await getAllCourses()))())
+// console.log((async () => generateSubjectList(await getAllCourses()))())
 
 app.get('/', (req, res) => {
   res.send({
@@ -32,6 +32,10 @@ app.get('/', (req, res) => {
 })
 
 app.post('/webhook', async (req, res) => {
+  const courses = await getAllCourses()
+  console.log(courses)
+  const subjectlist = generateSubjectList(courses)
+  console.log(subjectlist)
   const lineConfig = config.line
   // Set a new client
   const text = JSON.stringify(req.body)

@@ -24,8 +24,8 @@ function getAdminID() {
 }
 
 // Gets all subjects
-function getAllCourses() {
-  return Course.find({})
+async function getAllCourses() {
+  return await Course.find({})
 }
 
 // Adds a new user
