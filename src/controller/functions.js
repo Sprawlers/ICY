@@ -134,10 +134,11 @@ const generateBubbles = arr =>
     });
 
 // Generate a message containing a list of subjects
-const generateSubjectList = () => ({
+const generateSubjectList = async () => ({
     "type": "text",
-    "text": "Select from the following:\n" + getAllCourses().map(course => "- " + course["title"] + "\n")
+    "text": "Select from the following:\n" + (await getAllCourses()).map(course => "- " + course["title"]).join("\n")
 })
+
 
 // Gets the local datetime from a UTC datetime
 const getLocalFromUTC = UTCDateTime => moment(UTCDateTime).tz('Asia/Bangkok')
@@ -158,4 +159,11 @@ const watermarkFile = (path, text) => {
 }
 
 // Function exports
-module.exports = {generateHomework, generateSubjectList, getLocalFromUTC, downloadPDFFromURL, removeFile, watermarkFile};
+module.exports = {
+    generateHomework,
+    generateSubjectList,
+    getLocalFromUTC,
+    downloadPDFFromURL,
+    removeFile,
+    watermarkFile
+};
