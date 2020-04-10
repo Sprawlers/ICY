@@ -150,7 +150,10 @@ const downloadPDFFromURL = async (pdfURL, outputFileName) => {
 const removeFile = path => fs.unlink(path, e => e ? console.error(e) : null)
 
 // Watermark a pdf file (important: must specify full path) with text
-const watermarkFile = (path, text) => watermark.embedWatermark(path, {text})
+const watermarkFile = (path, text) => {
+    console.log(path)
+    watermark.embedWatermark(path, {text})
+}
 
 // Function exports
 module.exports = {generateHomework, getLocalFromUTC, downloadPDFFromURL, removeFile, watermarkFile};
