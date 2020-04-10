@@ -9,12 +9,17 @@ const Schema = mongoose.Schema
  * links: object containing urls to different homework assignments
  *
  */
-const logSchema = new Schema({
-  userID: String,
-  profileName: String,
-  type: String,
-  data: Object,
-})
+const logSchema = new Schema(
+  {
+    userID: String,
+    profileName: String,
+    type: String,
+    data: Object,
+  },
+  { versionKey: false }
+)
+
+logSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 })
 
 const logModel = mongoose.model('log', logSchema, 'log')
 

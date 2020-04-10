@@ -100,6 +100,7 @@ app.post('/webhook', async (req, res) => {
         case 'Homework':
           const homeworkObjectArr = await getAllHomework()
           const payloadJSON = generateHomework(homeworkObjectArr)
+          replyMsg.text = 'Homework Carousel'
           await client.replyMessage(replyToken, payloadJSON)
           break
         case 'save_feedback - yes':
@@ -156,7 +157,7 @@ app.post('/webhook', async (req, res) => {
                   action: {
                     type: 'datetimepicker',
                     label: 'Select date',
-                    data: 'datetime',
+                    data: 'deadline',
                     mode: 'datetime',
                   },
                 },
@@ -181,7 +182,7 @@ app.post('/webhook', async (req, res) => {
           break
       }
       messagelog.bot = replyMsg.text
-      await addLog(userID, profileName, event.type, messagelog)
+      await addLog(userID, userObject.profileName, event.type, messagelog)
       break
     case 'postback':
       const postback = event.postback
@@ -189,7 +190,7 @@ app.post('/webhook', async (req, res) => {
         type: 'text',
         text: null,
       }
-      if (postback.data === 'datetime') {
+      if (postback.data === 'deadline') {
         date.text = postback.params.datetime
         replyMsg.text = date
         const intentResponse = await detectIntent(userID, date.text, 'en-US')

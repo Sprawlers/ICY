@@ -66,5 +66,6 @@ module.exports = {
   addHomework,
   addUser,
   addFeedback,
+  addLog,
   delUser,
 }
