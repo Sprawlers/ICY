@@ -32,10 +32,6 @@ app.get('/', (req, res) => {
 })
 
 app.post('/webhook', async (req, res) => {
-  const courses = await getAllCourses()
-  console.log(courses)
-  const subjectlist = generateSubjectList(courses)
-  console.log(subjectlist)
   const lineConfig = config.line
   // Set a new client
   const text = JSON.stringify(req.body)
@@ -129,15 +125,21 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(replyToken, replyMsg)
           break
         case 'Upload':
+          if (!userObject.isAdmin) {
+            replyMsg.text = 'Only admin can upload!'
+            const clear = await clearContext(userID)
+            console.log(clear)
+            return await client.replyMessage(replyToken, replyMsg)
+          }
           replyMsg.text = query.fulfillmentText
-          // const subjectList = generateSubjectList()
-          await client.replyMessage(replyToken, replyMsg)
+          const courses = await getAllCourses()
+          const subjectList = generateSubjectList(courses)
+          await client.replyMessage(replyToken, [replyMsg, subjectList])
           break
         case 'Subject':
-          replyMsg.text = query.fulfillmentText
           const datetime = {
             type: 'text',
-            text: 'Hi',
+            text: 'Select Date:',
             quickReply: {
               items: [
                 {
@@ -152,7 +154,7 @@ app.post('/webhook', async (req, res) => {
               ],
             },
           }
-          await client.replyMessage(replyToken, [replyMsg, datetime])
+          await client.replyMessage(replyToken, datetime)
           break
         case 'Filename':
           const payload = query.outputContexts[0].parameters
@@ -168,11 +170,21 @@ app.post('/webhook', async (req, res) => {
       break
     case 'postback':
       const postback = event.postback
-      if (postback.data === 'datetime') {
-        const date = postback.params.datetime
-        replyMsg.text = date
+      const date = {
+        type: 'text',
+        text: null,
       }
-      await client.replyMessage(event.replyToken, replyMsg)
+      if (postback.data === 'datetime') {
+        date.text = postback.params.datetime
+        replyMsg.text = date
+        const intentResponse = await detectIntent(userID, date, 'en-US')
+        console.log(intentResponse)
+        const query = intentResponse.queryResult
+        const intent = query.intent.displayName
+        console.log(`Intent ${intent}`)
+        replyMsg.text = query.fulfillmentText
+      }
+      await client.replyMessage(event.replyToken, [date, replyMsg])
       break
     case 'unfollow':
       const feedback = await addFeedback(userID, userObject.profileName, event.type, null)
