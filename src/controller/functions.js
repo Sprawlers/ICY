@@ -136,7 +136,7 @@ const generateBubbles = arr =>
 // Generate a message containing a list of subjects
 const generateSubjectList = () => ({
     "type": "text",
-    "text": "Select from the following:\n" + getAllCourses().map(course => "- " + course.title).join("\n")
+    "text": "Select from the following:\n" + getAllCourses().map(course => "- " + course["title"]).join("\n")
 })
 
 // Gets the local datetime from a UTC datetime
