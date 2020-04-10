@@ -131,6 +131,11 @@ const generateBubbles = arr =>
         })
     });
 
+// Generate a message containing a list of subjects
+const generateSubjectList = () => {
+
+}
+
 // Gets the local datetime from a UTC datetime
 const getLocalFromUTC = UTCDateTime => moment(UTCDateTime).tz('Asia/Bangkok')
 
@@ -144,4 +149,4 @@ const downloadPDFFromURL = async (pdfURL, outputFileName) => {
 const removeFile = path => fs.unlink(path, e => console.error(e))
 
 // Function exports
-module.exports = {generateHomework, getLocalFromUTC, downloadPDFFromURL};
+module.exports = {generateHomework, getLocalFromUTC, downloadPDFFromURL, removeFile};
