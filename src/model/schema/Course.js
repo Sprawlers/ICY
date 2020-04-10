@@ -13,6 +13,6 @@ const courseSchema = new Schema({
     title: String,
 })
 
-const Course = mongoose.model('course', courseSchema, 'course')
+const Course = mongoose.model('courses', courseSchema, 'courses')
 
 module.exports = Course
