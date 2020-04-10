@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/webhook', async (req, res) => {
-  const courses = await getAllCourses()
+  const courses = getAllCourses()
   console.log(courses)
   const subjectlist = generateSubjectList(courses)
   console.log(subjectlist)
