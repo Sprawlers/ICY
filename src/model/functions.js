@@ -1,6 +1,7 @@
 const Homework = require('./schema/Homework')
 const User = require('./schema/User')
 const Feedback = require('./schema/Feedback')
+const Course = require('./schema/Course')
 
 // Gets all homework documents, called with hw()
 function getAllHomework() {
@@ -17,8 +18,14 @@ function getAllUsers() {
   return User.find({})
 }
 
+// Gets all admin users
 function getAdminID() {
   return User.distinct('userID', { isAdmin: true })
+}
+
+// Gets all subjects
+function getAllCourses() {
+  return Course.find({})
 }
 
 // Adds a new user
@@ -40,6 +47,7 @@ module.exports = {
   getAllHomework,
   getUserByID,
   getAllUsers,
+  getAllCourses,
   getAdminID,
   addUser,
   addFeedback,

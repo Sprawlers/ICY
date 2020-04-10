@@ -2,6 +2,7 @@ const moment = require('moment-timezone')
 const fs = require('fs')
 const request = require('request-promise')
 const watermark = require('image-watermark')
+const {getAllCourses} = require('../model/functions')
 
 /**
  * a function that constructs a carousel message for homework
@@ -133,9 +134,10 @@ const generateBubbles = arr =>
     });
 
 // Generate a message containing a list of subjects
-const generateSubjectList = () => {
-
-}
+const generateSubjectList = () => ({
+    "type": "text",
+    "text": "Select from the following:\n" + getAllCourses().map(course => "- " + course.title).join("\n")
+})
 
 // Gets the local datetime from a UTC datetime
 const getLocalFromUTC = UTCDateTime => moment(UTCDateTime).tz('Asia/Bangkok')
