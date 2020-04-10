@@ -171,7 +171,7 @@ app.post('/webhook', async (req, res) => {
         case 'Url - yes':
           const params = query.outputContexts[0].parameters.fields
           const subject = params.subject.stringValue
-          const deadline = moment(new Date(params.deadline.stringValue)).subtract(7, 'hours')
+          const deadline = moment(new Date(params.deadline.stringValue)).subtract(7, 'hours') // Convert to UTC
           const filename = params.filename.stringValue
           const url = params.url.stringValue
           replyMsg.text = query.fulfillmentText
