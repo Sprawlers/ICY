@@ -12,7 +12,7 @@ const { generateHomework, generateSubjectList } = require('./controller/function
 const { detectIntent, clearContext } = require('./controller/dialogflow')
 
 // Import database functions
-const { getAllHomework, getUserByID, getAdminID, getAllCourses, addUser, delUser, addFeedback } = require('./model/functions')
+const { getAllHomework, getUserByID, getAdminID, getAllCourses, addUser, delUser, addFeedback, addHomework } = require('./model/functions')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
@@ -77,6 +77,11 @@ app.post('/webhook', async (req, res) => {
         replyMsg.text = 'Only text input!'
         return await client.replyMessage(replyToken, replyMsg)
       }
+      if (userMsg === 'clear') {
+        replyMsg.text = 'Clear Context!'
+        await clearContext(UserID)
+        return await client.replyMessage(replyToken, replyMsg)
+      }
 
       // Dialogflow stuff
       const intentResponse = await detectIntent(userID, userMsg, 'en-US')
@@ -90,7 +95,6 @@ app.post('/webhook', async (req, res) => {
         case 'Homework':
           const homeworkObjectArr = await getAllHomework()
           const payloadJSON = generateHomework(homeworkObjectArr)
-          console.log(payloadJSON)
           await client.replyMessage(replyToken, payloadJSON)
           break
         case 'save_feedback - yes':
@@ -108,7 +112,6 @@ app.post('/webhook', async (req, res) => {
           if (!userObject.isAdmin) {
             replyMsg.text = 'Only admin can broadcast!'
             const clear = await clearContext(userID)
-            console.log(clear)
             return await client.replyMessage(replyToken, replyMsg)
           }
           replyMsg.text = query.fulfillmentText
@@ -156,15 +159,16 @@ app.post('/webhook', async (req, res) => {
           }
           await client.replyMessage(replyToken, datetime)
           break
-        case 'Filename':
-          const payload = query.parameters.fields
+        case 'Url - yes':
+          const params = query.outputContexts[0].parameters.fields
+          const subject = params.subject.stringValue
+          const deadline = params.deadline.stringValue
+          const filename = params.filename.stringValue
+          const url = params.url.stringValue
           replyMsg.text = query.fulfillmentText
-          console.log(query.outputContexts[0].parameters.fields)
-          console.log(payload)
+          const hw = await addHomework(subject, deadline, filename, url)
+          console.log(hw)
           await client.replyMessage(replyToken, replyMsg)
-          break
-        case 'Url':
-          console.log(query.parameters.fields)
           break
         default:
           replyMsg.text = query.fulfillmentText
@@ -184,7 +188,6 @@ app.post('/webhook', async (req, res) => {
         const intentResponse = await detectIntent(userID, date.text, 'en-US')
         console.log(intentResponse)
         const query = intentResponse.queryResult
-        console.log(query.parameters.fields)
         const intent = query.intent.displayName
         console.log(`Intent ${intent}`)
         replyMsg.text = query.fulfillmentText
