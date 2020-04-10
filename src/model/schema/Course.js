@@ -10,9 +10,9 @@ const Schema = mongoose.Schema;
  *
  */
 const courseSchema = new Schema({
-    title: String,
+    title: String
 })
 
-const Course = mongoose.model('courses', courseSchema, 'courses')
+const courseModel = mongoose.model('courses', courseSchema, 'courses')
 
-module.exports = Course
+module.exports = courseModel
