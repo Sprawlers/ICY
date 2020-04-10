@@ -1,6 +1,7 @@
 const moment = require('moment-timezone')
 const fs = require('fs')
 const request = require('request-promise')
+const watermark = require('image-watermark')
 
 /**
  * a function that constructs a carousel message for homework
@@ -139,14 +140,17 @@ const generateSubjectList = () => {
 // Gets the local datetime from a UTC datetime
 const getLocalFromUTC = UTCDateTime => moment(UTCDateTime).tz('Asia/Bangkok')
 
-// Download the PDF from URL
+// Download the PDF from URL (Must catch error)
 const downloadPDFFromURL = async (pdfURL, outputFileName) => {
     let pdfBuffer = await request.get({uri: pdfURL, encoding: null})
-    fs.writeFile(outputFileName, pdfBuffer, e => console.error(e))
+    fs.writeFile(outputFileName, pdfBuffer, e => e ? console.error(e) : null)
 }
 
 // Remove file from specified path
-const removeFile = path => fs.unlink(path, e => console.error(e))
+const removeFile = path => fs.unlink(path, e => e ? console.error(e) : null)
+
+// Watermark a pdf file (important: must specify full path) with text
+const watermarkFile = (path, text) => watermark.embedWatermark(path, {text})
 
 // Function exports
-module.exports = {generateHomework, getLocalFromUTC, downloadPDFFromURL, removeFile};
+module.exports = {generateHomework, getLocalFromUTC, downloadPDFFromURL, removeFile, watermarkFile};
