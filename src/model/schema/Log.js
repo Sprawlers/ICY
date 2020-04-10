@@ -2,11 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 /**
- * Homework Model
+ * User Model
  *
- * title: name of the subject
- * deadline: due date of the latest assignment
- * links: object containing urls to different homework assignments
+ * userID: UUID of the user
+ * profileName: profile name of the user as it appears in Line
+ * type: type of log
+ * data: data of log
  *
  */
 const logSchema = new Schema(
@@ -16,10 +17,11 @@ const logSchema = new Schema(
     type: String,
     data: Object,
   },
-  { versionKey: false }
+  { timestamps: true, versionKey: false }
 )
 
-logSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 })
+//set expire time for logSchema
+logSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 * 60 * 24 })
 
 const logModel = mongoose.model('log', logSchema, 'log')
 

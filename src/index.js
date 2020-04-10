@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 
 const mongoDB = config.db_host
+mongoose.set('useCreateIndex', true)
 const db = mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
   .then(console.log('Connected to database'))
