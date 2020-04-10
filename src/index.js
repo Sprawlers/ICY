@@ -79,7 +79,7 @@ app.post('/webhook', async (req, res) => {
       }
       if (userMsg === 'clear') {
         replyMsg.text = 'Clear Context!'
-        await clearContext(UserID)
+        await clearContext(userID)
         return await client.replyMessage(replyToken, replyMsg)
       }
 
@@ -161,6 +161,7 @@ app.post('/webhook', async (req, res) => {
           break
         case 'Url - yes':
           const params = query.outputContexts[0].parameters.fields
+          console.log(params)
           const subject = params.subject.stringValue
           const deadline = params.deadline.stringValue
           const filename = params.filename.stringValue
