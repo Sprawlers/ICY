@@ -128,9 +128,12 @@ app.post('/webhook', async (req, res) => {
           replyMsg.text = query.fulfillmentText
           // const subjectList = generateSubjectList()
           await client.replyMessage(replyToken, replyMsg)
+          break
         case 'Subject':
           replyMsg.text = query.fulfillmentText
           const datetime = {
+            type: 'text',
+            text: 'Hi',
             quickReply: {
               items: [
                 {
@@ -147,11 +150,25 @@ app.post('/webhook', async (req, res) => {
           }
           await client.replyMessage(replyToken, [replyMsg, datetime])
           break
+        case 'Filename':
+          const payload = query.outputContexts[0].parameters
+          replyMsg.text = query.fulfillmentText
+          console.log(payload)
+          await client.replyMessage(replyToken, replyMsg)
+          break
         default:
           replyMsg.text = query.fulfillmentText
           await client.replyMessage(replyToken, replyMsg)
           break
       }
+      break
+    case 'postback':
+      const postback = event.postback
+      if (postback.data === 'datetime') {
+        const date = postback.params.datetime
+        replyMsg.text = date
+      }
+      await client.replyMessage(event.replyToken, replyMsg)
       break
     case 'unfollow':
       const feedback = await addFeedback(userID, userObject.profileName, event.type, null)
