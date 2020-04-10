@@ -20,7 +20,8 @@ app.use(morgan('dev'))
 const mongoDB = config.db_host
 const db = mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
-  .then(console.log('Connected to database')).catch(e => console.error(e))
+  .then(console.log('Connected to database'))
+  .catch((e) => console.error(e))
 
 app.get('/', (req, res) => {
   res.send({
@@ -52,14 +53,17 @@ app.post('/webhook', async (req, res) => {
   const userID = event.source.userId
   if (event.type !== 'unfollow') {
     const profile = await client.getProfile(event.source.userId)
-
-    // Checks if the user exists. If not, adds a new user to the collection
-    const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
-    console.log(userObject)
-
     // Log information
     console.log(`User: ${profile.displayName}`)
   }
+
+  // Checks if the user exists. If not, adds a new user to the collection
+  const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
+  console.log(userObject)
+
+  // Get array of AdminID
+  const adminID = await getAdminID()
+
   // Switch for event type
   switch (event.type) {
     case 'message':
@@ -75,15 +79,13 @@ app.post('/webhook', async (req, res) => {
       // Dialogflow stuff
       const intentResponse = await detectIntent(userID, userMsg, 'en-US')
       console.log(intentResponse)
-      console.log(intentResponse.queryResult.fulfillmentMessages)
-      console.log(intentResponse.queryResult.outputContexts)
       const query = intentResponse.queryResult
       const intent = query.intent.displayName
+      console.log(`Intent ${intent}`)
 
       // Switch based on intent
       switch (intent) {
         case 'Homework':
-          console.log(`Intent ${intent}`)
           const homeworkObjectArr = await getAllHomework()
           const payloadJSON = generateHomework(homeworkObjectArr)
           console.log(payloadJSON)
@@ -92,19 +94,16 @@ app.post('/webhook', async (req, res) => {
         case 'save_feedback - yes':
           replyMsg.text = query.fulfillmentText
           const feedback = query.outputContexts[0].parameters.fields.details.stringValue
-          const userObject = await getUserByID(userID)
           await addFeedback(userID, userObject.profileName, event.type, feedback)
-          const admin = await getAdminID()
           const feedbackMsg = {
             type: 'text',
             text: feedback,
           }
-          await client.multicast(admin, feedbackMsg)
+          await client.multicast(adminID, feedbackMsg)
           await client.replyMessage(replyToken, replyMsg)
           break
         case 'Announce':
-          const userObj = await getUserByID(userID)
-          if (!userObj.isAdmin) {
+          if (!userObject.isAdmin) {
             replyMsg.text = 'Only admin can broadcast!'
             const clear = await clearContext(userID)
             console.log(clear)
@@ -123,6 +122,29 @@ app.post('/webhook', async (req, res) => {
           await client.broadcast(broadcastMsg)
           await client.replyMessage(replyToken, replyMsg)
           break
+        case 'Upload':
+          replyMsg.text = query.fulfillmentText
+          // const subjectList = generateSubjectList()
+          await client.replyMessage(replyToken, replyMsg)
+        case 'Subject':
+          replyMsg.text = query.fulfillmentText
+          const datetime = {
+            quickReply: {
+              items: [
+                {
+                  type: 'action',
+                  action: {
+                    type: 'datetimepicker',
+                    label: 'Select date',
+                    data: 'datetime',
+                    mode: 'datetime',
+                  },
+                },
+              ],
+            },
+          }
+          await client.replyMessage(replyToken, [replyMsg, datetime])
+          break
         default:
           replyMsg.text = query.fulfillmentText
           await client.replyMessage(replyToken, replyMsg)
@@ -130,7 +152,6 @@ app.post('/webhook', async (req, res) => {
       }
       break
     case 'unfollow':
-      const userObject = await getUserByID(userID)
       const feedback = await addFeedback(userID, userObject.profileName, event.type, null)
       await delUser(userID)
       console.log(feedback)
