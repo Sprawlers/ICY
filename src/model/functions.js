@@ -51,7 +51,7 @@ async function addHomework(subject, deadline, filename, link) {
       title: subject,
       deadline,
       links: {
-        filename: link,
+        [filename]: link,
       },
     }))
   objCopy['links'][filename] = link

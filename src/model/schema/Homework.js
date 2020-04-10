@@ -9,11 +9,14 @@ const Schema = mongoose.Schema
  * links: object containing urls to different homework assignments
  *
  */
-const homeworkSchema = new Schema({
-  title: String,
-  deadline: Date,
-  links: Object,
-})
+const homeworkSchema = new Schema(
+  {
+    title: String,
+    deadline: Date,
+    links: Object,
+  },
+  { versionKey: false }
+)
 
 // Prepares schema as a model
 const homeworkModel = mongoose.model('homework', homeworkSchema, 'homework')
