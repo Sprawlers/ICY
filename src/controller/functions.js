@@ -158,4 +158,4 @@ const watermarkFile = (path, text) => {
 }
 
 // Function exports
-module.exports = {generateHomework, getLocalFromUTC, downloadPDFFromURL, removeFile, watermarkFile};
+module.exports = {generateHomework, generateSubjectList, getLocalFromUTC, downloadPDFFromURL, removeFile, watermarkFile};
