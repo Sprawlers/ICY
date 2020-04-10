@@ -151,7 +151,7 @@ app.post('/webhook', async (req, res) => {
         case 'Subject':
           const datetime = {
             type: 'text',
-            text: 'Select Date:',
+            text: query.fulfillmentText,
             quickReply: {
               items: [
                 {
