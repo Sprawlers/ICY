@@ -8,11 +8,11 @@ const crypto = require('crypto')
 const app = express()
 
 // Import the appropriate class
-const { generateHomework } = require('./controller/functions')
+const { generateHomework, generateSubjectList } = require('./controller/functions')
 const { detectIntent, clearContext } = require('./controller/dialogflow')
 
 // Import database functions
-const { getAllHomework, getUserByID, getAdminID, addUser, delUser, addFeedback } = require('./model/functions')
+const { getAllHomework, getUserByID, getAdminID, getAllCourses, addUser, delUser, addFeedback } = require('./model/functions')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
@@ -22,6 +22,8 @@ const db = mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
   .then(console.log('Connected to database'))
   .catch((e) => console.error(e))
+
+console.log((async () => generateSubjectList(await getAllCourses()))())
 
 app.get('/', (req, res) => {
   res.send({

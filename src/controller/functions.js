@@ -2,7 +2,6 @@ const moment = require('moment-timezone')
 const fs = require('fs')
 const request = require('request-promise')
 const watermark = require('image-watermark')
-const {getAllCourses} = require('../model/functions')
 
 /**
  * a function that constructs a carousel message for homework
@@ -134,9 +133,9 @@ const generateBubbles = arr =>
     });
 
 // Generate a message containing a list of subjects
-const generateSubjectList = async () => ({
+const generateSubjectList = courses => ({
     "type": "text",
-    "text": "Select from the following:\n" + (await getAllCourses()).map(course => "- " + course["title"]).join("\n")
+    "text": "Select from the following:\n" + courses.map(course => "- " + course["title"]).join("\n")
 })
 
 
