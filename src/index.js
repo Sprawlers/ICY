@@ -157,10 +157,14 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(replyToken, datetime)
           break
         case 'Filename':
-          const payload = query.outputContexts[0].parameters
+          const payload = query.parameters.fields
           replyMsg.text = query.fulfillmentText
+          console.log(query.outputContexts[0].parameters.fields)
           console.log(payload)
           await client.replyMessage(replyToken, replyMsg)
+          break
+        case 'Url':
+          console.log(query.parameters.fields)
           break
         default:
           replyMsg.text = query.fulfillmentText
@@ -177,9 +181,10 @@ app.post('/webhook', async (req, res) => {
       if (postback.data === 'datetime') {
         date.text = postback.params.datetime
         replyMsg.text = date
-        const intentResponse = await detectIntent(userID, date, 'en-US')
+        const intentResponse = await detectIntent(userID, date.text, 'en-US')
         console.log(intentResponse)
         const query = intentResponse.queryResult
+        console.log(query.parameters.fields)
         const intent = query.intent.displayName
         console.log(`Intent ${intent}`)
         replyMsg.text = query.fulfillmentText
