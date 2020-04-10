@@ -4,8 +4,8 @@ const Feedback = require('./schema/Feedback')
 const Course = require('./schema/Course')
 
 // Gets all homework documents, called with hw()
-function getAllHomework() {
-  return Homework.find({})
+async function getAllHomework() {
+  return await Homework.find({})
 }
 
 // Gets a user by UUID
@@ -14,8 +14,8 @@ function getUserByID(userID) {
 }
 
 // Gets all users
-function getAllUsers() {
-  return User.find({})
+async function getAllUsers() {
+  return await User.find({})
 }
 
 // Gets all admin users
