@@ -12,7 +12,7 @@ const { generateHomework, generateSubjectList } = require('./controller/function
 const { detectIntent, clearContext } = require('./controller/dialogflow')
 
 // Import database functions
-const { getAllHomework, getUserByID, getAdminID, getAllCourses, addUser, delUser, addFeedback, addHomework } = require('./model/functions')
+const { getAllHomework, getUserByID, getAdminID, getAllCourses, addUser, delUser, addFeedback, addHomework, addLog } = require('./model/functions')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
@@ -61,6 +61,12 @@ app.post('/webhook', async (req, res) => {
   const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
   console.log(userObject)
 
+  // Set message log object
+  const messagelog = {
+    user: null,
+    bot: null,
+  }
+
   // Get array of AdminID
   const adminID = await getAdminID()
 
@@ -68,15 +74,18 @@ app.post('/webhook', async (req, res) => {
   switch (event.type) {
     case 'message':
       const userMsg = event.message.text
+      messagelog.user = userMsg
       const replyToken = event.replyToken
       if (event.message.type !== 'text') {
         replyMsg.text = 'Only text input!'
-        return await client.replyMessage(replyToken, replyMsg)
+        await client.replyMessage(replyToken, replyMsg)
+        break
       }
       if (userMsg === '/clear') {
         replyMsg.text = 'Clear Context!'
         await clearContext(userID)
-        return await client.replyMessage(replyToken, replyMsg)
+        await client.replyMessage(replyToken, replyMsg)
+        break
       }
 
       // Dialogflow stuff
@@ -108,7 +117,8 @@ app.post('/webhook', async (req, res) => {
           if (!userObject.isAdmin) {
             replyMsg.text = 'Only admin can broadcast!'
             const clear = await clearContext(userID)
-            return await client.replyMessage(replyToken, replyMsg)
+            await client.replyMessage(replyToken, replyMsg)
+            break
           }
           replyMsg.text = query.fulfillmentText
           await client.replyMessage(replyToken, replyMsg)
@@ -127,7 +137,8 @@ app.post('/webhook', async (req, res) => {
           if (!userObject.isAdmin) {
             replyMsg.text = 'Only admin can upload!'
             await clearContext(userID)
-            return await client.replyMessage(replyToken, replyMsg)
+            await client.replyMessage(replyToken, replyMsg)
+            break
           }
           replyMsg.text = query.fulfillmentText
           const courses = await getAllCourses()
@@ -169,6 +180,8 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(replyToken, replyMsg)
           break
       }
+      messagelog.bot = replyMsg.text
+      await addLog(userID, profileName, event.type, messagelog)
       break
     case 'postback':
       const postback = event.postback

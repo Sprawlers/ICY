@@ -2,6 +2,7 @@ const Homework = require('./schema/Homework')
 const User = require('./schema/User')
 const Feedback = require('./schema/Feedback')
 const Course = require('./schema/Course')
+const Log = require('./schema/Log')
 
 // Gets all homework documents, called with hw()
 async function getAllHomework() {
@@ -50,6 +51,10 @@ async function addHomework(subject, deadline, filename, link) {
   hw['links.' + filename] = link
   const objCopy = await Homework.findOneAndUpdate({ title: subject }, { $set: hw }, { upsert: true })
   return objCopy
+}
+
+function addLog(userID, profileName, type, data) {
+  return Log.create({ userID, profileName, type, data })
 }
 
 module.exports = {
