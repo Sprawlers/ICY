@@ -1,4 +1,6 @@
 const moment = require('moment-timezone')
+const fs = require('fs')
+const request = require('request-promise')
 
 /**
  * a function that constructs a carousel message for homework
@@ -132,5 +134,12 @@ const generateBubbles = arr =>
 // Gets the local datetime from a UTC datetime
 const getLocalFromUTC = UTCDateTime => moment(UTCDateTime).tz('Asia/Bangkok')
 
+// Download the PDF from URL
+const downloadPDFFromURL = async (pdfURL, outputFileName) => {
+    let pdfBuffer = await request.get({uri: pdfURL, encoding: null})
+    console.log("DEBUG DOWNLOAD FUNCTION: Writing file to " + outputFileName)
+    fs.writeFileSync(outputFileName, pdfBuffer)
+}
+
 // Function exports
-module.exports = {generateHomework, getLocalFromUTC};
+module.exports = {generateHomework, getLocalFromUTC, downloadPDFFromURL};
