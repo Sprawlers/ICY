@@ -1,6 +1,7 @@
 const moment = require('moment-timezone')
 const fs = require('fs')
 const request = require('request-promise')
+const config = ('../config.js')
 
 /**
  * a function that constructs a carousel message for homework
@@ -150,6 +151,23 @@ const getLocalFromUTC = UTCDateTime => moment(UTCDateTime).tz('Asia/Bangkok')
 const downloadFileFromURL = async (URL, outputFileName) => {
     let buffer = await request.get({uri: URL, encoding: null})
     fs.writeFile(outputFileName, buffer, e => e ? console.error(e) : null)
+}
+
+const shortenURL = URL => {
+    const response = await request.post({
+        uri:'https://api-ssl.bitly.com/v4/shorten',
+        headers:`Bearer ${config.bitly_token}`,
+        body: URL
+    })
+    return response.link
+}
+
+const getClicksFromURL = URL => {
+    URL = URL.replace(/(^\w+:|^)\/\//, '');
+    const response = await request.post({
+        uri: `https://api-ssl.bitly.com/v4/bitlinks/${URL}/clicks/summary`
+    })
+    return response.total_clicks
 }
 
 // Remove file from specified path
