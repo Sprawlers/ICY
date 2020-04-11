@@ -216,8 +216,7 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(event.replyToken, [date, replyMsg])
           break
         case 'richmenu/homework':
-          const homeworkObjectArr = await getAllHomework()
-          const payloadJSON = generateHomework(homeworkObjectArr)
+          const payloadJSON = generateHomework(await getAllHomework())
           postbacklog.type = 'richmenu'
           postbacklog.data.label = 'Homework'
           await client.replyMessage(event.replyToken, payloadJSON)
@@ -235,8 +234,8 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(event.replyToken, replyMsg)
           break
         case 'homework/Physics':
-          //Generate assignment JSON from function by passing subject
-          const assignmentJSON = generateAssignments('Physics')
+          //Generate assignment JSON from function by passing homework array and subject title
+          const assignmentJSON = generateAssignments(await getAllHomework(), 'Physics')
           postbacklog.type = 'button'
           postbacklog.data.label = postback.data
           await client.replyMessage(event.replyToken, assignmentJSON)
