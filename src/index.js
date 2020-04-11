@@ -160,7 +160,7 @@ app.post('/webhook', async (req, res) => {
                   action: {
                     type: 'datetimepicker',
                     label: 'Select date',
-                    data: 'deadline/',
+                    data: 'deadline',
                     mode: 'datetime',
                   },
                 },
