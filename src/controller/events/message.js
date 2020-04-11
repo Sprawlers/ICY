@@ -5,6 +5,7 @@ const replyMsg = { type: 'text' }
 const messagelog = {}
 
 const handleMessage = async (event, client, userObject) => {
+  const userID = userObject.userID
   const replyToken = event.replyToken
   if (event.message.type !== 'text') {
     messagelog.user = 'Non-Text Format'
