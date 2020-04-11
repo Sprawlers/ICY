@@ -11,9 +11,7 @@ let dialogflowConfig = {
 }
 const sessionClient = new dialogflow.SessionsClient(dialogflowConfig)
 
-const contextClient = new dialogflow.ContextsClient({
-  keyFilename: `../${config.filename}`,
-})
+const contextClient = new dialogflow.ContextsClient(dialogflowConfig)
 
 const detectIntent = async (userID, message, languageCode) => {
   console.log(projectId, userID)
