@@ -28,7 +28,7 @@ const handleMessage = async (event, client, userObject) => {
   const intentResponse = await detectIntent(userID, userMsg, 'en-US')
 
   //handleIntent function
-  messagelog.bot = handleIntent(intentResponse, userObject, client, replyToken)
+  messagelog.bot = await handleIntent(intentResponse, userObject, client, replyToken)
   return messagelog
 }
 

@@ -3,7 +3,7 @@ const { generateHomework, generateAssignments } = require('../functions')
 const { getAllHomework } = require('../../model/functions')
 
 const replyMsg = { type: 'text' }
-const postbacklog = {}
+const postbacklog = { data: {} }
 
 const handlePostback = async (event, client, userObject) => {
   const postback = event.postback

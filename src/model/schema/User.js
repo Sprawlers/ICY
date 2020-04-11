@@ -9,11 +9,14 @@ const Schema = mongoose.Schema
  * isAdmin: check whether the user is an admin or not
  *
  */
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     userID: String,
     profileName: String,
     isAdmin: Boolean,
-})
+  },
+  { versionKey: false }
+)
 
 // Prepares schema as a model
 const userModel = mongoose.model('users', userSchema, 'users')

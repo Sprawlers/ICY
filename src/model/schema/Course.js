@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 /**
  * Course Model
@@ -9,9 +9,12 @@ const Schema = mongoose.Schema;
  * links: object containing urls to different homework assignments
  *
  */
-const courseSchema = new Schema({
-    title: String
-})
+const courseSchema = new Schema(
+  {
+    title: String,
+  },
+  { versionKey: false }
+)
 
 const courseModel = mongoose.model('courses', courseSchema, 'courses')
 

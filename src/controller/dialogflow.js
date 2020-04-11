@@ -14,7 +14,6 @@ const sessionClient = new dialogflow.SessionsClient(dialogflowConfig)
 const contextClient = new dialogflow.ContextsClient(dialogflowConfig)
 
 const detectIntent = async (userID, message, languageCode) => {
-  console.log(projectId, userID)
   const sessionPath = sessionClient.sessionPath(projectId, userID)
   const request = {
     session: sessionPath,

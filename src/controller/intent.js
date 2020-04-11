@@ -5,9 +5,9 @@ const { generateHomework, generateSubjectList } = require('./functions')
 const replyMsg = { type: 'text' }
 
 const handleIntent = async (intentResponse, userObject, client, replyToken) => {
-  console.log(`Intent ${intent}`)
   const query = intentResponse.queryResult
   const intent = query.intent.displayName
+  console.log(`Intent ${intent}`)
   const userID = userObject.userID
   switch (intent) {
     case 'Homework':
@@ -21,7 +21,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       const adminID = await getAdminID()
       replyMsg.text = query.fulfillmentText
       const feedback = query.outputContexts[0].parameters.fields.details.stringValue
-      await addFeedback(userID, userObject.profileName, event.type, feedback)
+      await addFeedback(userID, userObject.profileName, 'message', feedback)
       const feedbackMsg = {
         type: 'text',
         text: 'Feedback from user: ' + feedback,
