@@ -3,9 +3,13 @@ const request = require('request-promise')
 const dialogflow = require('dialogflow')
 const projectId = config.projectId
 
-const sessionClient = new dialogflow.SessionsClient({
-  keyFilename: `../${config.filename}`,
-})
+let dialogflowConfig = {
+  credentials: {
+    private_key: config.private_key,
+    client_email: config.client_email,
+  },
+}
+const sessionClient = new dialogflow.SessionsClient(dialogflowConfig)
 
 const contextClient = new dialogflow.ContextsClient({
   keyFilename: `../${config.filename}`,
