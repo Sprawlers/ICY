@@ -17,6 +17,11 @@ const generateHomework = arr => ({
 // Generate subject-specific JSON payload of assignment list given array of homework object and subject name
 const generateAssignments = (arr, title) => {
     // Obtain object of assignment objects
+    console.log("DEBUG")
+    console.log(arr)
+    console.log("-------------")
+    console.log(arr.filter(obj => obj["title"] === title))
+    console.log("-------------")
     const assignments = JSON.parse(JSON.stringify(arr.filter(obj => obj["title"] === title)))["assignments"]
     // Construct a new array of objects from assignments for sorting
     const mapped = Object.keys(assignments).map(task => ({
