@@ -198,7 +198,8 @@ app.post('/webhook', async (req, res) => {
         type: null,
         data: {},
       }
-      switch (postback.data) {
+      const data = postback.data.split('/')
+      switch (data[0]) {
         case 'deadline':
           const date = {
             type: 'text',
@@ -215,29 +216,26 @@ app.post('/webhook', async (req, res) => {
           postbacklog.data.bot = date.text
           await client.replyMessage(event.replyToken, [date, replyMsg])
           break
-        case 'richmenu/homework':
-          const payloadJSON = generateHomework(await getAllHomework())
+        case 'richmenu':
+          switch (data[1]) {
+            case 'homework':
+              const payloadJSON = generateHomework(await getAllHomework())
+              postbacklog.type = 'richmenu'
+              postbacklog.data.label = 'Homework'
+              await client.replyMessage(event.replyToken, payloadJSON)
+              break
+            default:
+              replyMsg.text = data[1] + 'function is not available yet.'
+              await client.replyMessage(event.replyToken, replyMsg)
+          }
           postbacklog.type = 'richmenu'
-          postbacklog.data.label = 'Homework'
-          await client.replyMessage(event.replyToken, payloadJSON)
+          postbacklog.data.label = data[1]
           break
-        case 'richmenu/notes':
-          replyMsg.text = 'Notes function is not available yet.'
-          postbacklog.type = 'richmenu'
-          postbacklog.data.label = 'Notes'
-          await client.replyMessage(event.replyToken, replyMsg)
-          break
-        case 'richmenu/ask':
-          replyMsg.text = 'Ask function is not available yet.'
-          postbacklog.type = 'richmenu'
-          postbacklog.data.label = 'Ask'
-          await client.replyMessage(event.replyToken, replyMsg)
-          break
-        case 'homework/Physics':
+        case 'homework':
           //Generate assignment JSON from function by passing homework array and subject title
-          const assignmentJSON = generateAssignments(await getAllHomework(), 'Physics')
+          const assignmentJSON = generateAssignments(await getAllHomework(), data[1])
           postbacklog.type = 'button'
-          postbacklog.data.label = postback.data
+          postbacklog.data.label = data[1] + 'solution button'
           await client.replyMessage(event.replyToken, assignmentJSON)
           break
       }
