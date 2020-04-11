@@ -2,7 +2,7 @@ const { handleMessage } = require('./events/message')
 const { handlePostback } = require('./events/postback')
 const { addLog, addFeedback, delUser } = require('../model/functions')
 
-const handleEvent = async (event, adminID, userObject, client) => {
+const handleEvent = async (event, userObject, client) => {
   switch (event.type) {
     case 'message':
       const messagelog = handleMessage(event, client, userObject)

@@ -62,7 +62,7 @@ app.post('/webhook', async (req, res) => {
   const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
   console.log(userObject)
 
-  handleEvent(event, adminID, userObject, client)
+  handleEvent(event, userObject, client)
   res.status(200).end()
 })
 
