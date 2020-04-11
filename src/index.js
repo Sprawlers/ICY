@@ -18,7 +18,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 
+//Database config
 const mongoDB = config.db_host
+//Set to suppress warning from using index in schema
 mongoose.set('useCreateIndex', true)
 const db = mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
