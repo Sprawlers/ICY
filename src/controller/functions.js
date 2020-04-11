@@ -47,7 +47,7 @@ const getDeadlineFromDate = dateTimeObject => {
 // Generates array of Line Flex Bubble message JSON
 const generateBubbles = arr => {
 
-    return arr.map(subject => {
+    const mapped = arr.map(subject => {
         let bubbleClone = {...bubble}
         bubbleClone["header"]["contents"][0]["text"] = subject['title']
         bubbleClone["hero"]["contents"][0]["text"] = "📅 Deadline" +
@@ -70,6 +70,8 @@ const generateBubbles = arr => {
         console.log(subject + " NEW CLONE " + bubbleClone)
         return bubbleClone
     })
+    console.log(mapped)
+    return mapped
 }
 
 // Generate a message containing a list of subjects
