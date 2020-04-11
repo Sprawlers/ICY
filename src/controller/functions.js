@@ -44,6 +44,7 @@ const getDeadlineFromDate = dateTimeObject => {
 }
 
 // Generates array of Line Flex Bubble message JSON
+<<<<<<< HEAD
 const generateBubbles = arr =>
     arr.map(subject => {
         return ({
@@ -112,6 +113,76 @@ const generateBubbles = arr =>
                         "type": "separator",
                     },
                 ],
+=======
+const generateBubbles = (arr) =>
+  arr.map((subject) => {
+    return {
+      type: 'bubble',
+      direction: 'ltr',
+      header: {
+        type: 'box',
+        layout: 'vertical',
+        contents: [
+          {
+            type: 'text',
+            text: subject['title'],
+            weight: 'bold',
+            size: 'xxl',
+            align: 'center',
+            gravity: 'center',
+            color: '#000000',
+            wrap: true,
+          },
+        ],
+        backgroundColor: '#FFFFFF', //
+        cornerRadius: '0px',
+      },
+      hero: {
+        type: 'box',
+        layout: 'vertical',
+        contents: [
+          {
+            type: 'text',
+            text:
+              '📅 Deadline' +
+              getDeadlineFromDate(sortByParam(Object.values(JSON.parse(JSON.stringify(subject))['assignments']), 'deadline')[0]['deadline']),
+            size: 'lg',
+            align: 'center',
+            gravity: 'center',
+            contents: [
+              {
+                type: 'span',
+                text: '📅 Deadline: ',
+              },
+              {
+                type: 'span',
+                text: getDeadlineFromDate(sortByParam(Object.values(JSON.parse(JSON.stringify(subject))['assignments']), 'deadline')[0]['deadline']),
+                weight: 'regular',
+              },
+            ],
+          },
+        ],
+      },
+      body: {
+        type: 'box',
+        layout: 'vertical',
+        contents: [
+          {
+            type: 'separator',
+          },
+        ],
+      },
+      footer: {
+        type: 'box',
+        layout: 'vertical',
+        contents: [
+          {
+            type: 'button',
+            action: {
+              type: 'postback',
+              label: 'View Solution',
+              data: `homework/${subject['title']}`,
+>>>>>>> 873d6ad08591e8659fa8da4e9bfc8939f124a517
             },
             "footer": {
                 "type": "box",
@@ -161,6 +232,7 @@ const downloadFileFromURL = async (URL, outputFileName) => {
     fs.writeFile(outputFileName, buffer, e => e ? console.error(e) : null)
 }
 
+<<<<<<< HEAD
 const shortenURL = URL => {
     const response = await request.post({
         uri: 'https://api-ssl.bitly.com/v4/shorten',
@@ -168,6 +240,15 @@ const shortenURL = URL => {
         body: URL
     })
     return response.link
+=======
+const shortenURL = async (URL) => {
+  const response = await request.post({
+    uri: 'https://api-ssl.bitly.com/v4/shorten',
+    headers: `Bearer ${config.bitly_token}`,
+    body: URL,
+  })
+  return response.link
+>>>>>>> 873d6ad08591e8659fa8da4e9bfc8939f124a517
 }
 
 const getClicksFromURL = URL => {
