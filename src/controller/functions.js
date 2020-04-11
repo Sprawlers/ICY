@@ -20,30 +20,31 @@ const generateHomework = arr => ({
     "altText": "homework",
     "contents": {
         "type": "carousel",
-        "contents": generateBubbles(sortByDeadline(arr)),
+        "contents": generateBubbles(arr),
     },
 });
 
-// Function to sort homeworkObjectArray by deadline
-const sortByDeadline = arr => {
+// Function to sort array of objects by parameter
+const sortByParam = (arr, param) => {
     const arrCopy = [...arr]
     arrCopy.sort((a, b) => {
-        let dateA = new Date(a['deadline']);
-        let dateB = new Date(b['deadline']);
+        let dateA = new Date(a[param]);
+        let dateB = new Date(b[param]);
         return dateA - dateB;
     })
     return arrCopy
 };
+// E.g sort by sortByParam(arr, 'deadline')
 
 // Returns deadline from JS DateTime Object
 const getDeadlineFromDate = dateTimeObject => {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return `${monthNames[dateTimeObject.getMonth()]} ${dateTimeObject.getDate()}`
-};
+}
 
 // Generates array of Line Flex Bubble message JSON
 const generateBubbles = arr =>
-    arr.map(obj => {
+    arr.map(subject => {
         return ({
             "type": "bubble",
             "direction": "ltr",
@@ -53,7 +54,7 @@ const generateBubbles = arr =>
                 "contents": [
                     {
                         "type": "text",
-                        "text": obj['title'],
+                        "text": subject['title'],
                         "weight": "bold",
                         "size": "xxl",
                         "align": "center",
@@ -62,7 +63,7 @@ const generateBubbles = arr =>
                         "wrap": true,
                     },
                 ],
-                "backgroundColor": "#FFFFFF",
+                "backgroundColor": "#FFFFFF", //
                 "cornerRadius": "0px"
             },
             "hero": {
@@ -71,7 +72,10 @@ const generateBubbles = arr =>
                 "contents": [
                     {
                         "type": "text",
-                        "text": `📅 Deadline ${getDeadlineFromDate(obj['deadline'])}`,
+                        "text": "📅 Deadline" +
+                            getDeadlineFromDate(
+                                sortByParam(Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline')[0]["deadline"]
+                            ),
                         "size": "lg",
                         "align": "center",
                         "gravity": "center",
@@ -82,7 +86,9 @@ const generateBubbles = arr =>
                             },
                             {
                                 "type": "span",
-                                "text": getDeadlineFromDate(obj['deadline']),
+                                "text": getDeadlineFromDate(
+                                    sortByParam(Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline')[0]["deadline"]
+                                ),
                                 "weight": "regular",
                             },
                         ],
@@ -105,9 +111,9 @@ const generateBubbles = arr =>
                     {
                         "type": "button",
                         "action": {
-                            "type": "uri",
-                            "uri": obj['links'][Object.keys(obj['links'])[0]], // Need to fix this to be more elegant!!
+                            "type": "postback",
                             "label": "View Solution",
+                            "data": `homework/${subject['title']}`
                         },
                         "gravity": "center",
                         "style": "secondary",
