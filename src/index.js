@@ -212,11 +212,11 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(event.replyToken, payloadJSON)
           break
         case 'richmenu/notes':
-          replyMsg.text = label + 'function is not available yet.'
+          replyMsg.text = 'Notes function is not available yet.'
           await client.replyMessage(event.replyToken, replyMsg)
           break
         case 'richmenu/ask':
-          replyMsg.text = label + 'function is not available yet.'
+          replyMsg.text = 'Ask function is not available yet.'
           await client.replyMessage(event.replyToken, replyMsg)
           break
       }
