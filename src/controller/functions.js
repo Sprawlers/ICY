@@ -4,27 +4,43 @@ const request = require('request-promise')
 const config = ('../config.js')
 const bubble = require('../json/bubble.json')
 
-/**
- * a function that constructs a carousel message for homework
- *
- * Example homework object:
- * {
- *     "Calculus": {
- *         "deadline": (DateTime Object),
- *         "link": (URL)
- *     }
- * }
- *
- * @param arr Array containing homework objects
- */
+// Generate JSON payload from array of homework object
 const generateHomework = arr => ({
     "type": "flex",
     "altText": "homework",
     "contents": {
         "type": "carousel",
         "contents": generateBubbles(arr),
-    },
+    }
 });
+
+// Generate subject-specific JSON payload of assignment list given array of homework object and subject name
+const generateAssignments = (arr, title) => {
+    // Obtain object of assignment objects
+    const assignments = JSON.parse(JSON.stringify(arr.filter(obj => obj["title"] === title)))["assignments"]
+    // Construct a new array of objects from assignments for sorting
+    const mapped = Object.keys(assignments).map(task => ({
+        'task': task,
+        'link': assignments["task"]["link"],
+        'deadline': assignments["task"]["deadline"]
+    }))
+    // Obtain array of mapped objects and sort the assignments by their deadline
+    const sorted = sortByParam(mapped, 'deadline')
+    // Format the array into a readable string
+    const str = sorted
+        .map(task => `- ${task["task"]}: ${task["link"]} (due ${getDeadlineFromDate(task["deadline"])})`)
+        .join("\n")
+    // Return the text message payload
+    return ({
+        "type": "text",
+        "text": `${title}\n${str}`
+    })
+}
+
+// Formats a string for a message listing assignments
+const getAssignmentString = arr => {
+    const str = ""
+}
 
 // Function to sort array of objects by parameter
 const sortByParam = (arr, param) => {
@@ -81,16 +97,18 @@ const getSubjectAssignmentsSorted = arr => (
 
 // Generates array of Line Flex Bubble message JSON
 const generateBubbles = arr => {
-
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     return subjects.map(subject => {
         let bubbleClone = clone(bubble)
+        // Set subject title
         bubbleClone["header"]["contents"][0]["text"] = subject['title']
+        // Set subject deadline
         bubbleClone["hero"]["contents"][0]["text"] = "📅 Deadline" +
             getDeadlineFromDate(new Date(subject['latest']))
         bubbleClone["hero"]["contents"][0]["contents"][0]["text"] = "📅 Deadline: "
         bubbleClone["hero"]["contents"][0]["contents"][1]["text"] =
             getDeadlineFromDate(new Date(subject['latest']))
+        // Set postback
         bubbleClone["footer"]["contents"][0]["action"]["data"] = `homework/${subject['title']}`
         return bubbleClone
     })
@@ -135,6 +153,7 @@ const removeFile = path => fs.unlink(path, e => e ? console.error(e) : null)
 module.exports = {
     generateHomework,
     generateSubjectList,
+    generateAssignments,
     getLocalFromUTC,
     downloadFileFromURL,
     removeFile
