@@ -9,7 +9,7 @@ const crypto = require('crypto')
 const app = express()
 
 // Import the appropriate class
-const { generateHomework, generateAssignment, generateSubjectList } = require('./controller/functions')
+const { generateHomework, generateAssignments, generateSubjectList } = require('./controller/functions')
 const { detectIntent, clearContext } = require('./controller/dialogflow')
 
 // Import database functions
@@ -236,7 +236,7 @@ app.post('/webhook', async (req, res) => {
           break
         case 'homework/Physics':
           //Generate assignment JSON from function by passing subject
-          const assignmentJSON = generateAssignment('Physics')
+          const assignmentJSON = generateAssignments('Physics')
           postbacklog.type = 'button'
           postbacklog.data.label = postback.data
           await client.replyMessage(event.replyToken, assignmentJSON)
