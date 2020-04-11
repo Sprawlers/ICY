@@ -190,7 +190,10 @@ app.post('/webhook', async (req, res) => {
     case 'postback':
       const postback = event.postback
       console.log(postback)
-      const postbacklog = {}
+      const postbacklog = {
+        type: null,
+        data: {},
+      }
       switch (postback.data) {
         case 'deadline':
           const date = {
@@ -204,23 +207,31 @@ app.post('/webhook', async (req, res) => {
           const intent = query.intent.displayName
           console.log(`Intent ${intent}`)
           replyMsg.text = query.fulfillmentText
+          postbacklog.type = 'message'
+          postbacklog.data.bot = replyMsg.text
           await client.replyMessage(event.replyToken, [date, replyMsg])
           break
         case 'richmenu/homework':
           const homeworkObjectArr = await getAllHomework()
           const payloadJSON = generateHomework(homeworkObjectArr)
+          postbacklog.type = 'richmenu'
+          postbacklog.data.label = 'Homework'
           await client.replyMessage(event.replyToken, payloadJSON)
           break
         case 'richmenu/notes':
           replyMsg.text = 'Notes function is not available yet.'
+          postbacklog.type = 'richmenu'
+          postbacklog.data.label = 'Notes'
           await client.replyMessage(event.replyToken, replyMsg)
           break
         case 'richmenu/ask':
           replyMsg.text = 'Ask function is not available yet.'
+          postbacklog.type = 'richmenu'
+          postbacklog.data.label = 'Ask'
           await client.replyMessage(event.replyToken, replyMsg)
           break
       }
-      const result = await addLog(userID, userObject.profileName, postback.data, postbacklog)
+      const result = await addLog(userID, userObject.profileName, postbacklog.type, postbacklog.data)
       console.log(result)
       break
     case 'unfollow':
