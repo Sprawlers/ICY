@@ -53,14 +53,15 @@ app.post('/webhook', async (req, res) => {
 
   // Obtain user information and message information
   const userID = event.source.userId
+  const profile = {}
   if (event.type !== 'unfollow') {
-    const profile = await client.getProfile(event.source.userId)
+    profile = await client.getProfile(event.source.userId)
     // Log information
     console.log(`User: ${profile.displayName}`)
   }
 
   // Checks if the user exists. If not, adds a new user to the collection
-  const userObject = (await getUserByID(userID)) || (await addUser(userID, await profile.displayName))
+  const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
   console.log(userObject)
 
   // Set message log object
