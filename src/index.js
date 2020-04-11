@@ -160,7 +160,7 @@ app.post('/webhook', async (req, res) => {
                   action: {
                     type: 'datetimepicker',
                     label: 'Select date',
-                    data: 'deadline',
+                    data: 'deadline/',
                     mode: 'datetime',
                   },
                 },
@@ -206,26 +206,22 @@ app.post('/webhook', async (req, res) => {
           replyMsg.text = query.fulfillmentText
           await client.replyMessage(event.replyToken, [date, replyMsg])
           break
-        case 'richmenu':
-          const label = postback.label
-          postbacklog.label = label
-          switch (label) {
-            case 'Homework':
-              const homeworkObjectArr = await getAllHomework()
-              const payloadJSON = generateHomework(homeworkObjectArr)
-              await client.replyMessage(event.replyToken, payloadJSON)
-              break
-            case 'Notes':
-              replyMsg.text = label + 'function is not available yet.'
-              await client.replyMessage(event.replyToken, replyMsg)
-              break
-            case 'Ask':
-              replyMsg.text = label + 'function is not available yet.'
-              await client.replyMessage(event.replyToken, replyMsg)
-              break
-          }
-          await addLog(userID, userObject.profileName, postback.data, postbacklog)
+        case 'richmenu/homework':
+          const homeworkObjectArr = await getAllHomework()
+          const payloadJSON = generateHomework(homeworkObjectArr)
+          await client.replyMessage(event.replyToken, payloadJSON)
+          break
+        case 'richmenu/notes':
+          replyMsg.text = label + 'function is not available yet.'
+          await client.replyMessage(event.replyToken, replyMsg)
+          break
+        case 'richmenu/ask':
+          replyMsg.text = label + 'function is not available yet.'
+          await client.replyMessage(event.replyToken, replyMsg)
+          break
       }
+      const result = await addLog(userID, userObject.profileName, postback.data, postbacklog)
+      console.log(result)
       break
     case 'unfollow':
       await addFeedback(userID, userObject.profileName, event.type, null)
