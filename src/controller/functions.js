@@ -27,7 +27,9 @@ const generateAssignments = (arr, title) => {
   // Obtain array of mapped objects and sort the assignments by their deadline
   const sorted = sortByParam(mapped, 'deadline')
   // Format the array into a readable string
-  const str = sorted.map((task) => `- ${task['task']}: ${task['link']} (due ${getDeadlineFromDate(new Date(task['deadline']))})`).join('\n')
+  const str = sorted
+      .map((task) => `- ${task['task']}: ${task['link']} (due ${getDeadlineFromDate(new Date(task['deadline']))})`)
+      .join('\n')
   // Return the text message payload
   return {
     type: 'text',
@@ -116,6 +118,7 @@ const downloadFileFromURL = async (URL, outputFileName) => {
   fs.writeFile(outputFileName, buffer, (e) => (e ? console.error(e) : null))
 }
 
+// Shorten a URL using bit.ly
 const shortenURL = async (URL) => {
   const response = await request.post({
     uri: 'https://api-ssl.bitly.com/v4/shorten',
@@ -125,6 +128,7 @@ const shortenURL = async (URL) => {
   return response.link
 }
 
+// Get the number of clicks from a shortened links
 const getClicksFromURL = async (URL) => {
   URL = URL.replace(/(^\w+:|^)\/\//, '')
   const response = await request.post({
