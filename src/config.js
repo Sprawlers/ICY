@@ -1,9 +1,10 @@
-const dotenv = require('dotenv')
-
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
-const envFound = dotenv.config({ path: '../.env' })
-if (!envFound) console.log("⚠️  Couldn't find .env file")
+if (process.env.NODE_ENV === "development") {
+    const dotenv = require('dotenv')
+    const envFound = dotenv.config({ path: '../.env' })
+    if (!envFound) throw new Error("⚠️  Couldn't find .env file")
+}
 
 module.exports = {
   webhookid: process.env.WEBHOOK_ID,
