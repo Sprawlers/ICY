@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
   res.status(200).send('OK')
 })
 
+//For health check from server
 app.get('/health', (req, res) => {
   res.status(200).send('OK')
 })
@@ -38,7 +39,7 @@ app.post('/webhook', async (req, res) => {
   // Set a new client
   const client = new line.Client(lineConfig)
 
-  // Generate signature for comparing with line headers
+  // Generate signature for comparing with line headers.
   const text = JSON.stringify(req.body)
   const signature = crypto.createHmac('SHA256', lineConfig.channelSecret).update(text).digest('base64').toString()
   if (signature !== req.headers['x-line-signature']) {
@@ -52,18 +53,17 @@ app.post('/webhook', async (req, res) => {
   const userID = event.source.userId
   let profile = {}
 
+  //If it is unfollow event, we cannot getProfile from user.
   if (event.type !== 'unfollow') {
     profile = await client.getProfile(event.source.userId)
-    // Log information
-    console.log(`User: ${profile.displayName}`)
   }
 
   // Checks if the user exists. If not, adds a new user to the collection
   const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
   console.log(userObject)
 
-  handleEvent(event, userObject, client)
-  res.status(200).end()
+  //handleEvent for everything
+  await handleEvent(event, userObject, client)
 })
 
 app.listen(config.port, () => {

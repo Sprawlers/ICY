@@ -9,12 +9,15 @@ let dialogflowConfig = {
     client_email: config.client_email,
   },
 }
+
+//Initialize sessionClient and contextClient from above credentials
 const sessionClient = new dialogflow.SessionsClient(dialogflowConfig)
 
 const contextClient = new dialogflow.ContextsClient(dialogflowConfig)
 
 const detectIntent = async (userID, message, languageCode) => {
   const sessionPath = sessionClient.sessionPath(projectId, userID)
+  //request JSON for detectIntent
   const request = {
     session: sessionPath,
     queryInput: {
@@ -28,6 +31,7 @@ const detectIntent = async (userID, message, languageCode) => {
   return responses[0]
 }
 
+//deleteAllContexts from dialogflow session
 const clearContext = async (userID) => {
   const sessionPath = contextClient.sessionPath(projectId, userID)
   return await contextClient.deleteAllContexts({ parent: sessionPath }).catch((err) => {
@@ -35,6 +39,7 @@ const clearContext = async (userID) => {
   })
 }
 
+//Unused function, but use dialogflow API from webhook
 const postToDialogflow = (req) => {
   const body = JSON.stringify({
     destination: req.body.destination,
