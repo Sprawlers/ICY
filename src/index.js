@@ -225,7 +225,7 @@ app.post('/webhook', async (req, res) => {
               await client.replyMessage(event.replyToken, payloadJSON)
               break
             default:
-              replyMsg.text = data[1] + 'function is not available yet.'
+              replyMsg.text = data[1].toUpperCase() + ' function is not available yet.'
               await client.replyMessage(event.replyToken, replyMsg)
           }
           postbacklog.type = 'richmenu'
@@ -235,7 +235,7 @@ app.post('/webhook', async (req, res) => {
           //Generate assignment JSON from function by passing homework array and subject title
           const assignmentJSON = generateAssignments(await getAllHomework(), data[1])
           postbacklog.type = 'button'
-          postbacklog.data.label = data[1] + 'solution button'
+          postbacklog.data.label = data[1] + ' Solution'
           await client.replyMessage(event.replyToken, assignmentJSON)
           break
       }
