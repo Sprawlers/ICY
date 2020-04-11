@@ -1,0 +1,85 @@
+{
+  "type": "bubble",
+  "direction": "ltr",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "",
+        "weight": "bold",
+        "size": "xxl",
+        "align": "center",
+        "gravity": "center",
+        "color": "#000000",
+        "wrap": true
+      }
+    ],
+    "backgroundColor": "#FFFFFF",
+    "cornerRadius": "0px"
+  },
+  "hero": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "",
+        "size": "lg",
+        "align": "center",
+        "gravity": "center",
+        "contents": [
+          {
+            "type": "span",
+            "text": ""
+          },
+          {
+            "type": "span",
+            "text": "",
+            "weight": "regular"
+          }
+        ]
+      }
+    ]
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "separator"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "button",
+        "action": {
+          "type": "postback",
+          "label": "View Solution",
+          "data": ""
+        },
+        "gravity": "center",
+        "style": "secondary"
+      }
+    ],
+    "backgroundColor": "#FFFFFF"
+  },
+  "size": "kilo",
+  "styles": {
+    "header": {
+      "backgroundColor": "#ffaaaa",
+      "separator": false
+    },
+    "body": {
+      "backgroundColor": "#ffffff"
+    },
+    "footer": {
+      "backgroundColor": "#aaaaff"
+    }
+  }
+}

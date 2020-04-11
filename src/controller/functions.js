@@ -2,6 +2,7 @@ const moment = require('moment-timezone')
 const fs = require('fs')
 const request = require('request-promise')
 const config = ('../config.js')
+const bubble = require('../json/bubble.json')
 
 /**
  * a function that constructs a carousel message for homework
@@ -44,107 +45,31 @@ const getDeadlineFromDate = dateTimeObject => {
 }
 
 // Generates array of Line Flex Bubble message JSON
-const generateBubbles = arr =>
-    arr.map(subject => {
-        return ({
-            "type": "bubble",
-            "direction": "ltr",
-            "header": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                    {
-                        "type": "text",
-                        "text": subject['title'],
-                        "weight": "bold",
-                        "size": "xxl",
-                        "align": "center",
-                        "gravity": "center",
-                        "color": "#000000",
-                        "wrap": true,
-                    },
-                ],
-                "backgroundColor": "#FFFFFF", //
-                "cornerRadius": "0px"
-            },
-            "hero": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                    {
-                        "type": "text",
-                        "text": "📅 Deadline" +
-                            getDeadlineFromDate(
-                                new Date(
-                                    sortByParam(
-                                        Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline'
-                                    )[0]["deadline"]
-                                )
-                            ),
-                        "size": "lg",
-                        "align": "center",
-                        "gravity": "center",
-                        "contents": [
-                            {
-                                "type": "span",
-                                "text": "📅 Deadline: ",
-                            },
-                            {
-                                "type": "span",
-                                "text": getDeadlineFromDate(
-                                    new Date(
-                                        sortByParam(
-                                            Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline'
-                                        )[0]["deadline"]
-                                    )
-                                ),
-                                "weight": "regular",
-                            },
-                        ],
-                    },
-                ],
-            },
-            "body": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                    {
-                        "type": "separator",
-                    },
-                ],
-            },
-            "footer": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                    {
-                        "type": "button",
-                        "action": {
-                            "type": "postback",
-                            "label": "View Solution",
-                            "data": `homework/${subject['title']}`
-                        },
-                        "gravity": "center",
-                        "style": "secondary",
-                    },
-                ],
-                "backgroundColor": "#FFFFFF",
-            },
-            "size": "kilo",
-            "styles": {
-                "header": {
-                    "backgroundColor": "#ffaaaa",
-                    "separator": false,
-                },
-                "body": {
-                    "backgroundColor": "#ffffff",
-                },
-                "footer": {
-                    "backgroundColor": "#aaaaff",
-                },
-            },
-        })
-    });
+const generateBubbles = arr => {
+
+    return arr.map(subject => {
+        let bubbleClone = {...bubble}
+        bubbleClone["header"]["contents"][0]["text"] = subject['title']
+        bubbleClone["hero"]["contents"][0]["text"] = "📅 Deadline" +
+            getDeadlineFromDate(
+                new Date(
+                    sortByParam(
+                        Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline'
+                    )[0]["deadline"]
+                )
+            )
+        bubbleClone["hero"]["contents"][0]["contents"][0]["text"] = "📅 Deadline: "
+        bubbleClone["hero"]["contents"][0]["contents"][1]["text"] = getDeadlineFromDate(
+            new Date(
+                sortByParam(
+                    Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline'
+                )[0]["deadline"]
+            )
+        )
+        bubbleClone["footer"]["contents"][0]["action"]["data"] = `homework/${subject['title']}`
+        return bubbleClone
+    })
+}
 
 // Generate a message containing a list of subjects
 const generateSubjectList = courses => ({
