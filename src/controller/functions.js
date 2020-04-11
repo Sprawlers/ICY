@@ -44,11 +44,31 @@ const getDeadlineFromDate = dateTimeObject => {
     return `${monthNames[dateTimeObject.getMonth()]} ${dateTimeObject.getDate()}`
 }
 
+// Deep Clone Function
+function clone(obj) {
+    if (obj === null || typeof (obj) !== 'object' || 'isActiveClone' in obj)
+        return obj;
+
+    if (obj instanceof Date)
+        var temp = new obj.constructor(); //or new Date(obj);
+    else
+        var temp = obj.constructor();
+
+    for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            obj['isActiveClone'] = null;
+            temp[key] = clone(obj[key]);
+            delete obj['isActiveClone'];
+        }
+    }
+    return temp;
+}
+
 // Generates array of Line Flex Bubble message JSON
 const generateBubbles = arr => {
 
     const mapped = arr.map(subject => {
-        let bubbleClone = {...bubble}
+        let bubbleClone = clone(bubble)
         bubbleClone["header"]["contents"][0]["text"] = subject['title']
         bubbleClone["hero"]["contents"][0]["text"] = "📅 Deadline" +
             getDeadlineFromDate(
@@ -70,7 +90,6 @@ const generateBubbles = arr => {
         console.log(subject + " NEW CLONE " + bubbleClone)
         return bubbleClone
     })
-    console.log(mapped)
     return mapped
 }
 
