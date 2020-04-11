@@ -149,9 +149,10 @@ app.post('/webhook', async (req, res) => {
           await client.replyMessage(replyToken, [replyMsg, subjectList])
           break
         case 'Subject':
+          replyMsg.text = query.fulfillmentText
           const datetime = {
             type: 'text',
-            text: query.fulfillmentText,
+            text: replyMsg.text,
             quickReply: {
               items: [
                 {
@@ -194,7 +195,6 @@ app.post('/webhook', async (req, res) => {
       }
       if (postback.data === 'deadline') {
         date.text = postback.params.datetime
-        replyMsg.text = date
         const intentResponse = await detectIntent(userID, date.text, 'en-US')
         console.log(intentResponse)
         const query = intentResponse.queryResult
