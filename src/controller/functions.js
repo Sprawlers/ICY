@@ -45,7 +45,7 @@ const getDeadlineFromDate = dateTimeObject => {
 }
 
 // Deep Clone Function
-function clone(obj) {
+const clone = (obj) => {
     if (obj === null || typeof (obj) !== 'object' || 'isActiveClone' in obj)
         return obj;
 
@@ -64,33 +64,41 @@ function clone(obj) {
     return temp;
 }
 
+// Converts object of objects into an array of objects
+const toArray = (obj_obj) => Object.keys(obj_obj).map(i => obj_obj[i]);
+
+// Returns array of subjects with assignments sorted by deadline
+const getSubjectAssignmentsSorted = arr => (
+    arr.map(subject => {
+        const assignments = toArray(JSON.parse(JSON.stringify(subject))["assignments"])
+        const sorted = sortByParam(assignments, 'deadline')
+        return {
+            'title': subject['title'],
+            'latest': sorted[0]['deadline']
+        }
+    })
+)
+
+// Returns array of subjects sorted by their latest assignment deadlines
+const getLatestDeadlineSorted = arr => {
+
+}
+
 // Generates array of Line Flex Bubble message JSON
 const generateBubbles = arr => {
 
-    const mapped = arr.map(subject => {
+    const subjects = getSubjectAssignmentsSorted(arr)
+    return subjects.map(subject => {
         let bubbleClone = clone(bubble)
         bubbleClone["header"]["contents"][0]["text"] = subject['title']
         bubbleClone["hero"]["contents"][0]["text"] = "📅 Deadline" +
-            getDeadlineFromDate(
-                new Date(
-                    sortByParam(
-                        Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline'
-                    )[0]["deadline"]
-                )
-            )
+            getDeadlineFromDate(new Date(subject['latest']))
         bubbleClone["hero"]["contents"][0]["contents"][0]["text"] = "📅 Deadline: "
-        bubbleClone["hero"]["contents"][0]["contents"][1]["text"] = getDeadlineFromDate(
-            new Date(
-                sortByParam(
-                    Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline'
-                )[0]["deadline"]
-            )
-        )
+        bubbleClone["hero"]["contents"][0]["contents"][1]["text"] =
+            getDeadlineFromDate(new Date(subject['latest']))
         bubbleClone["footer"]["contents"][0]["action"]["data"] = `homework/${subject['title']}`
-        console.log(subject + " NEW CLONE " + bubbleClone)
         return bubbleClone
     })
-    return mapped
 }
 
 // Generate a message containing a list of subjects
