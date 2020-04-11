@@ -53,7 +53,7 @@ app.post('/webhook', async (req, res) => {
 
   // Obtain user information and message information
   const userID = event.source.userId
-  const profile = {}
+  let profile = {}
   if (event.type !== 'unfollow') {
     profile = await client.getProfile(event.source.userId)
     // Log information
