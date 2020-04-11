@@ -79,15 +79,10 @@ const getSubjectAssignmentsSorted = arr => (
     })
 )
 
-// Returns array of subjects sorted by their latest assignment deadlines
-const getLatestDeadlineSorted = arr => {
-
-}
-
 // Generates array of Line Flex Bubble message JSON
 const generateBubbles = arr => {
 
-    const subjects = getSubjectAssignmentsSorted(arr)
+    const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     return subjects.map(subject => {
         let bubbleClone = clone(bubble)
         bubbleClone["header"]["contents"][0]["text"] = subject['title']
