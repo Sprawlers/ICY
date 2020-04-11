@@ -189,20 +189,43 @@ app.post('/webhook', async (req, res) => {
       break
     case 'postback':
       const postback = event.postback
-      const date = {
-        type: 'text',
-        text: null,
+      console.log(postback)
+      const postbacklog = {}
+      switch (postback.data) {
+        case 'deadline':
+          const date = {
+            type: 'text',
+            text: null,
+          }
+          date.text = postback.params.datetime
+          const intentResponse = await detectIntent(userID, date.text, 'en-US')
+          console.log(intentResponse)
+          const query = intentResponse.queryResult
+          const intent = query.intent.displayName
+          console.log(`Intent ${intent}`)
+          replyMsg.text = query.fulfillmentText
+          await client.replyMessage(event.replyToken, [date, replyMsg])
+          break
+        case 'richmenu':
+          const label = postback.label
+          postbacklog.label = label
+          switch (label) {
+            case 'Homework':
+              const homeworkObjectArr = await getAllHomework()
+              const payloadJSON = generateHomework(homeworkObjectArr)
+              await client.replyMessage(event.replyToken, payloadJSON)
+              break
+            case 'Notes':
+              replyMsg.text = label + 'function is not available yet.'
+              await client.replyMessage(event.replyToken, replyMsg)
+              break
+            case 'Ask':
+              replyMsg.text = label + 'function is not available yet.'
+              await client.replyMessage(event.replyToken, replyMsg)
+              break
+          }
+          await addLog(userID, userObject.profileName, postback.data, postbacklog)
       }
-      if (postback.data === 'deadline') {
-        date.text = postback.params.datetime
-        const intentResponse = await detectIntent(userID, date.text, 'en-US')
-        console.log(intentResponse)
-        const query = intentResponse.queryResult
-        const intent = query.intent.displayName
-        console.log(`Intent ${intent}`)
-        replyMsg.text = query.fulfillmentText
-      }
-      await client.replyMessage(event.replyToken, [date, replyMsg])
       break
     case 'unfollow':
       await addFeedback(userID, userObject.profileName, event.type, null)
