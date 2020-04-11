@@ -27,9 +27,7 @@ const generateAssignments = (arr, title) => {
   // Obtain array of mapped objects and sort the assignments by their deadline
   const sorted = sortByParam(mapped, 'deadline')
   // Format the array into a readable string
-  const str = sorted
-      .map((task) => `- ${task['task']}: ${task['link']} (due ${getDeadlineFromDate(new Date(task['deadline']))})`)
-      .join('\n')
+  const str = sorted.map((task) => `- ${task['task']}: ${task['link']} (due ${getDeadlineFromDate(new Date(task['deadline']))})`).join('\n')
   // Return the text message payload
   return {
     type: 'text',
@@ -98,7 +96,7 @@ const generateBubbles = (arr) => {
     bubbleClone['hero']['contents'][0]['contents'][0]['text'] = '📅 Deadline: '
     bubbleClone['hero']['contents'][0]['contents'][1]['text'] = getDeadlineFromDate(new Date(subject['latest']))
     // Set post-back
-    bubbleClone['footer']['contents'][0]['action']['data'] = `homework/${subject['title']}`
+    bubbleClone['footer']['contents'][0]['action']['data'] = `solution/${subject['title']}`
     return bubbleClone
   })
 }
