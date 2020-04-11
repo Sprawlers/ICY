@@ -10,7 +10,6 @@ module.exports = {
   private_key: process.env.GOOGLE_PRIVATE_KEY,
   bitly_token: process.env.BITLY_TOKEN,
   webhookid: process.env.WEBHOOK_ID,
-  filename: process.env.FILE_NAME,
   db_host: process.env.DB_HOST,
   port: process.env.PORT,
   projectId: process.env.PROJECT_ID,
