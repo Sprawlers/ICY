@@ -46,9 +46,9 @@ function addFeedback(userID, profileName, type, text) {
 
 // Adds a new homework assignment given parameters
 async function addHomework(subject, deadline, filename, link) {
-  const assignments = {}
-  assignments[filename] = { deadline, link }
-  const objCopy = await Homework.findOneAndUpdate({ title: subject }, { $set: assignments }, { upsert: true })
+  const hw = {}
+  hw['assignments.' + filename] = { deadline, link }
+  const objCopy = await Homework.findOneAndUpdate({ title: subject }, { $set: hw }, { upsert: true })
   return objCopy
 }
 
