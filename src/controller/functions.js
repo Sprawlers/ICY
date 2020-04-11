@@ -49,6 +49,7 @@ const generateBubbles = arr => {
 
     return arr.map(subject => {
         let bubbleClone = {...bubble}
+        console.log(subject)
         bubbleClone["header"]["contents"][0]["text"] = subject['title']
         bubbleClone["hero"]["contents"][0]["text"] = "📅 Deadline" +
             getDeadlineFromDate(
