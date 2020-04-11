@@ -39,11 +39,6 @@ const generateAssignments = (arr, title) => {
     })
 }
 
-// Formats a string for a message listing assignments
-const getAssignmentString = arr => {
-    const str = ""
-}
-
 // Function to sort array of objects by parameter
 const sortByParam = (arr, param) => {
     const arrCopy = [...arr]
@@ -67,10 +62,10 @@ const clone = (obj) => {
     if (obj === null || typeof (obj) !== 'object' || 'isActiveClone' in obj)
         return obj;
 
-    const temp = (obj instanceof Date)? new obj.constructor() : obj.constructor()
+    const temp = (obj instanceof Date) ? new obj.constructor() : obj.constructor()
 
-    obj.forEach(key => {
-        if(Object.prototype.hasOwnProperty.call(obj, key)) {
+    Object.keys(obj).forEach(key => {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
             obj['isActiveClone'] = null
             temp[key] = clone(obj[key])
             delete obj['isActiveClone']
@@ -108,7 +103,7 @@ const generateBubbles = arr => {
         bubbleClone["hero"]["contents"][0]["contents"][0]["text"] = "📅 Deadline: "
         bubbleClone["hero"]["contents"][0]["contents"][1]["text"] =
             getDeadlineFromDate(new Date(subject['latest']))
-        // Set postback
+        // Set post-back
         bubbleClone["footer"]["contents"][0]["action"]["data"] = `homework/${subject['title']}`
         return bubbleClone
     })
@@ -132,7 +127,7 @@ const downloadFileFromURL = async (URL, outputFileName) => {
 const shortenURL = async URL => {
     const response = await request.post({
         uri: 'https://api-ssl.bitly.com/v4/shorten',
-        headers: `Bearer ${config.bitly_token}`,
+        headers: `Bearer ${config["bitly_token"]}`,
         body: URL
     })
     return response.link
@@ -143,7 +138,7 @@ const getClicksFromURL = async URL => {
     const response = await request.post({
         uri: `https://api-ssl.bitly.com/v4/bitlinks/${URL}/clicks/summary`
     })
-    return response.total_clicks
+    return response["total_clicks"]
 }
 
 // Remove file from specified path
