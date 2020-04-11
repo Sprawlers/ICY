@@ -28,7 +28,9 @@ const generateAssignments = (arr, title) => {
     const sorted = sortByParam(mapped, 'deadline')
     // Format the array into a readable string
     const str = sorted
-        .map(task => `- ${task["task"]}: ${task["link"]} (due ${getDeadlineFromDate(task["deadline"])})`)
+        .map(task =>
+            `- ${task["task"]}: ${task["link"]} (due ${getDeadlineFromDate(new Date(task["deadline"]))})`
+        )
         .join("\n")
     // Return the text message payload
     return ({
