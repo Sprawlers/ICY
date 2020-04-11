@@ -9,7 +9,7 @@ const crypto = require('crypto')
 const app = express()
 
 // Import the appropriate class
-const { generateHomework, generateSubjectList } = require('./controller/functions')
+const { generateHomework, generateAssignment, generateSubjectList } = require('./controller/functions')
 const { detectIntent, clearContext } = require('./controller/dialogflow')
 
 // Import database functions
@@ -208,7 +208,7 @@ app.post('/webhook', async (req, res) => {
           console.log(`Intent ${intent}`)
           replyMsg.text = query.fulfillmentText
           postbacklog.type = 'message'
-          postbacklog.data.bot = replyMsg.text
+          postbacklog.data.bot = date.text
           await client.replyMessage(event.replyToken, [date, replyMsg])
           break
         case 'richmenu/homework':
@@ -229,6 +229,13 @@ app.post('/webhook', async (req, res) => {
           postbacklog.type = 'richmenu'
           postbacklog.data.label = 'Ask'
           await client.replyMessage(event.replyToken, replyMsg)
+          break
+        case 'homework/Physics':
+          //Generate assignment JSON from function by passing subject
+          const assignmentJSON = generateAssignment('Physics')
+          postbacklog.type = 'button'
+          postbacklog.data.label = postback.data
+          await client.replyMessage(event.replyToken, assignmentJSON)
           break
       }
       const result = await addLog(userID, userObject.profileName, postbacklog.type, postbacklog.data)
