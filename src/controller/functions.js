@@ -75,7 +75,11 @@ const generateBubbles = arr =>
                         "type": "text",
                         "text": "📅 Deadline" +
                             getDeadlineFromDate(
-                                sortByParam(Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline')[0]["deadline"]
+                                new Date(
+                                    sortByParam(
+                                        Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline'
+                                    )[0]["deadline"]
+                                )
                             ),
                         "size": "lg",
                         "align": "center",
@@ -88,7 +92,11 @@ const generateBubbles = arr =>
                             {
                                 "type": "span",
                                 "text": getDeadlineFromDate(
-                                    sortByParam(Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline')[0]["deadline"]
+                                    new Date(
+                                        sortByParam(
+                                            Object.values(JSON.parse(JSON.stringify(subject))["assignments"]), 'deadline'
+                                        )[0]["deadline"]
+                                    )
                                 ),
                                 "weight": "regular",
                             },
@@ -155,8 +163,8 @@ const downloadFileFromURL = async (URL, outputFileName) => {
 
 const shortenURL = URL => {
     const response = await request.post({
-        uri:'https://api-ssl.bitly.com/v4/shorten',
-        headers:`Bearer ${config.bitly_token}`,
+        uri: 'https://api-ssl.bitly.com/v4/shorten',
+        headers: `Bearer ${config.bitly_token}`,
         body: URL
     })
     return response.link
