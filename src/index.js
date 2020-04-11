@@ -60,7 +60,7 @@ app.post('/webhook', async (req, res) => {
   }
 
   // Checks if the user exists. If not, adds a new user to the collection
-  const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
+  const userObject = (await getUserByID(userID)) || (await addUser(userID, await profile.displayName))
   console.log(userObject)
 
   // Set message log object
