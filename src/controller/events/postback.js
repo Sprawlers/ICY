@@ -51,6 +51,7 @@ const handlePostback = async (event, client, userObject) => {
           postbacklog.data.area = data[1]
           break
       }
+      break
   }
   return postbacklog
 }
