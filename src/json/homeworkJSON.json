@@ -10,7 +10,7 @@
         "action": {
           "type": "postback",
           "label": "Header",
-          "data": "carousel/homework/header"
+          "data": "homework/header"
         },
         "text": "",
         "weight": "bold",
@@ -33,7 +33,7 @@
         "action": {
           "type": "postback",
           "label": "Hero",
-          "data": "carousel/homework/hero"
+          "data": "homework/hero"
         },
         "text": "",
         "size": "lg",

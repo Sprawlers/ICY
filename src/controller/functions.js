@@ -116,7 +116,7 @@ const generateBubbles = (arr) => {
         bubbleClone['hero']['contents'][0]['contents'][1]['text'] = displayedDeadline
 
         // Set post-back
-        bubbleClone['footer']['contents'][0]['action']['data'] = `solution/${subject['title']}`
+        bubbleClone['footer']['contents'][0]['action']['data'] = `homework/solution/${subject['title']}`
         return bubbleClone
     })
 }
