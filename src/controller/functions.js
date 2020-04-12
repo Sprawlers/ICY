@@ -28,7 +28,7 @@ const generateNotes = (arr) => {
 }*/
 
 // Generate subject-specific JSON payload of assignment list given array of homework object and subject name
-const generateAssignments = (arr, title) => {
+const generateAssignments = async (arr, title) => {
   // Obtain object of assignment objects
   const assignments = JSON.parse(JSON.stringify(...arr.filter((obj) => obj['title'] === title)))['assignments']
   // Construct a new array of objects from assignments for sorting
