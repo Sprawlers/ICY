@@ -41,7 +41,7 @@ const generateAssignments = async (arr, title) => {
   const sorted = sortByParam(mapped, 'deadline')
   // Format the array into a readable string
   const str = sorted
-    .map((task) => {
+    .map(async (task) => {
       // Checks if the homework is past due date
       const isOverdue = new Date(task['deadline']) - new Date(Date.now()) < 0
       // Store date/overdue status
