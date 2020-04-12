@@ -1,7 +1,7 @@
 const moment = require('moment-timezone')
 const fs = require('fs')
 const request = require('request-promise')
-const config = '../config.js'
+const config = '../config'
 const bubble = require('../json/homeworkJSON.json')
 
 // Generate JSON payload from array of homework object
@@ -156,7 +156,7 @@ const shortenURL = async (URL) => {
   const response = await request.post({
     uri: 'https://api-ssl.bitly.com/v4/shorten',
     headers: {
-      Authorization: 'Bearer xxx',
+      Authorization: `Bearer ${config.bitly_token}`,
     },
     body: {
       long_url: URL,
