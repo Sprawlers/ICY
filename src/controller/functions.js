@@ -19,7 +19,7 @@ const generateNotes = async (arr) => {
     const str = await arr.map(async course => {
         const notes = await course["notes"].map(async note => {
             console.log(await shortenURL(note["link"]))
-            return "- " + note["name"] + ": " + await shortenURL(note["link"])
+            return "- " + note["name"] + ": " + (note["link"])
         }).join("\n")
         console.log(notes)
         return `${course["title"]}\n${notes}`
