@@ -16,6 +16,7 @@ const generateHomework = (arr) => ({
 
 // Generate message payload (to be changed to JSON) from array of course notes
 const generateNotes = async (arr) => {
+  // DO NOT TOUCH THIS PART !!! WARNING !!! DANGER !!!
   let str = await Promise.map(arr, async (course) => {
     let notes = await Promise.map(course['notes'], async (note) => {
       const shortURL = await shortenURL(note['link'])
@@ -25,6 +26,7 @@ const generateNotes = async (arr) => {
     return `${course['title']}\n${notes}`
   })
   str = str.join('\n')
+  // OKAY NOW YOU CAN CONTINUE AFTER THIS LINE !!!
   // Return the text message payload
   return {
     type: 'text',
