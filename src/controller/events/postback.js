@@ -2,15 +2,15 @@ const { detectIntent } = require('../dialogflow')
 const { generateHomework, generateAssignments } = require('../functions')
 const { getAllHomework } = require('../../model/functions')
 
-//Initialize replyMsg and postbacklog
-const replyMsg = { type: 'text' }
-const postbacklog = { data: {} }
-
 const handlePostback = async (event, client, userObject) => {
+  //Initialize replyMsg and postbacklog
+  const replyMsg = { type: 'text' }
+  const postbacklog = { data: {} }
   const postback = event.postback
   const userID = userObject.userID
   //Split data from postback.data by '/' to make a decision
   const data = postback.data.split('/')
+  console.log(data)
   switch (data[0]) {
     case 'deadline':
       const date = { type: 'text' }
@@ -49,6 +49,7 @@ const handlePostback = async (event, client, userObject) => {
         default:
           postbacklog.type = 'empty'
           postbacklog.data.area = data[1]
+          postbacklog.data.label = data[2]
           break
       }
       break

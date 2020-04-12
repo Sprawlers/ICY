@@ -2,9 +2,8 @@ const moment = require('moment')
 const { getAllCourses, getAllHomework, getAdminID, addFeedback, addHomework } = require('../model/functions')
 const { generateHomework, generateSubjectList } = require('./functions')
 
-const replyMsg = { type: 'text' }
-
 const handleIntent = async (intentResponse, userObject, client, replyToken) => {
+  const replyMsg = { type: 'text' }
   //Initialize query from intentResponse
   const query = intentResponse.queryResult
   const intent = query.intent.displayName
