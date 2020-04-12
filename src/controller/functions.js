@@ -19,10 +19,10 @@ const generateNotes = (arr) => {
     const str = arr.map(async course => {
         const notes = course["notes"].map(async note => {
             return "- " + note["name"] + ": " + await shortenURL(note["link"])
-        }).join("\n").then(r => r)
+        }).join("\n").then(r => r).catch(e => console.error(e))
         console.log(notes)
         return `${course["title"]}\n${notes}`
-    }).join("\n").then(r => r)
+    }).join("\n").then(r => r).catch(e => console.error(e))
     console.log("STR LEVEL:\n" + str)
     // Return the text message payload
     return {
