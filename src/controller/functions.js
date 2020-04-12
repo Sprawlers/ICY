@@ -3,7 +3,6 @@ const fs = require('fs')
 const request = require('request-promise')
 const config = '../config.js'
 const bubble = require('../json/homeworkJSON.json')
-const tz = require('moment-timezone')
 
 // Generate JSON payload from array of homework object
 const generateHomework = (arr) => ({
@@ -15,6 +14,19 @@ const generateHomework = (arr) => ({
     },
 })
 
+/* WORK IN PROGRESS
+// Generate message payload (to be changed to JSON) from array of course notes
+const generateNotes = (arr) => {
+    const str = arr.map(subject => {
+
+    })
+    // Return the text message payload
+    return {
+        type: 'text',
+        text: `${title}\n${str}`,
+    }
+}*/
+
 // Generate subject-specific JSON payload of assignment list given array of homework object and subject name
 const generateAssignments = (arr, title) => {
     // Obtain object of assignment objects
@@ -22,7 +34,7 @@ const generateAssignments = (arr, title) => {
     // Construct a new array of objects from assignments for sorting
     const mapped = Object.keys(assignments).map((task) => ({
         task: task,
-        link: assignments[task]['link'],
+        link: shortenURL(assignments[task]['link']),
         deadline: assignments[task]['deadline'],
     }))
     // Obtain array of mapped objects and sort the assignments by their deadline
