@@ -103,8 +103,8 @@ const generateBubbles = (arr) => {
         // Set subject title
         bubbleClone['header']['contents'][0]['text'] = subject['title']
         // Set subject deadline
-        bubbleClone['hero']['contents'][0]['text'] = '📅 Deadline' + displayedDeadline
-        bubbleClone['hero']['contents'][0]['contents'][0]['text'] = '📅 Deadline: '
+        bubbleClone['hero']['contents'][0]['text'] = (subject['latest']? '📅 Deadline': "") + displayedDeadline
+        bubbleClone['hero']['contents'][0]['contents'][0]['text'] = (subject['latest']? '📅 Deadline ': "")
         bubbleClone['hero']['contents'][0]['contents'][1]['text'] = displayedDeadline
         // Set post-back
         bubbleClone['footer']['contents'][0]['action']['data'] = `solution/${subject['title']}`
