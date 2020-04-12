@@ -85,12 +85,10 @@ const getSubjectAssignmentsSorted = (arr) =>
     arr.map((subject) => {
         const assignments = toArray(JSON.parse(JSON.stringify(subject))['assignments'])
         const sorted = sortByParam(assignments, 'deadline')
-        const notOverdue = sorted
-            // Only filter assignments which are not overdue to use
             .filter(subject => new Date(subject['deadline']) - new Date(Date.now()) > 0)
         return {
             title: subject['title'],
-            latest: notOverdue[0]['deadline'] || sorted[0]['deadline'],
+            latest: sorted? sorted[0]['deadline']: false,
         }
     })
 
@@ -99,12 +97,13 @@ const generateBubbles = (arr) => {
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     return subjects.map((subject) => {
         let bubbleClone = clone(bubble)
+        const displayedDeadline = subject['latest']? getDeadlineFromDate(new Date(subject['latest'])): "No due"
         // Set subject title
         bubbleClone['header']['contents'][0]['text'] = subject['title']
         // Set subject deadline
-        bubbleClone['hero']['contents'][0]['text'] = '📅 Deadline' + getDeadlineFromDate(new Date(subject['latest']))
+        bubbleClone['hero']['contents'][0]['text'] = '📅 Deadline' + displayedDeadline
         bubbleClone['hero']['contents'][0]['contents'][0]['text'] = '📅 Deadline: '
-        bubbleClone['hero']['contents'][0]['contents'][1]['text'] = getDeadlineFromDate(new Date(subject['latest']))
+        bubbleClone['hero']['contents'][0]['contents'][1]['text'] = displayedDeadline
         // Set post-back
         bubbleClone['footer']['contents'][0]['action']['data'] = `solution/${subject['title']}`
         return bubbleClone
