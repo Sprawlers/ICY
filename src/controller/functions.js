@@ -27,7 +27,12 @@ const generateAssignments = (arr, title) => {
   // Obtain array of mapped objects and sort the assignments by their deadline
   const sorted = sortByParam(mapped, 'deadline')
   // Format the array into a readable string
-  const str = sorted.map((task) => `- ${task['task']}: ${task['link']} (due ${getDeadlineFromDate(new Date(task['deadline']))})`).join('\n')
+  const str = sorted.map((task) => {
+    // Checks if the homework is past due date
+    const isOverdue = new Date(task['deadline']) - new Date(Date.now()) < 0
+    return `- ${task['task']}: ${task['link']}`
+    + isOverdue?`(due ${getDeadlineFromDate(new Date(task['deadline']))})`:"✅"
+  }).join('\n')
   // Return the text message payload
   return {
     type: 'text',
