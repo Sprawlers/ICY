@@ -49,7 +49,7 @@ const generateAssignments = async (arr, title) => {
         ? '✅'
         : '(📅 ' + getDeadlineFromDate(new Date(task['deadline'])) + ' ' + getLocalTimeFromDate(new Date(task['deadline'])) + ')'
       // Returns message
-      return '-' + task['task'] + ': ' + task['link'] + ' ' + status
+      return '-' + task['task'] + ': ' + await task['link'] + ' ' + status
     })
     .join('\n')
   // Return the text message payload
