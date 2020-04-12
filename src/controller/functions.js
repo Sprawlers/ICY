@@ -88,7 +88,7 @@ const getSubjectAssignmentsSorted = (arr) =>
             .filter(subject => new Date(subject['deadline']) - new Date(Date.now()) > 0)
         return {
             title: subject['title'],
-            latest: sorted? sorted[0]['deadline']: false,
+            latest: sorted.length? sorted[0]['deadline']: false,
         }
     })
 
