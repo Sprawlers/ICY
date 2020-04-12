@@ -43,7 +43,7 @@ const handlePostback = async (event, client, userObject) => {
           //Generate assignment JSON from function by passing homework array and subject title
           const assignmentJSON = generateAssignments(await getAllHomework(), data[2])
           postbacklog.type = 'button'
-          postbacklog.data.label = data[1] + ' Solution'
+          postbacklog.data.label = data[2] + ' Solution'
           await client.replyMessage(event.replyToken, assignmentJSON)
           break
         default:
