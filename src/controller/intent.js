@@ -103,7 +103,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       break
     case 'Notes':
       //Get all courses from courses collection and generate notesList from courses
-      const notesList = generateNotes(await getAllCourses())
+      const notesList = await generateNotes(await getAllCourses())
       await client.replyMessage(replyToken, notesList)
       break
     default:
