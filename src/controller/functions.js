@@ -46,7 +46,9 @@ const generateAssignments = (arr, title) => {
 const sortByParam = (arr, param) => {
     const arrCopy = [...arr]
     arrCopy.sort((a, b) => {
+        if(!a[param]) return 1
         let dateA = new Date(a[param])
+        if(!b[param]) return -1
         let dateB = new Date(b[param])
         return dateA - dateB
     })
@@ -88,7 +90,7 @@ const getSubjectAssignmentsSorted = (arr) =>
             .filter(subject => new Date(subject['deadline']) - new Date(Date.now()) > 0)
         return {
             title: subject['title'],
-            latest: sorted.length? sorted[0]['deadline']: false,
+            latest: sorted.length? sorted[0]['deadline']: false
         }
     })
 
@@ -97,7 +99,7 @@ const generateBubbles = (arr) => {
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     return subjects.map((subject) => {
         let bubbleClone = clone(bubble)
-        const displayedDeadline = subject['latest']? getDeadlineFromDate(new Date(subject['latest'])): "No due"
+        const displayedDeadline = subject['latest']? getDeadlineFromDate(new Date(subject['latest'])): "None due"
         // Set subject title
         bubbleClone['header']['contents'][0]['text'] = subject['title']
         // Set subject deadline
