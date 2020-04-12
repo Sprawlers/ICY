@@ -85,8 +85,6 @@ const getSubjectAssignmentsSorted = (arr) =>
     arr.map((subject) => {
         const assignments = toArray(JSON.parse(JSON.stringify(subject))['assignments'])
         const sorted = sortByParam(assignments, 'deadline')
-        console.log("DEBUG")
-        console.log(sorted)
             // Only filter assignments which are not overdue to use
             .filter(subject => new Date(subject['deadline']) - new Date(Date.now()) > 0)
         return {
