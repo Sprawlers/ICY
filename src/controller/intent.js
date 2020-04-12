@@ -36,7 +36,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
     case 'Announce':
       //If user is not an admin, clear dialogflow context
       if (!userObject.isAdmin) {
-        replyMsg.text = 'Only admin can broadcast!'
+        replyMsg.text = "Sorry, I didn't get that!"
         await clearContext(userID)
         await client.replyMessage(replyToken, replyMsg)
         break
@@ -58,7 +58,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
     case 'Upload':
       //If user is not an admin, clear dialogflow context
       if (!userObject.isAdmin) {
-        replyMsg.text = 'Only admin can upload!'
+        replyMsg.text = "Sorry, I didn't get that!"
         await clearContext(userID)
         await client.replyMessage(replyToken, replyMsg)
         break
