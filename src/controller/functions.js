@@ -99,8 +99,8 @@ const generateBubbles = (arr) => {
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     return subjects.map((subject) => {
         let bubbleClone = clone(bubble)
-        const displayedDeadline = subject['latest']? getDeadlineFromDate(new Date(subject['latest'])): null
-        const deadlineText = displayedDeadline? '📅 Deadline ': "None due"
+        const displayedDeadline = subject['latest']? getDeadlineFromDate(new Date(subject['latest'])): ""
+        const deadlineText = displayedDeadline === ""? '📅 Deadline ': "None due"
         // Set subject title
         bubbleClone['header']['contents'][0]['text'] = subject['title']
         // Set subject deadline
