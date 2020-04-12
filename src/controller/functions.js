@@ -28,20 +28,20 @@ const generateNotes = (arr) => {
 }*/
 
 // Generate subject-specific JSON payload of assignment list given array of homework object and subject name
-const generateAssignments = async (arr, title) => {
+const generateAssignments = (arr, title) => {
   // Obtain object of assignment objects
   const assignments = JSON.parse(JSON.stringify(...arr.filter((obj) => obj['title'] === title)))['assignments']
   // Construct a new array of objects from assignments for sorting
-  const mapped = await Object.keys(assignments).map((task) => ({
+  const mapped = Object.keys(assignments).map((task) => ({
     task: task,
-    link: shortenURL(assignments[task]['link']),
+    link: shortenURL(assignments[task]['link']).then(r => r).catch(e => console.error(e)),
     deadline: assignments[task]['deadline'],
   }))
   // Obtain array of mapped objects and sort the assignments by their deadline
   const sorted = sortByParam(mapped, 'deadline')
   // Format the array into a readable string
   const str = sorted
-    .map(async (task) => {
+    .map((task) => {
       // Checks if the homework is past due date
       const isOverdue = new Date(task['deadline']) - new Date(Date.now()) < 0
       // Store date/overdue status
@@ -49,7 +49,7 @@ const generateAssignments = async (arr, title) => {
         ? '✅'
         : '(📅 ' + getDeadlineFromDate(new Date(task['deadline'])) + ' ' + getLocalTimeFromDate(new Date(task['deadline'])) + ')'
       // Returns message
-      return '-' + task['task'] + ': ' + await task['link'] + ' ' + status
+      return '-' + task['task'] + ': ' + task['link'] + ' ' + status
     })
     .join('\n')
   // Return the text message payload
