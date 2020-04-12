@@ -32,9 +32,9 @@ const generateAssignments = async (arr, title) => {
   // Obtain object of assignment objects
   const assignments = JSON.parse(JSON.stringify(...arr.filter((obj) => obj['title'] === title)))['assignments']
   // Construct a new array of objects from assignments for sorting
-  const mapped = await Object.keys(assignments).map(async (task) => ({
+  const mapped = await Object.keys(assignments).map((task) => ({
     task: task,
-    link: await shortenURL(assignments[task]['link']),
+    link: shortenURL(assignments[task]['link']),
     deadline: assignments[task]['deadline'],
   }))
   // Obtain array of mapped objects and sort the assignments by their deadline
