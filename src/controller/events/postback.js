@@ -37,13 +37,20 @@ const handlePostback = async (event, client, userObject) => {
       postbacklog.type = 'richmenu'
       postbacklog.data.label = data[1]
       break
-    case 'solution':
-      //Generate assignment JSON from function by passing homework array and subject title
-      const assignmentJSON = generateAssignments(await getAllHomework(), data[1])
-      postbacklog.type = 'button'
-      postbacklog.data.label = data[1] + ' Solution'
-      await client.replyMessage(event.replyToken, assignmentJSON)
-      break
+    case 'homework':
+      switch (data[1]) {
+        case 'solution':
+          //Generate assignment JSON from function by passing homework array and subject title
+          const assignmentJSON = generateAssignments(await getAllHomework(), data[2])
+          postbacklog.type = 'button'
+          postbacklog.data.label = data[1] + ' Solution'
+          await client.replyMessage(event.replyToken, assignmentJSON)
+          break
+        default:
+          postbacklog.type = 'empty'
+          postbacklog.data.area = data[1]
+          break
+      }
   }
   return postbacklog
 }
