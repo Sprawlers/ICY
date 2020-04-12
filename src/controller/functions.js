@@ -67,7 +67,7 @@ const getDeadlineFromDate = (dateTimeObject) => {
 }
 
 // Returns local time in HH:MM format from JS DateTime Object
-const getLocalTimeFromDate = (dateTimeObject) => moment(dateTimeObject).local().format('HH:mm');
+const getLocalTimeFromDate = (dateTimeObject) => moment(dateTimeObject).tz('Asia/Bangkok').format('HH:mm');
 
 // Deep Clone Function
 const clone = (obj) => {
