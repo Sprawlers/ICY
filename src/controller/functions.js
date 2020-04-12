@@ -34,7 +34,7 @@ const generateAssignments = (arr, title) => {
   // Construct a new array of objects from assignments for sorting
   const mapped = Object.keys(assignments).map((task) => ({
     task: task,
-    link: shortenURL(assignments[task]['link']).then(r => r).catch(e => console.error(e)),
+    link: shortenURL(assignments[task]['link']),
     deadline: assignments[task]['deadline'],
   }))
   // Obtain array of mapped objects and sort the assignments by their deadline
