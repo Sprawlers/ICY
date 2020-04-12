@@ -1,7 +1,7 @@
 const moment = require('moment-timezone')
 const fs = require('fs')
 const request = require('request-promise')
-const config = '../config'
+const config = require('../config')
 const bubble = require('../json/homeworkJSON.json')
 
 // Generate JSON payload from array of homework object
