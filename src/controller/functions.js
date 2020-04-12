@@ -29,6 +29,8 @@ const generateAssignments = (arr, title) => {
   // Format the array into a readable string
   const str = sorted.map((task) => {
     // Checks if the homework is past due date
+    console.log("DEBUG")
+    console.log(task)
     const isOverdue = new Date(task['deadline']) - new Date(Date.now()) < 0
     return `- ${task['task']}: ${task['link']} `
     + isOverdue?`(due ${getDeadlineFromDate(new Date(task['deadline']))})`:"✅"
