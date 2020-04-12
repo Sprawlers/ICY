@@ -10,7 +10,7 @@
         "action": {
           "type": "postback",
           "label": "Header",
-          "data": "homework/header"
+          "data": ""
         },
         "text": "",
         "weight": "bold",
@@ -33,7 +33,7 @@
         "action": {
           "type": "postback",
           "label": "Hero",
-          "data": "homework/hero"
+          "data": ""
         },
         "text": "",
         "size": "lg",
