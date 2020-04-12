@@ -15,10 +15,10 @@ const generateHomework = (arr) => ({
 })
 
 // Generate message payload (to be changed to JSON) from array of course notes
-const generateNotes = async (arr) => {
-    const str = await arr.map(async course => {
-        const notes = await course["notes"].map(async note => {
-            console.log(await shortenURL(note["link"]))
+const generateNotes = (arr) => {
+    const str = arr.map(course => {
+        const notes = course["notes"].map(note => {
+            console.log(shortenURL(note["link"]))
             return "- " + note["name"] + ": " + (note["link"])
         }).join("\n")
         console.log(notes)
