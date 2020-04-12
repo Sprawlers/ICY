@@ -34,7 +34,7 @@ const generateAssignments = async (arr, title) => {
   // Construct a new array of objects from assignments for sorting
   const mapped = await Promise.all(
     Object.keys(assignments).map(async (task) => ({
-      task: task,g
+      task: task,
       link: await shortenURL(assignments[task]['link']),
       deadline: assignments[task]['deadline'],
     }))
