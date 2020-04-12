@@ -87,6 +87,8 @@ const getSubjectAssignmentsSorted = (arr) =>
         const sorted = sortByParam(assignments, 'deadline')
         console.log("DEBUG")
         console.log(sorted)
+            // Only filter assignments which are not overdue to use
+            .filter(subject => new Date(subject['deadline']) - new Date(Date.now()) > 0)
         return {
             title: subject['title'],
             latest: sorted[0]['deadline'],
