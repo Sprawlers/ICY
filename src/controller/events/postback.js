@@ -26,7 +26,8 @@ const handlePostback = async (event, client, userObject) => {
     case 'richmenu':
       switch (data[1]) {
         case 'homework':
-          //Generate reply JSON from homework collection          const payloadJSON = generateHomework(await getAllHomework())
+          //Generate reply JSON from homework collection
+          const payloadJSON = generateHomework(await getAllHomework())
           await client.replyMessage(event.replyToken, payloadJSON)
           break
         default:
