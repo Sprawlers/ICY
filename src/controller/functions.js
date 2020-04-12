@@ -30,10 +30,11 @@ const generateAssignments = (arr, title) => {
   const str = sorted.map((task) => {
     // Checks if the homework is past due date
     console.log("DEBUG")
-    console.log(task)
     const isOverdue = new Date(task['deadline']) - new Date(Date.now()) < 0
-    return `- ${task['task']}: ${task['link']} `
-    + isOverdue?`(due ${getDeadlineFromDate(new Date(task['deadline']))})`:"✅"
+    console.log(`- ${task['task']}: ${task['link']} `)
+    console.log(isOverdue?`(due ${getDeadlineFromDate(new Date(task['deadline']))})`:"✅")
+    return (`- ${task['task']}: ${task['link']} `
+    + isOverdue?`(due ${getDeadlineFromDate(new Date(task['deadline']))})`:"✅")
   }).join('\n')
   // Return the text message payload
   return {
