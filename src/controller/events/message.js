@@ -1,11 +1,10 @@
 const { detectIntent, clearContext } = require('../dialogflow')
 const { handleIntent } = require('../intent')
 
-//Initialize replyMsg and messagelog object
-const replyMsg = { type: 'text' }
-const messagelog = {}
-
 const handleMessage = async (event, client, userObject) => {
+  //Initialize replyMsg and messagelog object
+  const replyMsg = { type: 'text' }
+  const messagelog = {}
   const userID = userObject.userID
   const replyToken = event.replyToken
   //check message type from user
