@@ -109,10 +109,12 @@ const generateBubbles = (arr) => {
         const displayedDeadline = subject['latest']? getDeadlineFromDate(new Date(subject['latest'])): "-"
         // Set subject title
         bubbleClone['header']['contents'][0]['text'] = subject['title']
+
         // Set subject deadline
         bubbleClone['hero']['contents'][0]['text'] = '📅 Deadline' + displayedDeadline
         bubbleClone['hero']['contents'][0]['contents'][0]['text'] = '📅 Deadline: '
         bubbleClone['hero']['contents'][0]['contents'][1]['text'] = displayedDeadline
+
         // Set post-back
         bubbleClone['footer']['contents'][0]['action']['data'] = `solution/${subject['title']}`
         return bubbleClone
