@@ -16,11 +16,11 @@ const generateHomework = (arr) => ({
 
 // Generate message payload (to be changed to JSON) from array of course notes
 const generateNotes = async (arr) => {
-    const str = await Promise.all(arr.map(async course => {
+    const str = await arr.map(async course => {
         const notes = await Promise
             .all(course["notes"].map(async note => "- " + note["name"] + ": " + await shortenURL(note["link"])).join("\n"))
         return `${course["title"]}\n${notes}`
-    }).join("\n"))
+    }).join("\n")
     // Return the text message payload
     return {
         type: 'text',
