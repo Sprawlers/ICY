@@ -41,7 +41,7 @@ const handlePostback = async (event, client, userObject) => {
       switch (data[1]) {
         case 'solution':
           //Generate assignment JSON from function by passing homework array and subject title
-          const assignmentJSON = generateAssignments(await getAllHomework(), data[2])
+          const assignmentJSON = await generateAssignments(await getAllHomework(), data[2])
           postbacklog.type = 'button'
           postbacklog.data.label = data[2] + ' Solution'
           await client.replyMessage(event.replyToken, assignmentJSON)
