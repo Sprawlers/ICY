@@ -18,7 +18,7 @@ const generateHomework = (arr) => ({
 const generateNotes = (arr) => {
     const str = arr.map(course => {
         const notes = course["notes"].map(note => {
-            console.log(shortenURL(note["link"]).then(r => r).catch(e => console.error(e)))
+            console.log(shortenURL(note["link"]).then(r => r).then(r => r).catch(e => console.error(e)))
             return "- " + note["name"] + ": " + (note["link"])
         }).join("\n")
         console.log(notes)
