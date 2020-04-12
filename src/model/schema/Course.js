@@ -5,15 +5,19 @@ const Schema = mongoose.Schema
  * Course Model
  *
  * title: name of the course
- * time:
- * links: object containing urls to different homework assignments
+ * code: course code
+ * examDates: object containing the dates of different exams
+ * notes: object containing the notes of the subject
  *
  */
 const courseSchema = new Schema(
-  {
-    title: String,
-  },
-  { versionKey: false }
+    {
+        title: String,
+        code: String,
+        examDates: Object,
+        notes: Object
+    },
+    {versionKey: false}
 )
 
 const courseModel = mongoose.model('courses', courseSchema, 'courses')

@@ -29,6 +29,11 @@ async function getAllCourses() {
   return await Course.find({})
 }
 
+// Gets a particular course
+function getCourse(courseName) {
+  return Course.findOne({ 'title': courseName })
+}
+
 // Adds a new user
 function addUser(userID, profileName) {
   return User.create({ userID, profileName, isAdmin: false })
@@ -45,11 +50,10 @@ function addFeedback(userID, profileName, type, text) {
 }
 
 // Adds a new homework assignment given parameters
-async function addHomework(subject, deadline, filename, link) {
+function addHomework(subject, deadline, filename, link) {
   const hw = {}
   hw['assignments.' + filename] = { deadline, link }
-  const objCopy = await Homework.findOneAndUpdate({ title: subject }, { $set: hw }, { upsert: true })
-  return objCopy
+  return Homework.findOneAndUpdate({ title: subject }, { $set: hw }, { upsert: true })
 }
 
 function addLog(userID, profileName, type, data) {
@@ -61,6 +65,7 @@ module.exports = {
   getUserByID,
   getAllUsers,
   getAllCourses,
+  getCourse,
   getAdminID,
   addHomework,
   addUser,
