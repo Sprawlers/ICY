@@ -3,6 +3,7 @@ const fs = require('fs')
 const request = require('request-promise')
 const config = '../config.js'
 const bubble = require('../json/homeworkJSON.json')
+const tz = require('moment-timezone')
 
 // Generate JSON payload from array of homework object
 const generateHomework = (arr) => ({
@@ -31,7 +32,10 @@ const generateAssignments = (arr, title) => {
         // Checks if the homework is past due date
         const isOverdue = new Date(task['deadline']) - new Date(Date.now()) < 0
         // Store date/overdue status
-        const status = isOverdue ? "✅" : "(due " + getDeadlineFromDate(new Date(task['deadline'])) + ")"
+        const status =
+            isOverdue ? "✅" :
+                "(📅 " + getDeadlineFromDate(new Date(task['deadline']))
+                + " " + getLocalTimeFromDate(new Date(task['deadline'])) + ")"
         // Returns message
         return ("-" + task['task'] + ": " + task['link'] + " " + status)
     }).join('\n')
@@ -56,11 +60,14 @@ const sortByParam = (arr, param) => {
 }
 // E.g sort by sortByParam(arr, 'deadline')
 
-// Returns deadline from JS DateTime Object
+// Returns deadline in {(Month) (Day)} format from JS DateTime Object
 const getDeadlineFromDate = (dateTimeObject) => {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     return `${monthNames[dateTimeObject.getMonth()]} ${dateTimeObject.getDate()}`
 }
+
+// Returns local time in HH:MM format from JS DateTime Object
+const getLocalTimeFromDate = (dateTimeObject) => moment(dateTimeObject).local().format('HH:mm');
 
 // Deep Clone Function
 const clone = (obj) => {
