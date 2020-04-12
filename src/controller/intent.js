@@ -1,6 +1,6 @@
 const moment = require('moment')
 const { getAllCourses, getAllHomework, getAdminID, addFeedback, addHomework } = require('../model/functions')
-const { generateHomework, generateSubjectList } = require('./functions')
+const { generateHomework, generateSubjectList, generateNotes } = require('./functions')
 
 const handleIntent = async (intentResponse, userObject, client, replyToken) => {
   const replyMsg = { type: 'text' }
@@ -63,10 +63,8 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
         break
       }
       replyMsg.text = query.fulfillmentText
-      //Get all courses from courses collection
-      const courses = await getAllCourses()
-      //Generate reply JSON from courses
-      const subjectList = generateSubjectList(courses)
+      //Get all courses from courses collection and generate reply JSON from courses
+      const subjectList = generateSubjectList(await getAllCourses())
       await client.replyMessage(replyToken, [replyMsg, subjectList])
       break
     case 'Subject':
@@ -102,6 +100,11 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       //Add homework to homework collection
       await addHomework(subject, deadline, filename, url)
       await client.replyMessage(replyToken, replyMsg)
+      break
+    case 'Notes':
+      //Get all courses from courses collection and generate notesList from courses
+      const notesList = generateNotes(await getAllCourses())
+      await client.replyMessage(replyToken, notesList)
       break
     default:
       //If no additional action required, just reply to user
