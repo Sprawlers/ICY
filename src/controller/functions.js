@@ -32,11 +32,13 @@ const generateAssignments = async (arr, title) => {
   // Obtain object of assignment objects
   const assignments = JSON.parse(JSON.stringify(...arr.filter((obj) => obj['title'] === title)))['assignments']
   // Construct a new array of objects from assignments for sorting
-  const mapped = await Object.keys(assignments).map((task) => ({
-    task: task,
-    link: shortenURL(assignments[task]['link']),
-    deadline: assignments[task]['deadline'],
-  }))
+  const mapped = await Promise.all(
+    Object.keys(assignments).map(async (task) => ({
+      task: task,
+      link: await shortenURL(assignments[task]['link']),
+      deadline: assignments[task]['deadline'],
+    }))
+  )
   // Obtain array of mapped objects and sort the assignments by their deadline
   const sorted = sortByParam(mapped, 'deadline')
   // Format the array into a readable string
@@ -49,7 +51,7 @@ const generateAssignments = async (arr, title) => {
         ? '✅'
         : '(📅 ' + getDeadlineFromDate(new Date(task['deadline'])) + ' ' + getLocalTimeFromDate(new Date(task['deadline'])) + ')'
       // Returns message
-      return '-' + task['task'] + ': ' + await task['link'] + ' ' + status
+      return '-' + task['task'] + ': ' + task['link'] + ' ' + status
     })
     .join('\n')
   // Return the text message payload
@@ -152,7 +154,6 @@ const downloadFileFromURL = async (URL, outputFileName) => {
 
 // Shorten a URL using bit.ly
 const shortenURL = async (URL) => {
-  console.log(URL)
   const response = await request.post({
     uri: 'https://api-ssl.bitly.com/v4/shorten',
     headers: {
@@ -163,8 +164,7 @@ const shortenURL = async (URL) => {
     },
     json: true,
   })
-  console.log(response.link)
-  return response.link
+  return response['link']
 }
 
 // Get the number of clicks from a shortened links
