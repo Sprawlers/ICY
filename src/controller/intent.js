@@ -20,7 +20,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       // Get array of AdminID
       const adminID = await getAdminID()
       replyMsg.text = query.fulfillmentText
-      const feedback = query.outputContexts[0].parameters.fields.details.stringValue
+      const feedback = query.parameters.fields.details.stringValue
       //add feedback to feedback collection
       await addFeedback(userID, userObject.profileName, 'message', feedback)
       //feedbackMsg to send to admin
@@ -45,7 +45,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       break
     case 'Broadcast - yes':
       replyMsg.text = query.fulfillmentText
-      const broadcast = query.outputContexts[0].parameters.fields.message.stringValue
+      const broadcast = query.parameters.fields.message.stringValue
       const broadcastMsg = {
         type: 'text',
         text: broadcast,
@@ -90,7 +90,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       await client.replyMessage(replyToken, datetime)
       break
     case 'Url - yes':
-      const params = query.outputContexts[0].parameters.fields
+      const params = query.parameters.fields
       const subject = params.subject.stringValue
       //Convert deadline to UTC
       const deadline = new Date(moment(new Date(params.deadline.stringValue)).subtract(7, 'hours'))
