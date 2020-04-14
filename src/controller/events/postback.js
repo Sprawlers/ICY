@@ -1,6 +1,6 @@
-const { detectIntent } = require('../dialogflow')
-const { generateHomework, generateAssignments } = require('../functions')
-const { getAllHomework } = require('../../model/functions')
+const { detectIntent, clearContext } = require('../dialogflow')
+const { generateHomework, generateAssignments, generateNotes } = require('../functions')
+const { getAllHomework, getAllCourses } = require('../../model/functions')
 
 const handlePostback = async (event, client, userObject) => {
   //Initialize replyMsg and postbacklog
@@ -26,6 +26,7 @@ const handlePostback = async (event, client, userObject) => {
       await client.replyMessage(event.replyToken, [date, replyMsg])
       break
     case 'richmenu':
+      await clearContext(userID)
       switch (data[1]) {
         case 'homework':
           //Generate reply JSON from homework collection
@@ -33,10 +34,8 @@ const handlePostback = async (event, client, userObject) => {
           await client.replyMessage(event.replyToken, payloadJSON)
           break
         case 'notes':
-          intentResponse = await detectIntent(userID, data[1], 'en-US')
-          query = intentResponse.queryResult
-          replyMsg.text = query.fulfillmentText
-          await client.replyMessage(event.replyToken, replyMsg)
+          const notesList = await generateNotes(await getAllCourses())
+          await client.replyMessage(event.replyToken, notesList)
           break
         case 'feedback':
           intentResponse = await detectIntent(userID, data[1], 'en-US')
