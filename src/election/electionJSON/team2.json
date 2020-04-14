@@ -40,7 +40,7 @@
               "action": {
                 "type": "postback",
                 "label": "VOTE",
-                "text": "choose team 2",
+                "displayText": "Choose TEAM2",
                 "data": "choose/team2"
               },
               "color": "#FDB813",
