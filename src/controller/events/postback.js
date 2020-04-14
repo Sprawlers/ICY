@@ -8,6 +8,8 @@ const handlePostback = async (event, client, userObject) => {
   const postbacklog = { data: {} }
   const postback = event.postback
   const userID = userObject.userID
+  let intentResponse = {}
+  let query = {}
   //Split data from postback.data by '/' to make a decision
   const data = postback.data.split('/')
   console.log(data)
@@ -16,8 +18,8 @@ const handlePostback = async (event, client, userObject) => {
       const date = { type: 'text' }
       date.text = postback.params.datetime
       //detectIntent by dialogflow API and get response in intentResponse
-      let intentResponse = await detectIntent(userID, date.text, 'en-US')
-      let query = intentResponse.queryResult
+      intentResponse = await detectIntent(userID, date.text, 'en-US')
+      query = intentResponse.queryResult
       replyMsg.text = query.fulfillmentText
       postbacklog.type = 'message'
       postbacklog.data.bot = date.text
@@ -31,14 +33,14 @@ const handlePostback = async (event, client, userObject) => {
           await client.replyMessage(event.replyToken, payloadJSON)
           break
         case 'notes':
-          let intentResponse = await detectIntent(userID, data[1], 'en-US')
-          let query = intentResponse.queryResult
+          intentResponse = await detectIntent(userID, data[1], 'en-US')
+          query = intentResponse.queryResult
           replyMsg.text = query.fulfillmentText
           await client.replyMessage(event.replyToken, replyMsg)
           brek
         case 'feedback':
-          let intentResponse = await detectIntent(userID, data[1], 'en-US')
-          let query = intentResponse.queryResult
+          intentResponse = await detectIntent(userID, data[1], 'en-US')
+          query = intentResponse.queryResult
           replyMsg.text = query.fulfillmentText
           await client.replyMessage(event.replyToken, replyMsg)
           break
