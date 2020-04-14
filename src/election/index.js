@@ -54,7 +54,8 @@ app.post('/election', async (req, res) => {
     }
     const replyToken = event.replyToken
     const isEmpty = (obj) => {
-        return obj.constructor === Object && Object.keys(obj).length === 0
+        if(!obj) return true
+        return Object.keys(obj).length === 0
     }
     switch (event.type) {
         case 'message':
