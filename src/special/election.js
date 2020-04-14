@@ -45,7 +45,7 @@ app.post('/election', async (req, res) => {
     const userID = event.source.userId ||  null;
 
     let profile = {}
-    if (event.type !== 'unfollow' || event.type !== 'join') {
+    if (event.type !== 'unfollow' && event.type !== 'join') {
         profile = await client.getProfile(event.source.userId)
     }
     const userObject =
