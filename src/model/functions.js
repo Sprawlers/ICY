@@ -3,6 +3,7 @@ const User = require('./schema/User')
 const Feedback = require('./schema/Feedback')
 const Course = require('./schema/Course')
 const Log = require('./schema/Log')
+const Election = require('./schema/Election')
 
 // Gets all homework documents, called with hw()
 async function getAllHomework() {
@@ -31,7 +32,7 @@ async function getAllCourses() {
 
 // Gets a particular course
 function getCourse(courseName) {
-  return Course.findOne({ 'title': courseName })
+  return Course.findOne({ title: courseName })
 }
 
 // Adds a new user
@@ -60,6 +61,14 @@ function addLog(userID, profileName, type, data) {
   return Log.create({ userID, profileName, type, data })
 }
 
+function addVote(userID, profileName, vote) {
+  return Election.create({ userID, profileName, vote })
+}
+
+function getVote(userID) {
+  return Election.findOne({ userID })
+}
+
 module.exports = {
   getAllHomework,
   getUserByID,
@@ -67,9 +76,11 @@ module.exports = {
   getAllCourses,
   getCourse,
   getAdminID,
+  getVote,
   addHomework,
   addUser,
   addFeedback,
   addLog,
+  addVote,
   delUser,
 }
