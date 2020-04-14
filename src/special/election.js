@@ -93,7 +93,8 @@ app.post('/election', async (req, res) => {
       await delUser(userID)
       break
     case 'join':
-      await client.replyMessage(replyToken, JSON)
+      const joinJSON = require('./electionJSON/join.json')
+      await client.replyMessage(replyToken, joinJSON)
       break
     default:
       break

@@ -1,0 +1,99 @@
+{
+  "type": "flex",
+  "altText": "Flex Message",
+  "contents": {
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "md",
+      "contents": [
+        {
+          "type": "text",
+          "text": "HOW TO VOTE",
+          "size": "lg",
+          "align": "center",
+          "weight": "bold",
+          "color": "#5DC55F"
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "spacing": "sm",
+          "contents": [
+            {
+              "type": "text",
+              "text": "1.",
+              "flex": 1,
+              "weight": "bold"
+            },
+            {
+              "type": "text",
+              "text": "Add this bot as your friend ",
+              "flex": 9,
+              "color": "#334955",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "spacing": "sm",
+          "contents": [
+            {
+              "type": "text",
+              "text": "2.",
+              "flex": 1,
+              "weight": "bold"
+            },
+            {
+              "type": "text",
+              "text": "Select the team you like",
+              "flex": 9,
+              "color": "#334955",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "spacing": "sm",
+          "contents": [
+            {
+              "type": "text",
+              "text": "3.",
+              "flex": 1,
+              "weight": "bold"
+            },
+            {
+              "type": "text",
+              "text": "Confirm your vote",
+              "flex": 9,
+              "color": "#334955",
+              "wrap": true
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "md",
+      "contents": [
+        {
+          "type": "button",
+          "action": {
+            "type": "uri",
+            "label": "Vote Now!",
+            "uri": "https://liff.line.me/1654084015-Vnr6b5r8"
+          },
+          "style": "primary"
+        }
+      ]
+    }
+  }
+}
