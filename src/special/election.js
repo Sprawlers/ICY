@@ -74,7 +74,7 @@ app.post('/election', async (req, res) => {
           break
         case 'vote':
           const voteData = await getVote(userID)
-          if (!isEmpty(voteData)) {
+          if (isEmpty(voteData)) {
             let vote
             if (data[1] === 'team1') vote = 'team1'
             else if (data[1] === 'team2') vote = 'team2'
