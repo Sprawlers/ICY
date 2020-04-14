@@ -8,13 +8,13 @@
       {
         "type": "postback",
         "label": "Yes",
-        "text": "yes",
+        "displayText": "Yes",
         "data": "vote/team2"
       },
       {
         "type": "message",
         "label": "No",
-        "text": "no"
+        "text": "No"
       }
     ]
   }
