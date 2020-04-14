@@ -45,7 +45,7 @@ app.post('/election', async (req, res) => {
   const userID = event.source.userId
   let profile = {}
   if (event.type !== 'unfollow') {
-    profile = await client.getProfile(event.sourxe.userId)
+    profile = await client.getProfile(event.source.userId)
   }
   const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
   console.log(userObject)
@@ -93,6 +93,7 @@ app.post('/election', async (req, res) => {
       await delUser(userID)
       break
     case 'join':
+      await client.replyMessage(replyToken, JSON)
       break
     default:
       break
