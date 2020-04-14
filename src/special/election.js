@@ -1,5 +1,5 @@
 const express = require('express')
-const config = require('./config')
+const config = require('../config')
 const line = require('@line/bot-sdk')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -8,7 +8,7 @@ const crypto = require('crypto')
 const app = express()
 
 // Import database functions
-const { getUserByID, addUser, addFeedback, delUser, getVote, addVote } = require('./model/functions')
+const { getUserByID, addUser, addFeedback, delUser, getVote, addVote } = require('../model/functions')
 
 //Initialize middleware
 app.use(bodyParser.json())
