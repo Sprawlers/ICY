@@ -12,7 +12,7 @@
         "x": 0,
         "y": 0,
         "width": 1250,
-        "height": 421
+        "height": 843
       },
       "action": {
         "type": "postback",
@@ -25,7 +25,7 @@
         "x": 1251,
         "y": 0,
         "width": 1250,
-        "height": 421
+        "height": 843
       },
       "action": {
         "type": "postback",
