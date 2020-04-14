@@ -1,0 +1,21 @@
+{
+  "type": "template",
+  "altText": "Confirm Team 2",
+  "template": {
+    "type": "confirm",
+    "text": "Confirm vote for Natt & Punlee?",
+    "actions": [
+      {
+        "type": "postback",
+        "label": "Yes",
+        "text": "yes",
+        "data": "vote/team2"
+      },
+      {
+        "type": "message",
+        "label": "No",
+        "text": "no"
+      }
+    ]
+  }
+}
