@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "Flex Message",
+  "altText": "Election",
   "contents": {
     "type": "bubble",
     "direction": "ltr",
@@ -15,7 +15,7 @@
           "size": "lg",
           "align": "center",
           "weight": "bold",
-          "color": "#5DC55F"
+          "color": "#FDB813"
         },
         {
           "type": "box",
@@ -26,13 +26,14 @@
               "type": "text",
               "text": "1.",
               "flex": 1,
-              "weight": "bold"
+              "weight": "bold",
+              "color": "#FFFFFF"
             },
             {
               "type": "text",
               "text": "Add this bot as your friend ",
               "flex": 9,
-              "color": "#334955",
+              "color": "#FFFFFF",
               "wrap": true
             }
           ]
@@ -46,13 +47,14 @@
               "type": "text",
               "text": "2.",
               "flex": 1,
-              "weight": "bold"
+              "weight": "bold",
+              "color": "#FFFFFF"
             },
             {
               "type": "text",
               "text": "Select the team you like",
               "flex": 9,
-              "color": "#334955",
+              "color": "#FFFFFF",
               "wrap": true
             }
           ]
@@ -66,13 +68,14 @@
               "type": "text",
               "text": "3.",
               "flex": 1,
-              "weight": "bold"
+              "weight": "bold",
+              "color": "#FFFFFF"
             },
             {
               "type": "text",
               "text": "Confirm your vote",
               "flex": 9,
-              "color": "#334955",
+              "color": "#FFFFFF",
               "wrap": true
             }
           ]
@@ -89,11 +92,20 @@
           "action": {
             "type": "uri",
             "label": "Vote Now!",
-            "uri": "https://liff.line.me/1654084015-Vnr6b5r8"
+            "uri": "line://app/101"
           },
+          "color": "#FDB813",
           "style": "primary"
         }
       ]
+    },
+    "styles": {
+      "body": {
+        "backgroundColor": "#344955"
+      },
+      "footer": {
+        "backgroundColor": "#344955"
+      }
     }
   }
 }
