@@ -84,11 +84,11 @@ app.post('/election', async (req, res) => {
             else if (data[1] === 'team2') vote = 'team2'
             await addVote(userID, userObject.profileName, vote)
             replyMsg.text = 'Thank you for voting, ' + vote.toUpperCase()
-            await client.replyMessage(replyToken, replyMsg)
           } else {
             let vote = voteData.vote
             replyMsg.text = 'You have already voted, ' + vote.toUpperCase()
           }
+          await client.replyMessage(replyToken, replyMsg)
           break
       }
       break
