@@ -42,12 +42,12 @@ app.post('/election', async (req, res) => {
     return res.status(401).send('Unauthorized')
   }
   const event = req.body.events[0]
-  const userID = event.source.userId
+  const userID = event.source.userId || null
   let profile = {}
-  if (event.type !== 'unfollow') {
+  if (event.type !== 'unfollow' && event.type !== 'join') {
     profile = await client.getProfile(event.source.userId)
   }
-  const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
+  const userObject = userID ? (await getUserByID(userID)) || (await addUser(userID, profile.displayName)) : null
   console.log(userObject)
   const replyMsg = {
     type: 'text',
