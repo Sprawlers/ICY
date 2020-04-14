@@ -26,7 +26,6 @@ const handleMessage = async (event, client, userObject) => {
     await client.replyMessage(replyToken, replyMsg)
     return messagelog
   }
-  if (userMsg[0] === '/') userMsg = userMsg.substring(1)
 
   // detect intent and get intentResponse
   const intentResponse = await detectIntent(userID, userMsg, 'en-US')

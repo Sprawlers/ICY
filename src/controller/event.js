@@ -9,7 +9,7 @@ const handleEvent = async (event, userObject, client) => {
       //for handling message and return messagelog
       const messagelog = await handleMessage(event, client, userObject)
       console.log(messagelog)
-      if (event.message.text[0] != '/') await addLog(userID, userObject.profileName, event.type, messagelog)
+      await addLog(userID, userObject.profileName, event.type, messagelog)
       break
     case 'postback':
       //for handling postback and return postbacklog

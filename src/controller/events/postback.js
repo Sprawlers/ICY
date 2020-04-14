@@ -24,6 +24,28 @@ const handlePostback = async (event, client, userObject) => {
       await client.replyMessage(event.replyToken, [date, replyMsg])
       break
     case 'richmenu':
+      switch (data[1]) {
+        case 'homework':
+          //Generate reply JSON from homework collection
+          const payloadJSON = generateHomework(await getAllHomework())
+          await client.replyMessage(event.replyToken, payloadJSON)
+          break
+        case 'notes':
+          const intentResponse = await detectIntent(userID, data[1], 'en-US')
+          const query = intentResponse.queryResult
+          replyMsg.text = query.fulfillmentText
+          await client.replyMessage(event.replyToken, replyMsg)
+          brek
+        case 'feedback':
+          const intentResponse = await detectIntent(userID, data[1], 'en-US')
+          const query = intentResponse.queryResult
+          replyMsg.text = query.fulfillmentText
+          await client.replyMessage(event.replyToken, replyMsg)
+          break
+        default:
+          replyMsg.text = data[1].toUpperCase() + ' function is not available yet.'
+          await client.replyMessage(event.replyToken, replyMsg)
+      }
       postbacklog.type = 'richmenu'
       postbacklog.data.label = data[1]
       break

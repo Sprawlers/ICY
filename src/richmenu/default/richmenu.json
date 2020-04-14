@@ -17,8 +17,7 @@
       "action": {
         "type": "postback",
         "label": "Homework",
-        "data": "richmenu/homework",
-        "displayText": "/homework"
+        "data": "richmenu/homework"
       }
     },
     {
@@ -31,8 +30,7 @@
       "action": {
         "type": "postback",
         "label": "Notes",
-        "data": "richmenu/notes",
-        "displayText": "/notes"
+        "data": "richmenu/notes"
       }
     },
     {
@@ -45,8 +43,7 @@
       "action": {
         "type": "postback",
         "label": "Ask",
-        "data": "richmenu/feedback",
-        "displayText": "/feedback"
+        "data": "richmenu/feedback"
       }
     }
   ]
