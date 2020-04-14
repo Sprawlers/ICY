@@ -24,16 +24,6 @@ const handlePostback = async (event, client, userObject) => {
       await client.replyMessage(event.replyToken, [date, replyMsg])
       break
     case 'richmenu':
-      switch (data[1]) {
-        case 'homework':
-          //Generate reply JSON from homework collection
-          const payloadJSON = generateHomework(await getAllHomework())
-          await client.replyMessage(event.replyToken, payloadJSON)
-          break
-        default:
-          replyMsg.text = data[1].toUpperCase() + ' function is not available yet.'
-          await client.replyMessage(event.replyToken, replyMsg)
-      }
       postbacklog.type = 'richmenu'
       postbacklog.data.label = data[1]
       break

@@ -15,7 +15,7 @@ const handleMessage = async (event, client, userObject) => {
     await client.replyMessage(replyToken, replyMsg)
     return messagelog
   }
-  const userMsg = event.message.text
+  let userMsg = event.message.text
   //add user message to messagelog.user
   messagelog.user = userMsg
   //if user input is clear, it will clear dialogflow context.
@@ -26,6 +26,7 @@ const handleMessage = async (event, client, userObject) => {
     await client.replyMessage(replyToken, replyMsg)
     return messagelog
   }
+  if (userMsg[0] === '/') userMsg = userMsg.substring(1)
 
   // detect intent and get intentResponse
   const intentResponse = await detectIntent(userID, userMsg, 'en-US')
