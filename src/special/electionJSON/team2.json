@@ -1,0 +1,82 @@
+{
+  "type": "flex",
+  "altText": "Team 2",
+  "contents": {
+    "type": "carousel",
+    "contents": [
+      {
+        "type": "bubble",
+        "hero": {
+          "type": "image",
+          "url": "https://sgp1.digitaloceanspaces.com/winnaries/icy/election/punlee.jpg",
+          "size": "full",
+          "aspectRatio": "1:1",
+          "aspectMode": "cover"
+        }
+      },
+      {
+        "type": "bubble",
+        "hero": {
+          "type": "image",
+          "url": "https://sgp1.digitaloceanspaces.com/winnaries/icy/election/natt.jpg",
+          "size": "full",
+          "aspectRatio": "1:1",
+          "aspectMode": "cover"
+        }
+      },
+      {
+        "type": "bubble",
+        "direction": "ltr",
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "spacing": "md",
+          "contents": [
+            {
+              "type": "text",
+              "text": "NATT & PUNLEE",
+              "size": "lg",
+              "align": "center",
+              "weight": "bold",
+              "color": "#FDB813"
+            },
+            {
+              "type": "text",
+              "text": "Please make sure that you select the correct team since you can't change your selection after you confirm it. 🥺 ",
+              "align": "center",
+              "gravity": "center",
+              "color": "#FFFFFF",
+              "wrap": true
+            }
+          ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "vertical",
+          "spacing": "md",
+          "contents": [
+            {
+              "type": "button",
+              "action": {
+                "type": "postback",
+                "label": "VOTE",
+                "text": "choose team 2",
+                "data": "choose/team2"
+              },
+              "color": "#FDB813",
+              "style": "primary"
+            }
+          ]
+        },
+        "styles": {
+          "body": {
+            "backgroundColor": "#344955"
+          },
+          "footer": {
+            "backgroundColor": "#344955"
+          }
+        }
+      }
+    ]
+  }
+}
