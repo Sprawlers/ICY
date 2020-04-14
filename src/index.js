@@ -68,68 +68,6 @@ app.post('/webhook', async (req, res) => {
   await handleEvent(event, userObject, client)
 })
 
-app.post('/election', async (req, res) => {
-  const lineConfig = config.line
-  const client = new line.Client(lineConfig)
-  const text = JSON.stringify(req.body)
-  const { addFeedback, delUser, getVote, addVote } = require('./model/functions')
-  const signature = crypto.createHmac('SHA256', lineConfig.channelSecret).update(text).digest('base64').toString()
-  if (signature !== req.headers['x-line-signature']) {
-    return res.status(401).send('Unauthorized')
-  }
-  const event = req.body.events[0]
-  const userID = event.source.userId
-  let profile = {}
-  if (event.type !== 'unfollow') {
-    profile = await client.getProfile(event.sourxe.userId)
-  }
-  const userObject = (await getUserByID(userID)) || (await addUser(userID, profile.displayName))
-  console.log(userObject)
-  const replyMsg = {
-    type: 'text',
-  }
-  const isEmpty = (obj) => {
-    return Object.keys(obj).length === 0
-  }
-  const replyToken = event.replyToken
-  switch (event.type) {
-    case 'message':
-      break
-    case 'postback':
-      const postback = event.postback
-      const data = postback.data.split('/')
-      console.log(data)
-      switch (data[0]) {
-        case 'richmenu':
-          if (data[1] === 'team1') {
-          } else if (data[1] === 'team2') {
-          }
-          await client.replyMessage(replyToken, replyMsg)
-          break
-        case 'vote':
-          const voteData = await getVote(userID)
-          if (!isEmpty(voteData)) {
-            let vote
-            if (data[1] === 'team1') vote = 'team1'
-            else if (data[1] === 'team2') vote = 'team2'
-            await addVote(userID, userObject.profileName, vote)
-            replyMsg.text = 'Thank you for voting ' + vote
-            client.replyMessage(replyToken, replyMsg)
-          } else {
-            replyMsg.text = 'You have already voted ' + voteData.vote
-          }
-          break
-      }
-      break
-    case 'unfollow':
-      await addFeedback(userID, userObject.profileName, event.type, null)
-      await delUser(userID)
-      break
-    default:
-      break
-  }
-})
-
 app.listen(config.port, () => {
   console.log(`Server is running at port ${config.port}`)
 })
