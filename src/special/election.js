@@ -58,7 +58,7 @@ app.post('/election', async (req, res) => {
   }
   switch (event.type) {
     case 'message':
-      replyMsg.text = 'Please select team from the menu below...'
+      replyMsg.text = 'Please select your team from the menu below...'
       await client.replyMessage(replyToken, replyMsg)
       break
     case 'postback':
@@ -79,11 +79,11 @@ app.post('/election', async (req, res) => {
             if (data[1] === 'team1') vote = 'team1'
             else if (data[1] === 'team2') vote = 'team2'
             await addVote(userID, userObject.profileName, vote)
-            replyMsg.text = 'Thank you for voting ' + vote.toUpperCase()
+            replyMsg.text = 'Thank you for voting, ' + vote.toUpperCase()
             await client.replyMessage(replyToken, replyMsg)
           } else {
             let vote = voteData.vote
-            replyMsg.text = 'You have already voted ' + vote.toUpperCase()
+            replyMsg.text = 'You have already voted, ' + vote.toUpperCase()
           }
           break
       }
