@@ -67,10 +67,8 @@ app.post('/election', async (req, res) => {
       console.log(data)
       switch (data[0]) {
         case 'richmenu':
-          if (data[1] === 'team1') {
-          } else if (data[1] === 'team2') {
-          }
-          await client.replyMessage(replyToken, replyMsg)
+          const teamData = require(`./electionJSON/${data[1]}.json`)
+          await client.replyMessage(replyToken, teamData)
           break
         case 'vote':
           const voteData = await getVote(userID)
