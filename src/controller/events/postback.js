@@ -37,7 +37,7 @@ const handlePostback = async (event, client, userObject) => {
           query = intentResponse.queryResult
           replyMsg.text = query.fulfillmentText
           await client.replyMessage(event.replyToken, replyMsg)
-          brek
+          break
         case 'feedback':
           intentResponse = await detectIntent(userID, data[1], 'en-US')
           query = intentResponse.queryResult
@@ -47,6 +47,7 @@ const handlePostback = async (event, client, userObject) => {
         default:
           replyMsg.text = data[1].toUpperCase() + ' function is not available yet.'
           await client.replyMessage(event.replyToken, replyMsg)
+          break
       }
       postbacklog.type = 'richmenu'
       postbacklog.data.label = data[1]
