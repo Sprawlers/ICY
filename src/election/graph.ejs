@@ -46,7 +46,7 @@
                     tooltips: {
                         callbacks: {
                             title: function(tooltipItem, data) {
-                                return tooltipItem.datasetIndex
+                                return "Time: " + new Date(tooltipItem.xLabel).toString().substr(0, 21)
                             }
                         }
                     }
