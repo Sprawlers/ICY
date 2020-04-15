@@ -60,8 +60,8 @@ function getVote(userID) {
   return Election.findOne({ userID })
 }
 
-function addRating(rating) {
-  return Rating.create({ rating })
+function addRating(userID, rating) {
+  return Rating.create({ userID, rating })
 }
 
 module.exports = {
