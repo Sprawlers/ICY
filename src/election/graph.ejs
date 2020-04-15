@@ -31,7 +31,7 @@
             const chart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    datasets: [t1, t2]
+                    datasets: [t2, t1]
                 },
                 options: {
                     scales: {
@@ -53,18 +53,18 @@
                         callbacks: {
                             title: function(tooltipItems, data) {
                                 if((tooltipItems[0].datasetIndex === 0
-                                    && tooltipItems[0].index === <%=team1.length - 1%>)
+                                    && tooltipItems[0].index === <%=team2.length - 1%>)
                                     || (tooltipItems[0].datasetIndex === 1
-                                        && tooltipItems[0].index === <%=team2.length - 1%>)) return "Latest"
+                                        && tooltipItems[0].index === <%=team1.length - 1%>)) return "Latest"
                                 else return "Time: " + new Date(tooltipItems[0].xLabel).toString().substr(0, 21)
                             },
                             label: function(tooltipItems, data) {
                                 if(tooltipItems.datasetIndex === 0) {
-                                    if(tooltipItems.index === <%=team1.length - 1%>) return ""
-                                    else return "Win and Tantan: " + (tooltipItems.index + 1) + " votes"
-                                } else {
                                     if(tooltipItems.index === <%=team2.length - 1%>) return ""
                                     else return "Punnatt and Punlee: " + (tooltipItems.index + 1) + " votes"
+                                } else {
+                                    if(tooltipItems.index === <%=team1.length - 1%>) return ""
+                                    else return "Win and Tantan:Punnatt and Punlee: " + (tooltipItems.index + 1) + " votes"
                                 }
                             }
                         }
