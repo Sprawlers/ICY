@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "Thank you Rating",
+  "altText": "Thank you",
   "contents": {
     "type": "bubble",
     "direction": "ltr",
