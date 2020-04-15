@@ -12,12 +12,14 @@
             const t1 = {
                 label: 'Win and Tantan (' + <%=team1.length - 1%> + ' votes)',
                 borderColor: 'blue',
+                fill: true,
                 data: <%- JSON.stringify(team1) %>
             };
 
             const t2 = {
                 label: 'Punnatt and Punlee (' + <%=team2.length - 1%> + ' votes)',
                 borderColor: 'red',
+                fill: true,
                 data: <%- JSON.stringify(team2) %>
             };
 
@@ -36,6 +38,7 @@
                             }
                         }]
                     },
+                    backgroundColor: 'rgba(71, 76, 80, 1)',
                     elements: {
                         line: {
                             tension: 0
