@@ -45,8 +45,11 @@
                     tooltips: {
                         callbacks: {
                             title: function(tooltipItems, data) {
-                                return tooltipItems[0].datasetIndex
-                                //return "Time: " + new Date(tooltipItems[0].xLabel).toString().substr(0, 21)
+                                if((tooltipItems[0].datasetIndex === 0
+                                    && tooltipItems[0].index === <%=team1.length - 1%>)
+                                    || (tooltipItems[0].datasetIndex === 1
+                                        && tooltipItems[0].index === <%=team2.length - 1%>)) return "Current data: "
+                                else return "Time: " + new Date(tooltipItems[0].xLabel).toString().substr(0, 21)
                             }
                         }
                     }
