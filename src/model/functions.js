@@ -6,76 +6,76 @@ const Log = require('./schema/Log')
 const Election = require('./schema/Election')
 
 async function getAllHomework() {
-    return await Homework.find({})
+  return await Homework.find({})
 }
 
 function getUserByID(userID) {
-    return User.findOne({userID})
+  return User.findOne({ userID })
 }
 
 async function getAllUsers() {
-    return await User.find({})
+  return await User.find({})
 }
 
 function getAdminID() {
-    return User.distinct('userID', {isAdmin: true})
+  return User.distinct('userID', { isAdmin: true })
 }
 
 async function getAllCourses() {
-    return await Course.find({})
+  return await Course.find({})
 }
 
 function getCourse(courseName) {
-    return Course.findOne({title: courseName})
+  return Course.findOne({ title: courseName })
 }
 
 function addUser(userID, profileName) {
-    return User.create({userID, profileName, isAdmin: false})
+  return User.create({ userID, profileName, isAdmin: false })
 }
 
 function delUser(userID) {
-    return User.deleteOne({userID})
+  return User.deleteOne({ userID })
 }
 
 function addFeedback(userID, profileName, type, text) {
-    return Feedback.create({userID, profileName, type, text})
+  return Feedback.create({ userID, profileName, type, text })
 }
 
 function addHomework(subject, deadline, filename, link) {
-    const hw = {}
-    hw['assignments.' + filename] = {deadline, link}
-    return Homework.findOneAndUpdate({title: subject}, {$set: hw}, {upsert: true})
+  const hw = {}
+  hw['assignments.' + filename] = { deadline, link }
+  return Homework.findOneAndUpdate({ title: subject }, { $set: hw }, { upsert: true })
 }
 
 function addLog(userID, profileName, type, data) {
-    return Log.create({userID, profileName, type, data})
+  return Log.create({ userID, profileName, type, data })
 }
 
 function addVote(userID, profileName, vote) {
-    return Election.create({userID, profileName, vote})
+  return Election.create({ userID, profileName, vote })
 }
 
 function addRating(userID, rating) {
-    return Election.findOneAndUpdate({userID}, {$set: rating}, {upsert: true})
+  return Election.findOneAndUpdate({ userID }, { $set: { rating } })
 }
 
 function getVote(userID) {
-    return Election.findOne({userID})
+  return Election.findOne({ userID })
 }
 
 module.exports = {
-    getAllHomework,
-    getUserByID,
-    getAllUsers,
-    getAllCourses,
-    getCourse,
-    getAdminID,
-    getVote,
-    addHomework,
-    addUser,
-    addFeedback,
-    addLog,
-    addRating,
-    addVote,
-    delUser,
+  getAllHomework,
+  getUserByID,
+  getAllUsers,
+  getAllCourses,
+  getCourse,
+  getAdminID,
+  getVote,
+  addHomework,
+  addUser,
+  addFeedback,
+  addLog,
+  addRating,
+  addVote,
+  delUser,
 }
