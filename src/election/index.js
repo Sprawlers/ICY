@@ -93,8 +93,8 @@ app.post('/election', async (req, res) => {
           }
           break
         case 'rating':
-          const voteData = await getVote(userID)
-          if (!voteData.rating) {
+          const votedata = await getVote(userID)
+          if (!votedata.rating) {
             const rating = Number.parseInt(data[1])
             await addRating(userID, rating)
             replyMsg.text = 'Thank you for rating'
