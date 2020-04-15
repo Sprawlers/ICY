@@ -49,9 +49,6 @@ app.post('/election', async (req, res) => {
   }
   const userObject = userID ? (await getUserByID(userID)) || (await addUser(userID, profile.displayName)) : null
   console.log(userObject)
-  const replyMsg = {
-    type: 'text',
-  }
   const replyToken = event.replyToken
   const isEmpty = (obj) => {
     if (!obj) return true

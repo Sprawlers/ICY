@@ -41,7 +41,7 @@
             },
             {
               "type": "text",
-              "text": "Icy will notify you daily about all homeworks deadlines",
+              "text": "ICY will notify you daily about all homeworks deadlines",
               "flex": 9,
               "color": "#FFFFFF",
               "wrap": true
@@ -61,7 +61,7 @@
             },
             {
               "type": "text",
-              "text": "Icy has solutions for most of your homework, if not all",
+              "text": "ICY has solutions for most of your homework, if not all",
               "flex": 9,
               "color": "#FFFFFF",
               "wrap": true
@@ -81,7 +81,7 @@
             },
             {
               "type": "text",
-              "text": "Icy has study notes and textbook in PDF for you to download",
+              "text": "ICY has study notes and textbook in PDF for you to download",
               "flex": 9,
               "color": "#FFFFFF",
               "wrap": true
@@ -101,7 +101,7 @@
             },
             {
               "type": "text",
-              "text": "You can request features if you want. Icy is happy to hear from you guys.",
+              "text": "You can request features if you want. ICY is happy to hear from you guys.",
               "flex": 9,
               "color": "#FFFFFF",
               "wrap": true
