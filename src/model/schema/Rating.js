@@ -11,7 +11,7 @@ const Schema = mongoose.Schema
 const ratingSchema = new Schema(
     {
         userID: String,
-        rating: [Number]
+        rating: Number
     }
 )
 
