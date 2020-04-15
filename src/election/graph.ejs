@@ -12,6 +12,7 @@
             const t1 = {
                 label: 'Win and Tantan (' + <%=team1.length - 1%> + ' votes)',
                 borderColor: 'blue',
+                backgroundColor: 'rgba(253, 184, 19, 1)',
                 data: <%- JSON.stringify(team1) %>
             };
 
@@ -36,7 +37,6 @@
                             }
                         }]
                     },
-                    backgroundColor: 'rgba(255, 0, 0, 1)',
                     elements: {
                         line: {
                             tension: 0
