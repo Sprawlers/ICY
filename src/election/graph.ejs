@@ -12,7 +12,8 @@
             const t1 = {
                 label: 'Win and Tantan (' + <%=team1.length - 1%> + ' votes)',
                 borderColor: 'blue',
-                data: <%- JSON.stringify(team1) %>
+                data: <%- JSON.stringify(team1) %>,
+                pointRadius:
             };
 
             const t2 = {
@@ -44,8 +45,8 @@
                     aspectRatio: 2,
                     tooltips: {
                         callbacks: {
-                            title: function(tooltipItems, data) {
-                                return "Time: " + new Date(tooltipItems[0].xLabel).toString('DDD').substr(0, 21)
+                            title: function(tooltipItem, data) {
+                                return tooltipItem.datasetIndex
                             }
                         }
                     }
