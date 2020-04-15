@@ -1,3 +1,5 @@
+/// app.get /graph and render the data
+
 var s1 = {
     label: 's1',
     borderColor: 'blue',
