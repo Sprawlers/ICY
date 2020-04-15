@@ -1,13 +1,10 @@
-const {getAllVotes} = require("../model/functions")
-
-console.log(await getAllVotes())
-
 var s1 = {
     label: 's1',
     borderColor: 'blue',
     data: [
         { x: '2017-01-06 18:39:30', y: 100 },
         { x: '2017-01-07 18:39:28', y: 101 },
+        { x: '2017-01-07 18:50:28', y: 105 }
     ]
 };
 
