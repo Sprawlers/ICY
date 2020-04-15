@@ -1,0 +1,61 @@
+{
+  "type": "flex",
+  "altText": "Congratulations",
+  "contents": {
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "md",
+      "contents": [
+        {
+          "type": "text",
+          "text": "Congratulations to ",
+          "flex": 10,
+          "align": "start",
+          "color": "#FFFFFF",
+          "wrap": true
+        },
+        {
+          "type": "text",
+          "text": "Win and Tantan",
+          "size": "xl",
+          "align": "start",
+          "weight": "bold",
+          "color": "#FFB400",
+          "wrap": true
+        },
+        {
+          "type": "text",
+          "text": "for becoming the next president and vice-president of ICE14",
+          "align": "start",
+          "weight": "bold",
+          "color": "#FFFFFF",
+          "wrap": true
+        },
+        {
+          "type": "separator"
+        },
+        {
+          "type": "text",
+          "text": "We wish the new administration the best of luck :)",
+          "align": "start",
+          "weight": "regular",
+          "color": "#FFFFFF",
+          "wrap": true
+        },
+        {
+          "type": "text",
+          "text": "ICE14 2019 Administration",
+          "color": "#FFFFFF"
+        }
+      ]
+    },
+    "styles": {
+      "body": {
+        "backgroundColor": "#344955"
+      }
+    }
+  }
+}
