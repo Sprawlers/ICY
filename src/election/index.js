@@ -93,17 +93,16 @@ app.post('/election', async (req, res) => {
           break
         case 'rating':
           const votedata = await getVote(userID)
+          const thanksJSON = require('./electionJSON/thanks_rating.json')
+          const invitationJSON = require('./electionJSON/invitation.json')
           if (!votedata.rating) {
             const rating = Number.parseInt(data[1])
             await addRating(userID, rating)
-            const thanksJSON = require('./electionJSON/thanks_rating.json')
-            await client.replyMessage(replyToken, thanksJSON)
+            await client.replyMessage(replyToken, [thanksJSON, invitationJSON])
           } else {
             replyMsg.text = 'You have already rated, thank you'
-            await client.replyMessage(replyToken, replyMsg)
+            await client.replyMessage(replyToken, [replyMsg, invitationJSON])
           }
-          const invitationJSON = require('./electionJSON/invitation.json')
-          await client.replyMessage(replyToken, invitationJSON)
           break
       }
       break
