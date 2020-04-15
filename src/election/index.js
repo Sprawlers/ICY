@@ -33,10 +33,15 @@ app.get('/health', (req, res) => {
   res.status(200).send('OK')
 })
 
+//Settings
+app.engine('html', require('ejs').renderFile)
+app.set('view engine', 'html')
+
 app.get('/graph', (req, res) => {
-  let team1 = getTeamVotes('team1')
-  res.send(team1)
-  res.render('index.ejs', {})
+  const team1 = getTeamVotes('team1')
+  const team2 = getTeamVotes('team2')
+  const data = [team1, team2]
+  res.render('graph.ejs', { data })
 })
 
 app.post('/election', async (req, res) => {
