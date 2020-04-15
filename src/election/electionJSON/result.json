@@ -13,8 +13,8 @@
           "type": "button",
           "action": {
             "type": "uri",
-            "label": "Result Graph",
-            "uri": "https://dev.sprawl.team/election"
+            "label": "Results",
+            "uri": "https://icy.sprawl.team/election"
           },
           "color": "#FFB400",
           "style": "secondary"

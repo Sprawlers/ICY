@@ -111,8 +111,8 @@ app.post('/election', async (req, res) => {
           await client.replyMessage(replyToken, confirmJSON)
           break
         case 'vote':
-          // replyMsg.text = 'Sorry, the voting system is closed'
-          // return await client.replyMessage(replyToken, replyMsg)
+          replyMsg.text = 'Sorry, the voting system is closed'
+          return await client.replyMessage(replyToken, replyMsg)
           const voteData = await getVote(userID)
           if (isEmpty(voteData)) {
             let vote
