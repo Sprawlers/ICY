@@ -24,7 +24,10 @@
             const ctx = document.getElementById('myChart').getContext('2d');
             const chart = new Chart(ctx, {
                 type: 'line',
-                data: { datasets: [t1, t2] },
+                data: {
+                    labels: timestamps,
+                    datasets: [t1, t2]
+                },
                 options: {
                     scales: {
                         xAxes: [{
