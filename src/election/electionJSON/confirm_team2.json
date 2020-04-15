@@ -1,21 +1,63 @@
 {
-  "type": "template",
-  "altText": "Confirm Team 2",
-  "template": {
-    "type": "confirm",
-    "text": "Confirm vote for Natt & Punlee?",
-    "actions": [
-      {
-        "type": "postback",
-        "label": "Yes",
-        "text": "yes",
-        "data": "vote/team2"
+  "type": "flex",
+  "altText": "Vote Team 2",
+  "contents": {
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "md",
+      "contents": [
+        {
+          "type": "text",
+          "text": "Confirm vote for Team 2?",
+          "flex": 9,
+          "color": "#FFFFFF",
+          "wrap": true
+        },
+        {
+          "type": "text",
+          "text": "(Natt & Punlee)",
+          "color": "#FFFFFF"
+        }
+      ]
+    },
+    "footer": {
+      "type": "box",
+      "layout": "horizontal",
+      "spacing": "md",
+      "contents": [
+        {
+          "type": "button",
+          "action": {
+            "type": "postback",
+            "label": "Yes",
+            "displayText": "Yes",
+            "data": "vote/team2"
+          },
+          "color": "#FDB813",
+          "style": "secondary"
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "message",
+            "label": "No",
+            "text": "No"
+          },
+          "color": "#FDB813",
+          "style": "secondary"
+        }
+      ]
+    },
+    "styles": {
+      "body": {
+        "backgroundColor": "#344955"
       },
-      {
-        "type": "message",
-        "label": "No",
-        "text": "no"
+      "footer": {
+        "backgroundColor": "#344955"
       }
-    ]
+    }
   }
 }
