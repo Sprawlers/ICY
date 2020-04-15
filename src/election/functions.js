@@ -7,7 +7,16 @@ const processDataForGraph = arr =>
         })
     })
 
+const normalizeLatestTime = (arr1, arr2) => {
+    if(arr1[arr1.length - 1]["x"].getTime() > arr2[arr2.length - 1]["x"].getTime()) {
+        arr2.push(arr2[arr2.length - 1]["x"])
+    } else {
+        arr1.push(arr1[arr1.length - 1]["x"])
+    }
+}
+
 
 module.exports = {
-    processDataForGraph
+    processDataForGraph,
+    normalizeLatestTime
 }

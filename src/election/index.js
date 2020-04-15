@@ -10,7 +10,7 @@ const app = express()
 // Import database functions
 const {getUserByID, addUser, addFeedback, delUser, getVote, addVote, addRating, getTeamVotes} = require('../model/functions')
 
-const {processDataForGraph} = require('./functions')
+const {processDataForGraph, normalizeLatestTime} = require('./functions')
 
 //Initialize middleware
 app.use(bodyParser.json())
@@ -40,10 +40,11 @@ app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 
 app.get('/election', async (req, res) => {
-    const team1 =
+    let team1 =
         processDataForGraph(await getTeamVotes('team1'))
-    const team2 =
+    let team2 =
         processDataForGraph(await getTeamVotes('team2'))
+    normalizeLatestTime(team1, team2)
     res.render(__dirname + '/graph.ejs', {team1, team2})
 })
 
