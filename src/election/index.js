@@ -41,7 +41,7 @@ app.get('/graph', (req, res) => {
   const team1 = getTeamVotes('team1')
   const team2 = getTeamVotes('team2')
   const data = [team1, team2]
-  res.render('graph.ejs', { data })
+  res.render(__dirname + '/graph.ejs', { data })
 })
 
 app.post('/election', async (req, res) => {
