@@ -1,0 +1,113 @@
+{
+  "type": "flex",
+  "altText": "Flex Message",
+  "contents": {
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "md",
+      "contents": [
+        {
+          "type": "text",
+          "text": "⭐ Rate our voting system",
+          "flex": 10,
+          "size": "lg",
+          "align": "center",
+          "weight": "bold",
+          "color": "#FFFFFF",
+          "wrap": true
+        },
+        {
+          "type": "separator"
+        },
+        {
+          "type": "box",
+          "layout": "baseline",
+          "contents": [
+            {
+              "type": "text",
+              "text": "Bad",
+              "align": "start",
+              "color": "#FFF0CC"
+            },
+            {
+              "type": "text",
+              "text": "Good",
+              "align": "end",
+              "color": "#FFB400"
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "horizontal",
+          "spacing": "xs",
+          "contents": [
+            {
+              "type": "button",
+              "action": {
+                "type": "postback",
+                "label": "1",
+                "displaytText": "⭐",
+                "data": "rating/1"
+              },
+              "color": "#FFF0CC",
+              "style": "secondary"
+            },
+            {
+              "type": "button",
+              "action": {
+                "type": "postback",
+                "label": "2",
+                "displaytText": "⭐⭐",
+                "data": "rating/2"
+              },
+              "color": "#FFE199",
+              "style": "secondary"
+            },
+            {
+              "type": "button",
+              "action": {
+                "type": "postback",
+                "label": "3",
+                "displaytText": "⭐⭐⭐",
+                "data": "rating/3"
+              },
+              "color": "#FFD266",
+              "style": "secondary"
+            },
+            {
+              "type": "button",
+              "action": {
+                "type": "postback",
+                "label": "4",
+                "displaytText": "⭐⭐⭐⭐",
+                "data": "rating/4"
+              },
+              "color": "#FFC333",
+              "style": "secondary"
+            },
+            {
+              "type": "button",
+              "action": {
+                "type": "postback",
+                "label": "5",
+                "displaytText": "⭐⭐⭐⭐⭐",
+                "data": "rating/5"
+              },
+              "color": "#FDB813",
+              "style": "secondary"
+            }
+          ]
+        }
+      ]
+    },
+    "styles": {
+      "body": {
+        "backgroundColor": "#344955"
+      }
+    }
+  }
+}
