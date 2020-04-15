@@ -1,0 +1,139 @@
+{
+  "type": "flex",
+  "altText": "Annoucement",
+  "contents": {
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "md",
+      "contents": [
+        {
+          "type": "text",
+          "text": "📌 Annoucement",
+          "flex": 10,
+          "size": "lg",
+          "align": "center",
+          "weight": "bold",
+          "color": "#FFFFFF",
+          "wrap": true
+        },
+        {
+          "type": "separator"
+        },
+        {
+          "type": "text",
+          "text": "The election may be over but ICY has just started! Let’s make your time at ISE fun and memorable.",
+          "color": "#FFFFFF",
+          "wrap": true
+        },
+        {
+          "type": "box",
+          "layout": "baseline",
+          "contents": [
+            {
+              "type": "text",
+              "text": "1",
+              "flex": 1,
+              "weight": "bold",
+              "color": "#FBB400"
+            },
+            {
+              "type": "text",
+              "text": "ICY will notify you daily about all homeworks deadlines",
+              "flex": 9,
+              "color": "#FFFFFF",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "baseline",
+          "contents": [
+            {
+              "type": "text",
+              "text": "2",
+              "flex": 1,
+              "weight": "bold",
+              "color": "#FBB400"
+            },
+            {
+              "type": "text",
+              "text": "ICY has solutions for most of your homework, if not all",
+              "flex": 9,
+              "color": "#FFFFFF",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "baseline",
+          "contents": [
+            {
+              "type": "text",
+              "text": "3",
+              "flex": 1,
+              "weight": "bold",
+              "color": "#FBB400"
+            },
+            {
+              "type": "text",
+              "text": "ICY has study notes and textbook in PDF for you to download",
+              "flex": 9,
+              "color": "#FFFFFF",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "baseline",
+          "contents": [
+            {
+              "type": "text",
+              "text": "4",
+              "flex": 1,
+              "weight": "bold",
+              "color": "#FBB400"
+            },
+            {
+              "type": "text",
+              "text": "You can request features if you want. ICY is happy to hear from you guys.",
+              "flex": 9,
+              "color": "#FFFFFF",
+              "wrap": true
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "layout": "baseline",
+          "contents": [
+            {
+              "type": "text",
+              "text": "5",
+              "flex": 1,
+              "weight": "bold",
+              "color": "#FBB400"
+            },
+            {
+              "type": "text",
+              "text": "ICY will make your time at ISE enjoyable!",
+              "flex": 9,
+              "color": "#FFFFFF",
+              "wrap": true
+            }
+          ]
+        }
+      ]
+    },
+    "styles": {
+      "body": {
+        "backgroundColor": "#344955"
+      }
+    }
+  }
+}

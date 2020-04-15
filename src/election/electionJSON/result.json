@@ -1,0 +1,37 @@
+{
+  "type": "flex",
+  "altText": "Election Result",
+  "contents": {
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "spacing": "md",
+      "contents": [
+        {
+          "type": "button",
+          "action": {
+            "type": "uri",
+            "label": "Results",
+            "uri": "https://icy.sprawl.team/election"
+          },
+          "color": "#FFB400",
+          "style": "secondary"
+        },
+        {
+          "type": "text",
+          "text": "for the transparency",
+          "size": "xs",
+          "align": "center",
+          "color": "#FFFFFF"
+        }
+      ]
+    },
+    "styles": {
+      "body": {
+        "backgroundColor": "#344955"
+      }
+    }
+  }
+}
