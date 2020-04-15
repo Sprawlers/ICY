@@ -34,6 +34,9 @@
                     datasets: [t2, t1]
                 },
                 options: {
+                    legend: {
+                        reverse: true
+                    },
                     scales: {
                         xAxes: [{
                             type: 'time',
@@ -64,7 +67,7 @@
                                     else return "Punnatt and Punlee: " + (tooltipItems.index + 1) + " votes"
                                 } else {
                                     if(tooltipItems.index === <%=team1.length - 1%>) return ""
-                                    else return "Win and Tantan:Punnatt and Punlee: " + (tooltipItems.index + 1) + " votes"
+                                    else return "Win and Tantan: " + (tooltipItems.index + 1) + " votes"
                                 }
                             }
                         }
