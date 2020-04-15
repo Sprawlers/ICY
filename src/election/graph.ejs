@@ -12,14 +12,14 @@
             const t1 = {
                 label: 'Win and Tantan (' + <%=team1.length - 1%> + ' votes)',
                 borderColor: 'rgba(255, 180, 0, 1)',
-                backgroundColor: 'rgba(255, 180, 0, 1)',
+                fill: false,
                 data: <%- JSON.stringify(team1) %>
             };
 
             const t2 = {
                 label: 'Punnatt and Punlee (' + <%=team2.length - 1%> + ' votes)',
                 borderColor: '#42ee81',
-                backgroundColor: '#42ee81',
+                fill: false,
                 data: <%- JSON.stringify(team2) %>
             };
 
