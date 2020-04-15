@@ -62,7 +62,7 @@ app.post('/election', async (req, res) => {
 
   switch (event.type) {
     case 'message':
-      await client.replyMessage(replyToken, followJSON)
+      if (event.source.type !== 'group') await client.replyMessage(replyToken, followJSON)
       break
     case 'postback':
       const postback = event.postback
