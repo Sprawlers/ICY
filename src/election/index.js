@@ -83,10 +83,9 @@ app.post('/election', async (req, res) => {
             if (data[1] === 'team1') vote = 'team1'
             else if (data[1] === 'team2') vote = 'team2'
             await addVote(userID, userObject.profileName, vote)
-            replyMsg.text = 'Thank you for voting, ' + vote.toUpperCase()
             const thanksJSON = require(`./electionJSON/thanks_${data[1]}.json`)
             const ratingJSON = require('./electionJSON/rating.json')
-            await client.replyMessage(replyToken, [replyMsg, ratingJSON])
+            await client.replyMessage(replyToken, [thanksJSON, ratingJSON])
           } else {
             let vote = voteData.vote
             replyMsg.text = 'You have already voted, ' + vote.toUpperCase()
@@ -101,7 +100,7 @@ app.post('/election', async (req, res) => {
             const thanksJSON = require('./electionJSON/thanks_rating.json')
             await client.replyMessage(replyToken, thanksJSON)
           } else {
-            replyMsg.text = 'You have already rated,thank you'
+            replyMsg.text = 'You have already rated, thank you'
             await client.replyMessage(replyToken, replyMsg)
           }
           const invitationJSON = require('./electionJSON/invitation.json')
