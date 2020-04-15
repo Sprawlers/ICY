@@ -37,9 +37,9 @@ app.get('/health', (req, res) => {
 app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 
-app.get('/graph', (req, res) => {
-  const team1 = getTeamVotes('team1')
-  const team2 = getTeamVotes('team2')
+app.get('/graph', async (req, res) => {
+  const team1 = await getTeamVotes('team1')
+  const team2 = await getTeamVotes('team2')
   const data = [team1, team2]
   res.render(__dirname + '/graph.ejs', { data })
 })
