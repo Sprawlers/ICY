@@ -76,7 +76,7 @@ app.post('/election', async (req, res) => {
       const userMsg = event.message.text
       if (event.source.type !== 'group') await client.replyMessage(replyToken, followJSON)
       else {
-        if (userMsg[0] === '/') {
+        if (userMsg.charAt(0) === '/') {
           if (userObject.isAdmin) {
             if (userMsg === '/result') {
               const congratJSON = require('./electionJSON/congrat.json')
