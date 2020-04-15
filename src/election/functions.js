@@ -1,5 +1,5 @@
 const processDataForGraph = arr =>
-    arr.map(voter => ({timestamp: voter["createdAt"]["timestamp"]})).map((time, count) => {
+    arr.map(voter => voter["createdAt"]).map((time, count) => {
         console.log(time);
         return ({
             x: (new Date(time)).toString(),
