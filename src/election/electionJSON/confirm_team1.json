@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "Vote team 1",
+  "altText": "Confirm vote TEAM1",
   "contents": {
     "type": "bubble",
     "direction": "ltr",

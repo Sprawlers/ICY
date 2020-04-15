@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "Thank you",
+  "altText": "Welcome",
   "contents": {
     "type": "bubble",
     "direction": "ltr",
@@ -10,20 +10,11 @@
       "spacing": "sm",
       "contents": [
         {
-          "type": "spacer",
-          "size": "xl"
+          "type": "spacer"
         },
         {
           "type": "text",
-          "text": "🎉  Thank you",
-          "flex": 0,
-          "align": "start",
-          "weight": "bold",
-          "color": "#FFB400"
-        },
-        {
-          "type": "text",
-          "text": "for rating",
+          "text": "👇🏻  Select your team from the menu",
           "flex": 0,
           "align": "center",
           "weight": "regular",
@@ -31,7 +22,7 @@
         },
         {
           "type": "text",
-          "text": "ICY",
+          "text": "below",
           "weight": "bold",
           "color": "#FFB400"
         }
