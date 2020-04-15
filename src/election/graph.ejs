@@ -52,10 +52,7 @@
                                 else return "Time: " + new Date(tooltipItems[0].xLabel).toString().substr(0, 21)
                             },
                             label: function(tooltipItems, data) {
-                                let str = ""
-                                if(tooltipItems[0].datasetIndex === 0) str += "Win and Tantan"
-                                else str += "Punnatt and Punlee"
-                                return str + " " + tooltipItems[0].yLabel + " votes"
+                                return tooltipItems[0].yLabel + " votes"
                             }
                         }
                     }
