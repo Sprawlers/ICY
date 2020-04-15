@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "Flex Message",
+  "altText": "Welcome",
   "contents": {
     "type": "bubble",
     "direction": "ltr",
