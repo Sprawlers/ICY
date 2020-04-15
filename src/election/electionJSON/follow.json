@@ -1,0 +1,37 @@
+{
+  "type": "flex",
+  "altText": "Welcome",
+  "contents": {
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "horizontal",
+      "spacing": "sm",
+      "contents": [
+        {
+          "type": "spacer"
+        },
+        {
+          "type": "text",
+          "text": "👇🏻  Select your team from the menu",
+          "flex": 0,
+          "align": "center",
+          "weight": "regular",
+          "color": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "text": "below",
+          "weight": "bold",
+          "color": "#FFB400"
+        }
+      ]
+    },
+    "styles": {
+      "body": {
+        "backgroundColor": "#344955"
+      }
+    }
+  }
+}

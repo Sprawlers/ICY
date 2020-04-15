@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "Flex Message",
+  "altText": "Rating",
   "contents": {
     "type": "bubble",
     "direction": "ltr",
