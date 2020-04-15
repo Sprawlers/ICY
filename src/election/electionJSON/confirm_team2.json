@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "Confirm Vote",
+  "altText": "Vote team 2",
   "contents": {
     "type": "bubble",
     "direction": "ltr",
@@ -32,42 +32,39 @@
               "color": "#FFFFFF"
             }
           ]
-        }
-      ]
-    },
-    "footer": {
-      "type": "box",
-      "layout": "horizontal",
-      "spacing": "md",
-      "contents": [
-        {
-          "type": "button",
-          "action": {
-            "type": "message",
-            "label": "No",
-            "text": "no"
-          },
-          "color": "#FFF0CC",
-          "style": "secondary"
         },
         {
-          "type": "button",
-          "action": {
-            "type": "postback",
-            "label": "Yes",
-            "displayText": "Vote Team 2",
-            "data": "vote/team2"
-          },
-          "color": "#FFB400",
-          "style": "secondary"
+          "type": "box",
+          "layout": "horizontal",
+          "spacing": "md",
+          "contents": [
+            {
+              "type": "button",
+              "action": {
+                "type": "message",
+                "label": "No",
+                "text": "no"
+              },
+              "color": "#FFF0CC",
+              "style": "secondary"
+            },
+            {
+              "type": "button",
+              "action": {
+                "type": "postback",
+                "label": "Yes",
+                "displayText": "Vote TEAM2",
+                "data": "vote/team2"
+              },
+              "color": "#FFB400",
+              "style": "secondary"
+            }
+          ]
         }
       ]
     },
     "styles": {
       "body": {
-        "backgroundColor": "#344955"
-      },
-      "footer": {
         "backgroundColor": "#344955"
       }
     }

@@ -1,0 +1,46 @@
+{
+  "type": "flex",
+  "altText": "Thank you Rating",
+  "contents": {
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "horizontal",
+      "spacing": "sm",
+      "contents": [
+        {
+          "type": "spacer",
+          "size": "xl"
+        },
+        {
+          "type": "text",
+          "text": "🎉  Thank you",
+          "flex": 0,
+          "align": "start",
+          "weight": "bold",
+          "color": "#FFB400"
+        },
+        {
+          "type": "text",
+          "text": "for rating",
+          "flex": 0,
+          "align": "center",
+          "weight": "regular",
+          "color": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "text": "ICY",
+          "weight": "bold",
+          "color": "#FFB400"
+        }
+      ]
+    },
+    "styles": {
+      "body": {
+        "backgroundColor": "#344955"
+      }
+    }
+  }
+}

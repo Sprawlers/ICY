@@ -1,0 +1,47 @@
+{
+  "type": "flex",
+  "altText": "Thank You TEAM2",
+  "contents": {
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "horizontal",
+      "spacing": "sm",
+      "contents": [
+        {
+          "type": "spacer",
+          "size": "sm"
+        },
+        {
+          "type": "text",
+          "text": "🎉 Thank you ",
+          "flex": 0,
+          "align": "start",
+          "weight": "bold",
+          "color": "#FFB400"
+        },
+        {
+          "type": "text",
+          "text": "for voting",
+          "flex": 0,
+          "align": "center",
+          "weight": "regular",
+          "color": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "text": "TEAM2",
+          "flex": 0,
+          "align": "start",
+          "color": "#FFFFFF"
+        }
+      ]
+    },
+    "styles": {
+      "body": {
+        "backgroundColor": "#344955"
+      }
+    }
+  }
+}
