@@ -50,7 +50,7 @@
               "action": {
                 "type": "postback",
                 "label": "1",
-                "displaytText": "⭐",
+                "displayText": "⭐",
                 "data": "rating/1"
               },
               "color": "#FFF0CC",
@@ -61,7 +61,7 @@
               "action": {
                 "type": "postback",
                 "label": "2",
-                "displaytText": "⭐⭐",
+                "displayText": "⭐⭐",
                 "data": "rating/2"
               },
               "color": "#FFE199",
@@ -72,7 +72,7 @@
               "action": {
                 "type": "postback",
                 "label": "3",
-                "displaytText": "⭐⭐⭐",
+                "displayText": "⭐⭐⭐",
                 "data": "rating/3"
               },
               "color": "#FFD266",
@@ -94,7 +94,7 @@
               "action": {
                 "type": "postback",
                 "label": "5",
-                "displaytText": "⭐⭐⭐⭐⭐",
+                "displayText": "⭐⭐⭐⭐⭐",
                 "data": "rating/5"
               },
               "color": "#FDB813",
