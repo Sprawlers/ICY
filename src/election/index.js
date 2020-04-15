@@ -84,11 +84,13 @@ app.post('/election', async (req, res) => {
             else if (data[1] === 'team2') vote = 'team2'
             await addVote(userID, userObject.profileName, vote)
             replyMsg.text = 'Thank you for voting, ' + vote.toUpperCase()
+            const ratingJSON = require('./electionJSON/rating.json')
+            await client.replyMessage(replyToken, [replyMsg, ratingJSON])
           } else {
             let vote = voteData.vote
             replyMsg.text = 'You have already voted, ' + vote.toUpperCase()
+            await client.replyMessage(replyToken, replyMsg)
           }
-          await client.replyMessage(replyToken, replyMsg)
           break
         case 'rating':
           const voteData = await getVote(userID)
@@ -97,7 +99,8 @@ app.post('/election', async (req, res) => {
             await addRating(userID, rating)
             replyMsg.text = 'Thank you for rating'
           } else replyMsg.text = 'You have already rated,thank you'
-          await client.replyMessage(replyToken, replyMsg)
+          const invitationJSON = require('./electionJSON/invitation.json')
+          await client.replyMessage(replyToken, [replyMsg, invitationJSON])
           break
       }
       break
