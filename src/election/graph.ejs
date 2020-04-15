@@ -9,14 +9,14 @@
         <canvas id="myChart"></canvas>
         <script>
 
-            const s1 = {
-                label: 's1',
+            const t1 = {
+                label: 'Win and Tantan (' + <%=t1.length%> + ') votes',
                 borderColor: 'blue',
                 data: <%- JSON.stringify(team1) %>
             };
 
-            const s2 = {
-                label: 's2',
+            const t2 = {
+                label: 'Punnatt and Punlee (' + <%=t2.length%> + ') votes',
                 borderColor: 'red',
                 data: <%- JSON.stringify(team2) %>
             };
@@ -24,7 +24,7 @@
             const ctx = document.getElementById('myChart').getContext('2d');
             const chart = new Chart(ctx, {
                 type: 'line',
-                data: { datasets: [s1, s2] },
+                data: { datasets: [t1, t2] },
                 options: {
                     scales: {
                         xAxes: [{
