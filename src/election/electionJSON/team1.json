@@ -30,14 +30,6 @@
               "gravity": "center",
               "color": "#FFFFFF",
               "wrap": true
-            },
-            {
-              "type": "text",
-              "text": "Please make sure that you select the correct team before confirm the vote 🥺 ",
-              "align": "center",
-              "gravity": "center",
-              "color": "#FFFFFF",
-              "wrap": true
             }
           ]
         },
