@@ -12,6 +12,8 @@
             const t1 = {
                 label: 'Win and Tantan (' + <%=team1.length - 1%> + ' votes)',
                 borderColor: 'rgb(240, 84, 128)',
+                pointBorderColor: "rgb(240, 84, 128)",
+                pointBackgroundColor: "#fff",
                 fill: false,
                 data: <%- JSON.stringify(team1) %>
             };
@@ -19,6 +21,8 @@
             const t2 = {
                 label: 'Punnatt and Punlee (' + <%=team2.length - 1%> + ' votes)',
                 borderColor: 'rgb(84, 161, 238)',
+                pointBorderColor: "rgb(240, 84, 128)",
+                pointBackgroundColor: "#fff",
                 fill: false,
                 data: <%- JSON.stringify(team2) %>
             };
