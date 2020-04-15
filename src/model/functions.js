@@ -53,7 +53,7 @@ function addLog(userID, profileName, type, data) {
 }
 
 function addVote(userID, profileName, vote) {
-  return Election.create({ userID, profileName, vote })
+  return Election.findOneAndUpdate({ userID, profileName, vote })
 }
 
 function getVote(userID) {
