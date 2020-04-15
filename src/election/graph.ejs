@@ -12,13 +12,13 @@
             const s1 = {
                 label: 's1',
                 borderColor: 'blue',
-                data: <%= team1 %>
+                data: <%- JSON.stringify(team1) %>
             };
 
             const s2 = {
                 label: 's2',
                 borderColor: 'red',
-                data: <%= team2 %>
+                data: <%- JSON.stringify(team2) %>
             };
 
             const ctx = document.getElementById('myChart').getContext('2d');
