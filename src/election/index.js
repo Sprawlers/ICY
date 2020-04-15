@@ -122,6 +122,7 @@ app.post('/election', async (req, res) => {
     default:
       break
   }
+  res.status(200).send('OK')
 })
 
 app.listen(config.port, () => {
