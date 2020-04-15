@@ -1,4 +1,5 @@
 const Chart = require('chart.js')
+const moment = require('moment')
 
 const data = {
     labels: hours,

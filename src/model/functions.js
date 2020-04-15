@@ -4,7 +4,6 @@ const Feedback = require('./schema/Feedback')
 const Course = require('./schema/Course')
 const Log = require('./schema/Log')
 const Election = require('./schema/Election')
-const Rating = require('./schema/Rating')
 
 async function getAllHomework() {
     return await Homework.find({})
@@ -56,12 +55,12 @@ function addVote(userID, profileName, vote) {
     return Election.create({userID, profileName, vote})
 }
 
-function getVote(userID) {
-    return Election.findOne({userID})
+function addRating(userID, rating) {
+    return Election.findOneAndUpdate({userID}, {$set: rating}, {upsert: true})
 }
 
-function addRating(userID, rating) {
-    return Rating.create({userID, rating})
+function getVote(userID) {
+    return Election.findOne({userID})
 }
 
 module.exports = {
@@ -76,7 +75,7 @@ module.exports = {
     addUser,
     addFeedback,
     addLog,
-    addVote,
     addRating,
+    addVote,
     delUser,
 }
