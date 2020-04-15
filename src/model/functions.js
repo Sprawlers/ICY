@@ -61,11 +61,7 @@ function getVote(userID) {
 }
 
 function addRating(userID, rating) {
-<<<<<<< HEAD
-  return Rating.findOneAndUpdate({ userID, rating })
-=======
   return Rating.findOneAndUpdate({ userID }, { $set: rating })
->>>>>>> 0f22fb7803968761b7524803dd03f84c40ae4187
 }
 
 module.exports = {
