@@ -52,7 +52,7 @@
                                 else return "Time: " + new Date(tooltipItems[0].xLabel).toString().substr(0, 21)
                             },
                             label: function(tooltipItems, data) {
-                                return data.datasets[tooltipItems.datasetIndex] || ''
+                                return tooltipItems.index
                             }
                         }
                     }
