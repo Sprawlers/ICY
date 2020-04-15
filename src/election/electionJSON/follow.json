@@ -10,7 +10,8 @@
       "spacing": "sm",
       "contents": [
         {
-          "type": "spacer"
+          "type": "spacer",
+          "size": "xs"
         },
         {
           "type": "text",
