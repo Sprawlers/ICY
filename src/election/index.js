@@ -57,10 +57,12 @@ app.post('/election', async (req, res) => {
     if (!obj) return true
     return Object.keys(obj).length === 0
   }
+  const followJSON = require('./electionJSON/follow.json')
+  const invitationJSON = require('./electionJSON/invitation.json')
+
   switch (event.type) {
     case 'message':
-      replyMsg.text = 'Please select your team from the menu below...'
-      await client.replyMessage(replyToken, replyMsg)
+      await client.replyMessage(replyToken, followJSON)
       break
     case 'postback':
       const postback = event.postback
@@ -86,28 +88,25 @@ app.post('/election', async (req, res) => {
             const ratingJSON = require('./electionJSON/rating.json')
             await client.replyMessage(replyToken, [thanksJSON, ratingJSON])
           } else {
-            let vote = voteData.vote
-            replyMsg.text = 'You have already voted, ' + vote.toUpperCase()
-            await client.replyMessage(replyToken, replyMsg)
+            const votedJSON = require('./electionJSON/voted.json')
+            await client.replyMessage(replyToken, [votedJSON, invitationJSON])
           }
           break
         case 'rating':
           const votedata = await getVote(userID)
           const thanksJSON = require('./electionJSON/thanks_rating.json')
-          const invitationJSON = require('./electionJSON/invitation.json')
           if (!votedata.rating) {
             const rating = Number.parseInt(data[1])
             await addRating(userID, rating)
             await client.replyMessage(replyToken, [thanksJSON, invitationJSON])
           } else {
-            replyMsg.text = 'You have already rated, thank you'
-            await client.replyMessage(replyToken, [replyMsg, invitationJSON])
+            const ratedJSON = require('./electionJSON/rated.json')
+            await client.replyMessage(replyToken, [ratedJSON, invitationJSON])
           }
           break
       }
       break
     case 'follow':
-      const followJSON = require('./electionJSON/follow.json')
       await client.replyMessage(replyToken, followJSON)
       break
     case 'unfollow':

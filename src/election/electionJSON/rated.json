@@ -1,20 +1,21 @@
 {
   "type": "flex",
-  "altText": "Flex Message",
+  "altText": "Rated",
   "contents": {
     "type": "bubble",
     "direction": "ltr",
     "body": {
       "type": "box",
-      "layout": "horizontal",
+      "layout": "baseline",
       "spacing": "sm",
       "contents": [
         {
-          "type": "spacer"
+          "type": "spacer",
+          "size": "xl"
         },
         {
           "type": "text",
-          "text": "👇🏻  Select your team from",
+          "text": "🤫 You have ",
           "flex": 0,
           "align": "center",
           "weight": "regular",
@@ -22,7 +23,7 @@
         },
         {
           "type": "text",
-          "text": "below",
+          "text": "already rated",
           "weight": "bold",
           "color": "#FFB400"
         }
