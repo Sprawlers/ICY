@@ -48,16 +48,16 @@
                                 if((tooltipItems[0].datasetIndex === 0
                                     && tooltipItems[0].index === <%=team1.length - 1%>)
                                     || (tooltipItems[0].datasetIndex === 1
-                                        && tooltipItems[0].index === <%=team2.length - 1%>)) return "Current data"
+                                        && tooltipItems[0].index === <%=team2.length - 1%>)) return "Latest"
                                 else return "Time: " + new Date(tooltipItems[0].xLabel).toString().substr(0, 21)
                             },
                             label: function(tooltipItems, data) {
                                 if(tooltipItems.datasetIndex === 0) {
                                     if(tooltipItems.index === <%=team1.length - 1%>) return ""
-                                    else return tooltipItems.index + 1
+                                    else return "Win and Tantan: " + tooltipItems.index + 1 + " votes"
                                 } else {
                                     if(tooltipItems.index === <%=team2.length - 1%>) return ""
-                                    else return tooltipItems.index + 1
+                                    else return "Punnatt and Punlee: " + tooltipItems.index + 1 + " votes"
                                 }
                             }
                         }
