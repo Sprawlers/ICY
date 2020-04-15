@@ -52,7 +52,13 @@
                                 else return "Time: " + new Date(tooltipItems[0].xLabel).toString().substr(0, 21)
                             },
                             label: function(tooltipItems, data) {
-                                return tooltipItems.index
+                                if(tooltipItems.datasetIndex === 0) {
+                                    if(tooltipItems.index === <%=team1.length - 1%>) return ""
+                                    else return tooltipItems.index + 1
+                                } else {
+                                    if(tooltipItems.index === <%=team2.length - 1%>) return ""
+                                    else return tooltipItems.index + 1
+                                }
                             }
                         }
                     }
