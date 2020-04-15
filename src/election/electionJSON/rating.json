@@ -83,7 +83,7 @@
               "action": {
                 "type": "postback",
                 "label": "4",
-                "displaytText": "⭐⭐⭐⭐",
+                "displayText": "⭐⭐⭐⭐",
                 "data": "rating/4"
               },
               "color": "#FFC333",
