@@ -45,8 +45,9 @@
                     aspectRatio: 2,
                     tooltips: {
                         callbacks: {
-                            title: function(tooltipItem, data) {
-                                return "Time: " + new Date(tooltipItem.xLabel).toString().substr(0, 21)
+                            title: function(tooltipItems, data) {
+                                if(tooltipItems[0].yLabel > <%=team2.length - 2%>) return "Current Status"
+                                return "Time: " + new Date(tooltipItems[0].xLabel).toString().substr(0, 21)
                             }
                         }
                     }

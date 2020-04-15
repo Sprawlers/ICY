@@ -10,11 +10,11 @@ const processDataForGraph = arr =>
 const normalizeLatestTime = (arr1, arr2) => {
     arr1.push({
         x: new Date(Date.now()),
-        y: arr1.length
+        y: arr1.length + 1
     })
     arr2.push({
         x: new Date(Date.now()),
-        y: arr2.length
+        y: arr2.length + 1
     })
 }
 
