@@ -8,7 +8,7 @@ const crypto = require('crypto')
 const app = express()
 
 // Import database functions
-const { getUserByID, addUser, addFeedback, delUser, getVote, addVote, addRating } = require('../model/functions')
+const { getUserByID, addUser, addFeedback, delUser, getVote, addVote, addRating, getTeamVotes } = require('../model/functions')
 
 //Initialize middleware
 app.use(bodyParser.json())
@@ -31,6 +31,12 @@ app.get('/', (req, res) => {
 // For health check from server
 app.get('/health', (req, res) => {
   res.status(200).send('OK')
+})
+
+app.get('/graph', (req, res) => {
+  let team1 = getTeamVotes('team1')
+  res.send(team1)
+  res.render('index.ejs', {})
 })
 
 app.post('/election', async (req, res) => {
