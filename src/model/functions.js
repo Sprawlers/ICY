@@ -63,8 +63,8 @@ function getVote(userID) {
   return Election.findOne({ userID })
 }
 
-async function getAllVotes() {
-  return await Election.find({})
+async function getTeamVotes(team) {
+  return await Election.find({ vote: team })
 }
 
 module.exports = {
@@ -75,7 +75,7 @@ module.exports = {
   getCourse,
   getAdminID,
   getVote,
-  getAllVotes,
+  getTeamVotes,
   addHomework,
   addUser,
   addFeedback,
