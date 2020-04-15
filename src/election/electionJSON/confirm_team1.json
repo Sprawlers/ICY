@@ -1,6 +1,6 @@
 {
   "type": "flex",
-  "altText": "Vote Team 1",
+  "altText": "Confirm Vote",
   "contents": {
     "type": "bubble",
     "direction": "ltr",
@@ -11,15 +11,27 @@
       "contents": [
         {
           "type": "text",
-          "text": "Confirm vote for Team 1?",
-          "flex": 9,
+          "text": "🗳️ Confirm vote?",
+          "size": "lg",
+          "align": "center",
+          "weight": "bold",
           "color": "#FFFFFF",
           "wrap": true
         },
         {
-          "type": "text",
-          "text": "(Win & Tantan)",
-          "color": "#FFFFFF"
+          "type": "separator"
+        },
+        {
+          "type": "box",
+          "layout": "baseline",
+          "contents": [
+            {
+              "type": "text",
+              "text": "Team 1: Win & Tantan",
+              "align": "center",
+              "color": "#FFFFFF"
+            }
+          ]
         }
       ]
     },
@@ -31,22 +43,22 @@
         {
           "type": "button",
           "action": {
-            "type": "postback",
-            "label": "Yes",
-            "displayText": "Yes",
-            "data": "vote/team1"
+            "type": "message",
+            "label": "No",
+            "text": "no"
           },
-          "color": "#FDB813",
+          "color": "#FFF0CC",
           "style": "secondary"
         },
         {
           "type": "button",
           "action": {
-            "type": "message",
-            "label": "No",
-            "text": "No"
+            "type": "postback",
+            "label": "Yes",
+            "displayText": "Vote Team 1",
+            "data": "vote/team1"
           },
-          "color": "#FDB813",
+          "color": "#FFB400",
           "style": "secondary"
         }
       ]
