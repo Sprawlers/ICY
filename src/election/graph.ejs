@@ -10,13 +10,13 @@
         <script>
 
             const t1 = {
-                label: 'Win and Tantan (' + <%=team1.length - 1%> + ' votes)',
+                label: 'Win and Tantan (' + <%=team1.length - 2%> + ' votes)',
                 borderColor: 'blue',
                 data: <%- JSON.stringify(team1) %>
             };
 
             const t2 = {
-                label: 'Punnatt and Punlee (' + <%=team2.length - 1%> + ' votes)',
+                label: 'Punnatt and Punlee (' + <%=team2.length - 2%> + ' votes)',
                 borderColor: 'red',
                 data: <%- JSON.stringify(team2) %>
             };
@@ -54,10 +54,10 @@
                             label: function(tooltipItems, data) {
                                 if(tooltipItems.datasetIndex === 0) {
                                     if(tooltipItems.index === <%=team1.length - 1%>) return ""
-                                    else return "Win and Tantan: " + tooltipItems.index + 1 + " votes"
+                                    else return "Win and Tantan: " + (tooltipItems.index + 1) + " votes"
                                 } else {
                                     if(tooltipItems.index === <%=team2.length - 1%>) return ""
-                                    else return "Punnatt and Punlee: " + tooltipItems.index + 1 + " votes"
+                                    else return "Punnatt and Punlee: " + (tooltipItems.index + 1) + " votes"
                                 }
                             }
                         }
