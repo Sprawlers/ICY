@@ -1,1 +1,7 @@
-const chart = require('chart.js')
+const Chart = require('chart.js')
+
+var lineChart = new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options: options
+});
