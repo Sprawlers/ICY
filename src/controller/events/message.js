@@ -15,7 +15,7 @@ const handleMessage = async (event, client, userObject) => {
     await client.replyMessage(replyToken, replyMsg)
     return messagelog
   }
-  let userMsg = event.message.text
+  const userMsg = event.message.text
   //add user message to messagelog.user
   messagelog.user = userMsg
   //if user input is clear, it will clear dialogflow context.
@@ -24,6 +24,14 @@ const handleMessage = async (event, client, userObject) => {
     messagelog.bot = replyMsg.text
     await clearContext(userID)
     await client.replyMessage(replyToken, replyMsg)
+    return messagelog
+  }
+  if (userMsg.charAt(0) === '/' && userMsg.length > 1) {
+    if (userObject.isAdmin) messagelog.bot = await handleAdmin(client, userMsg)
+    else {
+      replyMsg.text = "Sorry, I didn't get that!"
+      messagelog.bot = replyMsg.text
+    }
     return messagelog
   }
 

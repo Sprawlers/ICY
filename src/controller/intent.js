@@ -1,6 +1,7 @@
 const moment = require('moment')
 const { getAllCourses, getAllHomework, getAdminID, addFeedback, addHomework } = require('../model/functions')
-const { generateHomework, generateSubjectList, generateNotes } = require('./functions')
+const { generateHomeworkJSON, generateNotes } = require('./functions')
+const { clearContext } = require('./dialogflow')
 
 const handleIntent = async (intentResponse, userObject, client, replyToken) => {
   const replyMsg = { type: 'text' }
@@ -10,18 +11,23 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
   console.log(`Intent: ${intent}`)
   const userID = userObject.userID
   switch (intent) {
+    case 'Default Welcome Intent':
+      replyMsg.text = query.fulfillmentText
+      await client.replyMessage(replyToken, replyMsg)
+      break
+    case 'Default Fallback Intent':
+      replyMsg.text = query.fulfillmentText
+      await client.replyMessage(replyToken, replyMsg)
     case 'Homework':
       //Generate reply JSON from homework collection
-      const homeworkJSON = generateHomework(await getAllHomework())
+      const homeworkJSON = generateHomeworkJSON(await getAllHomework())
       replyMsg.text = 'Homework Carousel'
       await client.replyMessage(replyToken, homeworkJSON)
       break
     case 'save_feedback - yes':
-      // Get array of AdminID
       const adminID = await getAdminID()
       replyMsg.text = query.fulfillmentText
       const feedback = query.parameters.fields.details.stringValue
-      //add feedback to feedback collection
       await addFeedback(userID, userObject.profileName, 'message', feedback)
       //feedbackMsg to send to admin
       const feedbackMsg = {
@@ -30,17 +36,6 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       }
       //Multicast to all admin
       await client.multicast(adminID, feedbackMsg)
-      await client.replyMessage(replyToken, replyMsg)
-      break
-    case 'Announce':
-      //If user is not an admin, clear dialogflow context
-      if (!userObject.isAdmin) {
-        replyMsg.text = "Sorry, I didn't get that!"
-        await clearContext(userID)
-        await client.replyMessage(replyToken, replyMsg)
-        break
-      }
-      replyMsg.text = query.fulfillmentText
       await client.replyMessage(replyToken, replyMsg)
       break
     case 'Broadcast - yes':
@@ -53,19 +48,6 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       //Broadcast to all users
       await client.broadcast(broadcastMsg)
       await client.replyMessage(replyToken, replyMsg)
-      break
-    case 'Upload':
-      //If user is not an admin, clear dialogflow context
-      if (!userObject.isAdmin) {
-        replyMsg.text = "Sorry, I didn't get that!"
-        await clearContext(userID)
-        await client.replyMessage(replyToken, replyMsg)
-        break
-      }
-      replyMsg.text = query.fulfillmentText
-      //Get all courses from courses collection and generate reply JSON from courses
-      const subjectList = generateSubjectList(await getAllCourses())
-      await client.replyMessage(replyToken, [replyMsg, subjectList])
       break
     case 'Subject':
       replyMsg.text = query.fulfillmentText
@@ -107,8 +89,8 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       await client.replyMessage(replyToken, notesList)
       break
     default:
-      //If no additional action required, just reply to user
-      replyMsg.text = query.fulfillmentText
+      await clearContext(userID)
+      replyMsg.text = "Sorry, I didn't get that!"
       await client.replyMessage(replyToken, replyMsg)
       break
   }
