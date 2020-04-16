@@ -6,9 +6,9 @@ const bubble = require('../json/homeworkJSON.json')
 const flexMessage = require('../json/flexTemplate.json')
 
 const generateHomework = (arr) => {
-    let msg = clone(flexMessage)
-    msg = {...msg, altText: "homework", contents: {type: "carousel", contents: generateBubbles(arr)}}
-    console.log(msg)
+    let msg = {...flexMessage, altText: "homework", contents: {type: "carousel", contents: generateBubbles(arr)}}
+    console.log(generateBubbles(arr))
+    console.log(msg.contents)
     return msg
 }
 
