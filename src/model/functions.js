@@ -51,8 +51,8 @@ function addFeedback(userID, profileName, type, text) {
   return Feedback.create({ userID, profileName, type, text })
 }
 
-function addHomework(subject, deadline, filename, link) {
-  const assignments = { deadline, link } // plural name so it can use ES6 destructure
+function addHomework(subject, deadline, name, link) {
+  const assignments = { name, deadline, link } // plural name so it can use ES6 destructure
   return Homework.findOneAndUpdate({ title: subject }, { $push: { assignments } }, { upsert: true })
 }
 
