@@ -34,10 +34,9 @@ const generateAssignments = async (arr, subjectName) => {
     const assignments = arr.filter(subject => subject.title === subjectName).map(subject => subject.assignments)
 
     console.log("DEBUG")
-    console.log(Object.keys(assignments))
 
     const mapped = await
-        Promise.map(Object.keys(assignments), async task => {
+        Promise.map(assignments, async task => {
             console.log("DEBUG")
             console.log(task)
             return ({

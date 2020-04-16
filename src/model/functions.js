@@ -34,6 +34,10 @@ function addCourse(courseName, code, examDates = [], notes = []) {
     return Course.create({title: courseName, code, examDates, notes})
 }
 
+function addNotes(subject, filename, link) {
+    return Course.findOneAndUpdate({title: subject}, {$set: notes}, {upsert: true})
+}
+
 function addUser(userID, profileName) {
     return User.create({userID, profileName, isAdmin: false})
 }
