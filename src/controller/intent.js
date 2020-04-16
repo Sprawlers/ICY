@@ -38,6 +38,11 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       await client.multicast(adminID, feedbackMsg)
       await client.replyMessage(replyToken, replyMsg)
       break
+    case 'Annouce':
+      await clearContext(userID)
+      replyMsg.text = "Sorry, I didn't get that!"
+      await client.replyMessage(replyToken, replyMsg)
+      break
     case 'Broadcast - yes':
       replyMsg.text = query.fulfillmentText
       const broadcast = query.parameters.fields.message.stringValue
@@ -47,6 +52,11 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       }
       //Broadcast to all users
       await client.broadcast(broadcastMsg)
+      await client.replyMessage(replyToken, replyMsg)
+      break
+    case 'Upload':
+      await clearContext(userID)
+      replyMsg.text = "Sorry, I didn't get that!"
       await client.replyMessage(replyToken, replyMsg)
       break
     case 'Subject':
@@ -89,8 +99,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       await client.replyMessage(replyToken, notesList)
       break
     default:
-      await clearContext(userID)
-      replyMsg.text = "Sorry, I didn't get that!"
+      replyMsg.text = query.fulfillmentText
       await client.replyMessage(replyToken, replyMsg)
       break
   }
