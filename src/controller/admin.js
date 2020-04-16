@@ -13,7 +13,7 @@ const handleAdmin = async (event, client, userObject) => {
         const intentResponse = await detectIntent(userID, 'broadcast', 'en-US')
         const query = intentResponse.queryResult
         replyMsg.text = query.fulfillmentText
-        await client.replyMsg(replyToken, replyMsg)
+        await client.replyMessage(replyToken, replyMsg)
       }
       break
     case '/uploadhw':
