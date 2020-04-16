@@ -82,25 +82,29 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       await client.replyMessage(replyToken, datetime)
       break
     case 'Homework_url - yes':
-      const params = query.parameters.fields
-      const subject = params.subject.stringValue
-      const filename = params.filename.stringValue
-      const url = params.url.stringValue
-      replyMsg.text = query.fulfillmentText
-      await addNotes(subject, filename, url)
-      await client.replyMessage(replyToken, replyMsg)
+      {
+        const params = query.parameters.fields
+        const subject = params.subject.stringValue
+        const filename = params.filename.stringValue
+        const url = params.url.stringValue
+        replyMsg.text = query.fulfillmentText
+        await addNotes(subject, filename, url)
+        await client.replyMessage(replyToken, replyMsg)
+      }
       break
     case 'Notes_url - yes':
-      const params = query.parameters.fields
-      const subject = params.subject.stringValue
-      //Convert deadline to UTC
-      const deadline = new Date(moment(new Date(params.deadline.stringValue)).subtract(7, 'hours'))
-      const filename = params.filename.stringValue
-      const url = params.url.stringValue
-      replyMsg.text = query.fulfillmentText
-      //Add homework to homework collection
-      await addHomework(subject, deadline, filename, url)
-      await client.replyMessage(replyToken, replyMsg)
+      {
+        const params = query.parameters.fields
+        const subject = params.subject.stringValue
+        //Convert deadline to UTC
+        const deadline = new Date(moment(new Date(params.deadline.stringValue)).subtract(7, 'hours'))
+        const filename = params.filename.stringValue
+        const url = params.url.stringValue
+        replyMsg.text = query.fulfillmentText
+        //Add homework to homework collection
+        await addHomework(subject, deadline, filename, url)
+        await client.replyMessage(replyToken, replyMsg)
+      }
       break
     case 'Notes':
       //Get all courses from courses collection and generate notesList from courses
