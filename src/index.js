@@ -47,7 +47,7 @@ app.post('/webhook', async (req, res) => {
   if (signature !== req.headers['x-line-signature']) {
     return res.status(401).send('Unauthorized')
   }
-
+  res.status(200).send('OK')
   // Set event
   const event = req.body.events[0]
 
