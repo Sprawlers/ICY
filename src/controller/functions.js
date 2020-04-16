@@ -33,17 +33,20 @@ const generateNotes = async (arr) => {
 const generateAssignments = async (arr, subjectName) => {
     const assignments = arr.filter(subject => subject.title === subjectName).map(subject => subject.assignments)
 
-    const mapped = await Promise.all(
-        Object.keys(assignments).map(async task => {
+    console.log("DEBUG")
+    console.log(Object.keys(assignments))
+
+    const mapped = await
+        Promise.map(Object.keys(assignments), async task => {
             console.log("DEBUG")
             console.log(task)
-            return  ({
+            return ({
                 task: task,
                 link: await shortenURL(assignments[task].link),
                 deadline: assignments[task].deadline
             })
         })
-    )
+
     // Obtain array of mapped objects and sort the assignments by their deadline
     const sorted = sortByParam(mapped, 'deadline')
     // Format the array into a readable string
