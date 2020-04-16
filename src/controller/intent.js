@@ -114,6 +114,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       break
     case 'Notes':
       //Get all courses from courses collection and generate notesList from courses
+      replyMsg.text = 'Notes list'
       const notesList = await generateNotes(await getAllCourses())
       await client.replyMessage(replyToken, notesList)
       break
