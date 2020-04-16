@@ -9,13 +9,13 @@ const handleEvent = async (event, userObject, client) => {
       //for handling message and return messagelog
       const messagelog = await handleMessage(event, client, userObject)
       console.log(messagelog)
-      if (!userObject.isAdmin) await addLog(userID, userObject.profileName, event.type, messagelog)
+      await addLog(userID, userObject.profileName, event.type, messagelog)
       break
     case 'postback':
       //for handling postback and return postbacklog
       const postbacklog = await handlePostback(event, client, userObject)
       console.log(postbacklog)
-      if (!userObject.isAdmin) await addLog(userID, userObject.profileName, postbacklog.type, postbacklog.data)
+      await addLog(userID, userObject.profileName, postbacklog.type, postbacklog.data)
       break
     case 'unfollow':
       //add unfollow to feedback collection and delete user from user collection
