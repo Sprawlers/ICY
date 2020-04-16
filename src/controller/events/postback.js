@@ -1,5 +1,5 @@
 const { detectIntent, clearContext } = require('../dialogflow')
-const { generateHomework, generateAssignments, generateNotes } = require('../functions')
+const { generateHomeworkJSON, generateAssignments, generateNotes } = require('../functions')
 const { getAllHomework, getAllCourses } = require('../../model/functions')
 
 const handlePostback = async (event, client, userObject) => {
@@ -30,7 +30,7 @@ const handlePostback = async (event, client, userObject) => {
       switch (data[1]) {
         case 'homework':
           //Generate reply JSON from homework collection
-          const payloadJSON = generateHomework(await getAllHomework())
+          const payloadJSON = generateHomeworkJSON(await getAllHomework())
           await client.replyMessage(event.replyToken, payloadJSON)
           break
         case 'notes':

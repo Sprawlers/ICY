@@ -1,5 +1,6 @@
 const { detectIntent, clearContext } = require('../dialogflow')
 const { handleIntent } = require('../intent')
+const { handleAdmin } = require('../admin')
 
 const handleMessage = async (event, client, userObject) => {
   //Initialize replyMsg and messagelog object
@@ -27,10 +28,11 @@ const handleMessage = async (event, client, userObject) => {
     return messagelog
   }
   if (userMsg.charAt(0) === '/' && userMsg.length > 1) {
-    if (userObject.isAdmin) messagelog.bot = await handleAdmin(client, userMsg)
+    if (userObject.isAdmin) messagelog.bot = await handleAdmin(event, client, userObject)
     else {
       replyMsg.text = "Sorry, I didn't get that!"
       messagelog.bot = replyMsg.text
+      await client.replyMessage(replyToken, replyMsg)
     }
     return messagelog
   }
