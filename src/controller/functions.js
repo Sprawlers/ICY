@@ -5,6 +5,8 @@ const config = require('../config')
 const bubble = require('../json/homeworkJSON.json')
 const flexMessage = require('../json/flexTemplate.json')
 
+const safeParseObject = obj => JSON.parse(JSON.stringify(obj))
+
 const generateHomeworkJSON = (arr) => ({
     ...flexMessage,
     altText: "homework",
@@ -29,8 +31,9 @@ const generateNotes = async (arr) => {
 
 // Generate subject-specific JSON payload of assignment list given array of homework object and subject name
 const generateAssignments = async (arr, title) => {
-    // Obtain object of assignment objects
-    const assignments = JSON.parse(JSON.stringify(...arr.filter((obj) => obj['title'] === title)))['assignments']
+    console.log("DEBUG:")
+    console.log(arr)
+    const assignments = safeParseObject(...arr.filter(obj => obj.title === title)).assignments
     // Construct a new array of objects from assignments for sorting
     const mapped = await Promise.all(
         Object.keys(assignments).map(async (task) => ({
