@@ -93,6 +93,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
         const params = query.parameters.fields
         const subject = params.subject.stringValue
         const filename = params.filename.stringValue
+        const deadline = new Date(moment(new Date(params.deadline.stringValue)).subtract(7, 'hours'))
         const url = params.url.stringValue
         replyMsg.text = query.fulfillmentText
         await addHomework(subject, deadline, filename, url)
@@ -104,7 +105,6 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
         const params = query.parameters.fields
         const subject = params.subject.stringValue
         //Convert deadline to UTC
-        const deadline = new Date(moment(new Date(params.deadline.stringValue)).subtract(7, 'hours'))
         const filename = params.filename.stringValue
         const url = params.url.stringValue
         replyMsg.text = query.fulfillmentText
