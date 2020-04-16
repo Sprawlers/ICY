@@ -7,80 +7,76 @@ const Election = require('./schema/Election')
 
 // Gets all homework documents, called with hw()
 async function getAllHomework() {
-  return await Homework.find({})
+    return await Homework.find({})
 }
 
-// Gets a user by UUID
 function getUserByID(userID) {
-  return User.findOne({ userID })
+    return User.findOne({userID})
 }
 
-// Gets all users
 async function getAllUsers() {
-  return await User.find({})
+    return await User.find({})
 }
 
-// Gets all admin users
 function getAdminID() {
-  return User.distinct('userID', { isAdmin: true })
+    return User.distinct('userID', {isAdmin: true})
 }
 
-// Gets all subjects
 async function getAllCourses() {
-  return await Course.find({})
+    return await Course.find({})
 }
 
-// Gets a particular course
 function getCourse(courseName) {
-  return Course.findOne({ title: courseName })
+    return Course.findOne({title: courseName})
 }
 
-// Adds a new user
+function addCourse(courseName, code, examDates = [], notes = []) {
+    return Course.create({title: courseName, code, examDates, notes})
+}
+
 function addUser(userID, profileName) {
-  return User.create({ userID, profileName, isAdmin: false })
+    return User.create({userID, profileName, isAdmin: false})
 }
 
-// Deletes a user
 function delUser(userID) {
-  return User.deleteOne({ userID })
+    return User.deleteOne({userID})
 }
 
-// Adds a new feedback
 function addFeedback(userID, profileName, type, text) {
-  return Feedback.create({ userID, profileName, type, text })
+    return Feedback.create({userID, profileName, type, text})
 }
 
-// Adds a new homework assignment given parameters
 function addHomework(subject, deadline, filename, link) {
-  const hw = {}
-  hw['assignments.' + filename] = { deadline, link }
-  return Homework.findOneAndUpdate({ title: subject }, { $set: hw }, { upsert: true })
+    const hw = {}
+    hw['assignments.' + filename] = {deadline, link}
+    return Homework.findOneAndUpdate({title: subject}, {$set: hw}, {upsert: true})
 }
 
 function addLog(userID, profileName, type, data) {
-  return Log.create({ userID, profileName, type, data })
+    return Log.create({userID, profileName, type, data})
 }
 
 function addVote(userID, profileName, vote) {
-  return Election.create({ userID, profileName, vote })
+    return Election.create({userID, profileName, vote})
 }
 
 function getVote(userID) {
-  return Election.findOne({ userID })
+    return Election.findOne({userID})
 }
 
 module.exports = {
-  getAllHomework,
-  getUserByID,
-  getAllUsers,
-  getAllCourses,
-  getCourse,
-  getAdminID,
-  getVote,
-  addHomework,
-  addUser,
-  addFeedback,
-  addLog,
-  addVote,
-  delUser,
+    getAllHomework,
+    getUserByID,
+    getAllUsers,
+    getAllCourses,
+    getCourse,
+    getAdminID,
+    getVote,
+    addHomework,
+    addUser,
+    addFeedback,
+    addLog,
+    addCourse,
+    addVote,
+    delUser,
 }
