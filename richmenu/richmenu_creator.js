@@ -1,11 +1,11 @@
 const newman = require('newman') // require newman in your project
 const api = require('./richmenu_creator.json')
-const richmenu = require('./election/election.json')
+const richmenu = require('./default/richmenu.json')
 // call newman.run to pass `options` object and wait for callback
 let data = JSON.stringify(api)
 let rich = JSON.stringify(richmenu)
 let path = process.cwd()
-path += '/election/election.png'
+path += '/default/version3.png'
 data = data.replace('%PATH%', path)
 rich = rich.replace(/"/g, '\\"')
 data = data.replace('%RICHMENU%', rich)
