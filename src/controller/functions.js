@@ -5,12 +5,11 @@ const config = require('../config')
 const bubble = require('../json/homeworkJSON.json')
 const flexMessage = require('../json/flexTemplate.json')
 
-const generateHomework = (arr) => {
-    let msg = {...flexMessage, altText: "homework", contents: {type: "carousel", contents: generateBubbles(arr)}}
-    console.log(generateBubbles(arr))
-    console.log(msg.contents)
-    return msg
-}
+const generateHomeworkJSON = (arr) => ({
+    ...flexMessage,
+    altText: "homework",
+    contents: {type: "carousel", contents: generateBubbles(arr)}
+})
 
 const generateNotes = async (arr) => {
     // DO NOT TOUCH THIS PART !!! WARNING !!! DANGER !!!
@@ -176,7 +175,7 @@ const getClicksFromURL = async (URL) => {
 
 // Function exports
 module.exports = {
-    generateHomework, // fix this
+    generateHomework: generateHomeworkJSON, // fix this
     generateNotes,
     generateSubjectList,
     generateAssignments,
