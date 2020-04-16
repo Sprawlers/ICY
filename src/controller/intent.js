@@ -95,7 +95,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
         const filename = params.filename.stringValue
         const url = params.url.stringValue
         replyMsg.text = query.fulfillmentText
-        await addNotes(subject, filename, url)
+        await addHomework(subject, deadline, filename, url)
         await client.replyMessage(replyToken, replyMsg)
       }
       break
@@ -108,8 +108,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
         const filename = params.filename.stringValue
         const url = params.url.stringValue
         replyMsg.text = query.fulfillmentText
-        //Add homework to homework collection
-        await addHomework(subject, deadline, filename, url)
+        await addNotes(subject, filename, url)
         await client.replyMessage(replyToken, replyMsg)
       }
       break
