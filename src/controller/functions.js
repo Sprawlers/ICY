@@ -31,7 +31,7 @@ const generateNotes = async (arr) => {
 
 // Generate subject-specific JSON payload of assignment list given array of homework object and subject name
 const generateAssignments = async (arr, subjectName) => {
-    const assignments = arr.filter(subject => subject.title === subjectName).assignments
+    const assignments = arr.find(subject => subject.title === subjectName).assignments
     const sorted = sortByParam(assignments, 'deadline')
     const str = await Promise.map(sorted, async task => {
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
