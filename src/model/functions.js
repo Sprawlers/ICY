@@ -35,7 +35,7 @@ function addCourse(courseName, code, examDates = [], notes = []) {
 }
 
 function addNotes(subject, filename, link) {
-  const notes = { name: filename, link }
+  const notes = { name: filename, link } // plural name so it can use ES6 destructure
   return Course.findOneAndUpdate({ title: subject }, { $push: { notes } }, { upsert: true })
 }
 
@@ -52,9 +52,8 @@ function addFeedback(userID, profileName, type, text) {
 }
 
 function addHomework(subject, deadline, filename, link) {
-  const hw = {}
-  hw['assignments.' + filename] = { deadline, link }
-  return Homework.findOneAndUpdate({ title: subject }, { $set: hw }, { upsert: true })
+  const assignments = { deadline, link } // plural name so it can use ES6 destructure
+  return Homework.findOneAndUpdate({ title: subject }, { $push: { assignments } }, { upsert: true })
 }
 
 function addLog(userID, profileName, type, data) {

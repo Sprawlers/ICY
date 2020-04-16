@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const electionSchama = new Schema(
+const electionSchema = new Schema(
   {
     userID: String,
     profileName: String,
@@ -13,6 +13,6 @@ const electionSchama = new Schema(
   }
 )
 
-const electionModel = mongoose.model('election', electionSchama, 'election')
+const electionModel = mongoose.model('election', electionSchema, 'election')
 
 module.exports = electionModel

@@ -15,7 +15,7 @@ const Schema = mongoose.Schema
 const homeworkSchema = new Schema(
     {
         title: String,
-        assignments: Object
+        assignments: Array
     },
     {versionKey: false}
 )

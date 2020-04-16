@@ -31,40 +31,19 @@ const generateNotes = async (arr) => {
 
 // Generate subject-specific JSON payload of assignment list given array of homework object and subject name
 const generateAssignments = async (arr, subjectName) => {
-    const assignments = arr.filter(subject => subject.title === subjectName).map(subject => subject.assignments)
-
-    console.log("DEBUG")
-
-    const mapped = await
-        Promise.map(assignments, async task => {
-            console.log("DEBUG")
-            console.log(task)
-            return ({
-                task: task,
-                link: await shortenURL(assignments[task].link),
-                deadline: assignments[task].deadline
-            })
-        })
-
-    // Obtain array of mapped objects and sort the assignments by their deadline
-    const sorted = sortByParam(mapped, 'deadline')
-    // Format the array into a readable string
-    const str = sorted
-        .map((task) => {
-            // Checks if the homework is past due date
-            const isOverdue = new Date(task['deadline']) - new Date(Date.now()) < 0
-            // Store date/overdue status
-            const status = isOverdue
-                ? '✅'
-                : '(📅 ' + getDeadlineFromDate(new Date(task['deadline'])) + ' ' + getLocalTimeFromDate(new Date(task['deadline'])) + ')'
-            // Returns message
-            return '-' + task['task'] + ': ' + task['link'] + ' ' + status
-        })
+    const assignments = arr.filter(subject => subject.title === subjectName).assignments
+    const sorted = sortByParam(assignments, 'deadline')
+    const str = await Promise.map(sorted, async task => {
+        const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
+        const status = isOverdue
+            ? '✅'
+            : '(📅 ' + getDeadlineFromDate(new Date(task.deadline)) + ' ' + getLocalTimeFromDate(new Date(task.deadline)) + ')'
+        return '-' + task.name + ': ' + task.link + ' ' + status
+    })
         .join('\n')
-    // Return the text message payload
     return {
         type: 'text',
-        text: `${title}\n${str}`,
+        text: subjectName + '\n' + str,
     }
 }
 
@@ -85,7 +64,7 @@ const sortByParam = (arr, param) => {
 // Returns deadline in {(Month) (Day)} format from JS DateTime Object
 const getDeadlineFromDate = (dateTimeObject) => {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    return `${monthNames[dateTimeObject.getMonth()]} ${dateTimeObject.getDate()}`
+    return monthNames[dateTimeObject.getMonth()] + ' '  + dateTimeObject.getDate()
 }
 
 // Returns local time in HH:MM format from JS DateTime Object
@@ -108,17 +87,14 @@ const clone = (obj) => {
     return temp
 }
 
-// Converts object of objects into an array of objects
-const toArray = (obj_obj) => Object.keys(obj_obj).map((i) => obj_obj[i])
-
 // Returns array of subjects with assignments sorted by deadline
 const getSubjectAssignmentsSorted = (arr) =>
     arr.map((subject) => {
-        const assignments = toArray(JSON.parse(JSON.stringify(subject))['assignments'])
-        const sorted = sortByParam(assignments, 'deadline').filter((subject) => new Date(subject['deadline']) - new Date(Date.now()) > 0)
+        const sorted = sortByParam(subject.assignments, 'deadline')
+            .filter(subject => new Date(subject.deadline) - new Date(Date.now()) > 0)
         return {
-            title: subject['title'],
-            latest: sorted.length ? sorted[0]['deadline'] : false,
+            title: subject.title,
+            latest: sorted.length ? sorted[0].deadline : false,
         }
     })
 
