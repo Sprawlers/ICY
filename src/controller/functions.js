@@ -33,14 +33,14 @@ const generateNotes = async (arr) => {
 const generateAssignments = async (arr, subjectName) => {
     const assignments = arr.find(subject => subject.title === subjectName).assignments
     const sorted = sortByParam(assignments, 'deadline')
-    const str = await Promise.map(sorted, async task => {
+    let str = await Promise.map(sorted, async task => {
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
         const status = isOverdue
             ? '✅'
             : '(📅 ' + getDeadlineFromDate(new Date(task.deadline)) + ' ' + getLocalTimeFromDate(new Date(task.deadline)) + ')'
         return '-' + task.name + ': ' + task.link + ' ' + status
     })
-        .join('\n')
+    str = str.join('\n')
     return {
         type: 'text',
         text: subjectName + '\n' + str,
