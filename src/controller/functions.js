@@ -31,9 +31,7 @@ const generateNotes = async (arr) => {
 
 // Generate subject-specific JSON payload of assignment list given array of homework object and subject name
 const generateAssignments = async (arr, title) => {
-    console.log("DEBUG")
-    console.log(arr.filter(obj => obj.title === title).map(obj => obj.assignments))
-    const assignments = safeParseObject(...arr.filter(obj => obj.title === title)).assignments
+    const assignments = arr.filter(obj => obj.title === title).map(obj => obj.assignments)
     // Construct a new array of objects from assignments for sorting
     const mapped = await Promise.all(
         Object.keys(assignments).map(async (task) => ({
