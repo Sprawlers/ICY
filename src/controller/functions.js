@@ -12,21 +12,18 @@ const generateHomeworkJSON = (arr) => ({
 })
 
 const generateNotes = async (arr) => {
-    // DO NOT TOUCH THIS PART !!! WARNING !!! DANGER !!!
     let str = await Promise.map(arr, async (course) => {
-        let notes = await Promise.map(course['notes'], async (note) => {
-            const shortURL = await shortenURL(note['link'])
-            return '- ' + note['name'] + ': ' + shortURL
+        let notes = await Promise.map(course.notes, async (note) => {
+            const shortenedURL = await shortenURL(note.link)
+            return '- ' + note.name + ': ' + shortenedURL
         })
         notes = notes.join('\n')
-        return `${course['title']}\n${notes}`
+        return course.title + '\n' + notes
     })
     str = str.join('\n')
-    // OKAY NOW YOU CAN CONTINUE AFTER THIS LINE !!!
-    // Return the text message payload
     return {
         type: 'text',
-        text: `📕 NOTES 📕\n${str}`,
+        text: '📕 NOTES 📕\n' + str
     }
 }
 
