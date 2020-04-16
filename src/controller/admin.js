@@ -16,7 +16,7 @@ const handleAdmin = async (event, client, userObject) => {
         await client.replyMessage(replyToken, replyMsg)
       }
       break
-    case '/uploadhw':
+    case '/upload hw':
       {
         const intentResponse = await detectIntent(userID, 'upload homework', 'en-US')
         const query = intentResponse.queryResult
@@ -25,7 +25,7 @@ const handleAdmin = async (event, client, userObject) => {
         await client.replyMessage(replyToken, [replyMsg, subjectList])
       }
       break
-    case '/uploadnotes':
+    case '/upload notes':
       {
         const intentResponse = await detectIntent(userID, 'upload notes', 'en-US')
         const query = intentResponse.queryResult
