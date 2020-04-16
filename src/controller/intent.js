@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { getAllCourses, getAllHomework, getAdminID, addFeedback, addHomework } = require('../model/functions')
+const { getAllCourses, getAllHomework, getAdminID, addFeedback, addHomework, addNotes } = require('../model/functions')
 const { generateHomeworkJSON, generateNotes } = require('./functions')
 const { clearContext } = require('./dialogflow')
 
@@ -38,7 +38,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       await client.multicast(adminID, feedbackMsg)
       await client.replyMessage(replyToken, replyMsg)
       break
-    case 'Annouce':
+    case 'Broadcast':
       await clearContext(userID)
       replyMsg.text = "Sorry, I didn't get that!"
       await client.replyMessage(replyToken, replyMsg)
@@ -54,12 +54,12 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       await client.broadcast(broadcastMsg)
       await client.replyMessage(replyToken, replyMsg)
       break
-    case 'Upload':
+    case 'Homework_upload':
       await clearContext(userID)
       replyMsg.text = "Sorry, I didn't get that!"
       await client.replyMessage(replyToken, replyMsg)
       break
-    case 'Subject':
+    case 'Homework_subject':
       replyMsg.text = query.fulfillmentText
       //Generate quickreply JSON
       const datetime = {
@@ -81,7 +81,16 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       }
       await client.replyMessage(replyToken, datetime)
       break
-    case 'Url - yes':
+    case 'Homework_url - yes':
+      const params = query.parameters.fields
+      const subject = params.subject.stringValue
+      const filename = params.filename.stringValue
+      const url = params.url.stringValue
+      replyMsg.text = query.fulfillmentText
+      await addNotes(subject, filename, url)
+      await client.replyMessage(replyToken, replyMsg)
+      break
+    case 'Notes_url - yes':
       const params = query.parameters.fields
       const subject = params.subject.stringValue
       //Convert deadline to UTC
