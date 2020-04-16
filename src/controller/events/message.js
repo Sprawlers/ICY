@@ -28,7 +28,7 @@ const handleMessage = async (event, client, userObject) => {
     return messagelog
   }
   if (userMsg.charAt(0) === '/' && userMsg.length > 1) {
-    if (userObject.isAdmin) messagelog.bot = await handleAdmin(client, userMsg)
+    if (userObject.isAdmin) messagelog.bot = await handleAdmin(event, client, userObject)
     else {
       replyMsg.text = "Sorry, I didn't get that!"
       messagelog.bot = replyMsg.text
