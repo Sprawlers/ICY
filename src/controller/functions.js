@@ -175,7 +175,7 @@ const getClicksFromURL = async (URL) => {
 
 // Function exports
 module.exports = {
-    generateHomework: generateHomeworkJSON, // fix this
+    generateHomeworkJSON, // fix this
     generateNotes,
     generateSubjectList,
     generateAssignments,
