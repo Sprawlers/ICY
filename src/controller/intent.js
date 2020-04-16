@@ -9,6 +9,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
   const query = intentResponse.queryResult
   const intent = query.intent.displayName
   console.log(`Intent: ${intent}`)
+  console.log(query)
   const userID = userObject.userID
   switch (intent) {
     case 'Default Welcome Intent':
@@ -18,6 +19,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
     case 'Default Fallback Intent':
       replyMsg.text = query.fulfillmentText
       await client.replyMessage(replyToken, replyMsg)
+      break
     case 'Homework':
       //Generate reply JSON from homework collection
       const homeworkJSON = generateHomeworkJSON(await getAllHomework())
@@ -55,6 +57,11 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       await client.replyMessage(replyToken, replyMsg)
       break
     case 'Homework_upload':
+      await clearContext(userID)
+      replyMsg.text = "Sorry, I didn't get that!"
+      await client.replyMessage(replyToken, replyMsg)
+      break
+    case 'Notes_upload':
       await clearContext(userID)
       replyMsg.text = "Sorry, I didn't get that!"
       await client.replyMessage(replyToken, replyMsg)
