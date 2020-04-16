@@ -36,7 +36,7 @@ const generateAssignments = async (arr, subjectName) => {
         const status = isOverdue
             ? '✅'
             : '(📅 ' + getDeadlineFromDate(new Date(task.deadline)) + ' ' + getLocalTimeFromDate(new Date(task.deadline)) + ')'
-        return '- ' + task.name + ': ' + task.link + ' ' + status
+        return '- ' + task.name + ': ' + await shortenURL(task.link) + ' ' + status
     })
     str = str.join('\n')
     return {
