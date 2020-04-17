@@ -16,6 +16,7 @@ const courseSchema = new Schema(
     id: String,
     examDates: Array,
     notes: Array,
+    assignments: Array,
   },
   { versionKey: false }
 )

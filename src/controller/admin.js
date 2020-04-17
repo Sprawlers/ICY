@@ -7,7 +7,7 @@ const handleAdmin = async (event, client, userObject) => {
   const replyToken = event.replyToken
   const userMsg = event.message.text
   const replyMsg = { type: 'text' }
-  const adminCmd = { type: 'text', text: 'Commands\n- /broadcast\n- /upload hw\n- /upload notes\n- /add exam\n- /add course\n- /clear\n- /help' }
+  const adminCmd = { type: 'text', text: 'Commands\n- /broadcast\n- /add hw\n- /add notes\n- /add exam\n- /add course\n- /clear\n- /help' }
   const cmd = userMsg.substring(1)
   const intentResponse = await detectIntent(userID, cmd, 'en-US')
   const query = intentResponse.queryResult
@@ -17,11 +17,11 @@ const handleAdmin = async (event, client, userObject) => {
       replyMsg.text = query.fulfillmentText
       await client.replyMessage(replyToken, replyMsg)
       break
-    case 'upload hw':
+    case 'add hw':
       replyMsg.text = query.fulfillmentText
       await client.replyMessage(replyToken, [replyMsg, subjectList])
       break
-    case 'upload notes':
+    case 'add notes':
       replyMsg.text = query.fulfillmentText
       await client.replyMessage(replyToken, [replyMsg, subjectList])
       break

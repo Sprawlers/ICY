@@ -13,11 +13,12 @@ const Schema = mongoose.Schema
  *
  */
 const homeworkSchema = new Schema(
-    {
-        title: String,
-        assignments: Array
-    },
-    {versionKey: false}
+  {
+    name: String,
+    deadline: Date,
+    link: String,
+  },
+  { versionKey: false }
 )
 
 // Prepares schema as a model
