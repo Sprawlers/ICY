@@ -12,8 +12,8 @@ const generateCarousel = (arr, altText, callback) => ({
     contents: {type: "carousel", contents: callback(arr)}
 })
 
-const generateHomeworkJSON = arr => generateCarousel(arr, "homework", generateHomeworkBubbles())
-const generateNotesJSON = arr => generateCarousel(arr, "notes", generateNotesBubbles())
+const generateHomeworkJSON = arr => generateCarousel(arr, "homework", generateHomeworkBubbles)
+const generateNotesJSON = arr => generateCarousel(arr, "notes", generateNotesBubbles)
 
 const generateNotesBubbles = async (arr) => {
     let str = await Promise.map(arr, async (course) => {
@@ -110,6 +110,8 @@ const getSubjectAssignmentsSorted = (arr) =>
 
 // INPUT: [ { title: subjectName, assignments: <arr> }, … ]
 const generateHomeworkBubbles = (arr) => {
+    console.log("DEBUG X")
+    console.log(arr)
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     console.log("DEBUG B")
     console.log(subjects)
