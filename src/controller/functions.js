@@ -6,13 +6,16 @@ const homeworkBubble = require('../json/homeworkJSON.json')
 const flexMessage = require('../json/flexTemplate.json')
 const taskJSON = require('../json/homeworkTasksJSON.json')
 
-const generateHomeworkJSON = (arr) => ({
+const generateCarousel = (arr, altText, callback) => ({
     ...flexMessage,
-    altText: "homework",
-    contents: {type: "carousel", contents: generateHomeworkBubbles(arr)}
+    altText,
+    contents: {type: "carousel", contents: callback(arr)}
 })
 
-const generateNotes = async (arr) => {
+const generateHomeworkJSON = arr => generateCarousel(arr, "homework", generateHomeworkBubbles())
+const generateNotesJSON = arr => generateCarousel(arr, "notes", generateNotesBubbles())
+
+const generateNotesBubbles = async (arr) => {
     let str = await Promise.map(arr, async (course) => {
         let notes = await Promise.map(course.notes, async (note) => {
             const shortenedURL = await shortenURL(note.link)
@@ -156,7 +159,7 @@ const getClicksFromURL = async (URL) => {
 // Function exports
 module.exports = {
     generateHomeworkJSON, // fix this
-    generateNotes,
+    generateNotes: generateNotesJSON,
     generateSubjectList,
     getLocalFromUTC,
 }
