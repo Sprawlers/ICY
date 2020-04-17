@@ -35,7 +35,7 @@ const generateTasksJSON = async (assignments) => {
 
     const sorted = sortByParam(assignments, 'deadline')
 
-    return await Promise.map(sorted, async task => {
+    const ret = await Promise.map(sorted, async task => {
         let json = clone(taskJSON)
         let [ name, btn ] = [...json.contents]
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
@@ -48,6 +48,9 @@ const generateTasksJSON = async (assignments) => {
         json.contents = [ name, btn ]
         return json
     })
+    console.log("PROM DEBUG")
+    console.log(ret)
+    return ret
 }
 
 const sortByParam = (arr, param) => {
