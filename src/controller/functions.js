@@ -44,7 +44,7 @@ const generateTasksJSON = async (assignments) => {
             : getDeadlineFromDate(new Date(task.deadline)) + ' ' + getLocalTimeFromDate(new Date(task.deadline))
         name.contents[0].text = task.name
         name.contents[1].contents[1].text = status.toUpperCase()
-        btn.url = await shortenURL(task.link)
+        btn.url = task.link
         json.contents = [ name, btn ]
         return json
     })
