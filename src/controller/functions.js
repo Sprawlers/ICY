@@ -170,7 +170,7 @@ const generateStats = async (hwArr, notesArr) => {
     })
 
     return {
-        'type': 'message',
+        'type': 'text',
         'text': str
     }
 }
