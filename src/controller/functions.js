@@ -151,6 +151,30 @@ const shortenURL = async (URL) => {
     return response.link
 }
 
+const generateStats = async (hwArr, notesArr) => {
+    // DUPLICATED CODE NEEDS FIXING
+    let str = ''
+    str += 'Homework Links:\n'
+    str += await Promise.map(hwArr.map(obj => obj.title), async courseName => {
+        str += courseName + ':\n'
+        await Promise.map((hwArr.filter(obj => obj.title === courseName)), async obj => {
+            str += '- "' + obj.name + '": ' + await getClicksFromURL(await shortenURL(obj.link)) + ' clicks\n'
+        })
+    })
+    str += '\nNote Links:\n'
+    str += await Promise.map(notesArr.map(obj => obj.title), async courseName => {
+        str += courseName + ':\n'
+        await Promise.map((hwArr.filter(obj => obj.title === courseName)), async obj => {
+            str += '- "' + obj.name + '": ' + await getClicksFromURL(await shortenURL(obj.link)) + ' clicks\n'
+        })
+    })
+
+    return {
+        'type': 'message',
+        'text': str
+    }
+}
+
 const getClicksFromURL = async (URL) => {
     URL = URL.replace(/(^\w+:|^)\/\//, '')
     const response = await request.post({
@@ -165,4 +189,5 @@ module.exports = {
     generateNotes: generateNotesJSON,
     generateSubjectList,
     getLocalFromUTC,
+    generateStats
 }
