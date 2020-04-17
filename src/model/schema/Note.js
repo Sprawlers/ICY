@@ -5,6 +5,7 @@ const noteSchema = new Schema(
   {
     name: String,
     link: String,
+    type: String,
     author: Object,
   },
   { versionKey: false }
