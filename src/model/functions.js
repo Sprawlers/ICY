@@ -17,7 +17,7 @@ async function getAllHomework() {
       for (let j = 0; j < subject.assignments.length; j++) {
         let data = await Homework.find({ _id: subject.assignments[j] }, { _id: 0 })
         if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { assignments: { $in: [subject.assignments[j]] } } })
-        subject.assignments[j] = data[0]
+        else subject.assignments[j] = data[0]
       }
       newObj.push(subject)
     }
@@ -35,7 +35,7 @@ async function getAllNotes() {
       for (let j = 0; j < subject.notes.length; j++) {
         let data = await Note.find({ _id: subject.notes[j] }, { _id: 0 })
         if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { notes: { $in: [subject.notes[j]] } } })
-        subject.notes[j] = data[0]
+        else subject.notes[j] = data[0]
       }
       newObj.push(subject)
     }
