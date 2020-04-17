@@ -42,12 +42,14 @@ const generateTasksJSON = async (assignments) => {
         const status = isOverdue
             ? '✅'
             : getDeadlineFromDate(new Date(task.deadline)) + ' ' + getLocalTimeFromDate(new Date(task.deadline))
+        console.log("NAME CONTENTS DEBUG")
+        console.log(name.contents)
+        console.log("LEVEL 2 DEBUG")
+        console.log(name.contents[1].contents)
         name.contents[0].text = task.name
         name.contents[1].contents[1].text = status.toUpperCase()
         btn.url = await shortenURL(task.link)
         json.contents = [ name, btn ]
-        console.log("INDIVIDUAL JSON DEBUG")
-        console.log(json)
         return json
     })
     console.log("PROM DEBUG")
