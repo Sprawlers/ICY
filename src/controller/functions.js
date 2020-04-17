@@ -110,7 +110,7 @@ const generateHomeworkBubbles = (arr) => {
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     return subjects.map((subject) => {
         console.log("DEBUG R")
-        console.log(subject.assignments)
+        console.log(subject)
         let bubble = clone(homeworkBubble)
 
         bubble.body.action.data = 'homework/body/' + subject.title // for logging
