@@ -11,13 +11,13 @@ const Schema = mongoose.Schema
  *
  */
 const courseSchema = new Schema(
-    {
-        title: String,
-        code: String,
-        examDates: Array,
-        notes: Array
-    },
-    {versionKey: false}
+  {
+    title: String,
+    id: String,
+    examDates: Array,
+    notes: Array,
+  },
+  { versionKey: false }
 )
 
 const courseModel = mongoose.model('courses', courseSchema, 'courses')

@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { getAllCourses, getAllHomework, getAdminID, addFeedback, addHomework, addNotes, addExam } = require('../model/functions')
+const { getAllCourses, getAllHomework, getAdminID, addFeedback, addHomework, addNotes, addExam, addCourse } = require('../model/functions')
 const { generateHomeworkJSON, generateNotes } = require('./functions')
 const { clearContext } = require('./dialogflow')
 
@@ -114,6 +114,16 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
         },
       }
       await client.replyMessage(replyToken, examDate)
+      break
+    case 'Course_id - yes':
+      {
+        const params = query.parameters.fields
+        const name = params.name.stringValue
+        const id = params.id.stringValue
+        replyMsg.text = query.fulfillmentText
+        await addCourse(name, id)
+        await client.replyMessage(replyToken, replyMsg)
+      }
       break
     case 'Homework_url - yes':
       {

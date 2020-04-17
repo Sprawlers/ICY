@@ -30,8 +30,8 @@ function getCourse(courseName) {
   return Course.findOne({ title: courseName })
 }
 
-function addCourse(courseName, code, examDates = [], notes = []) {
-  return Course.create({ title: courseName, code, examDates, notes })
+function addCourse(courseName, id, examDates = [], notes = []) {
+  return Course.create({ title: courseName, id, examDates, notes })
 }
 
 function addNotes(subject, filename, link) {
