@@ -95,19 +95,20 @@ const clone = (obj) => {
     return temp
 }
 
-const getSubjectAssignmentsSorted = (arr) =>
+const getSubjectsSorted = (arr) =>
     arr.map(subject => {
         const sorted = sortByParam(subject.assignments, 'deadline')
             .filter(task => new Date(task.deadline) - new Date(Date.now()) > 0)
         return {
             title: subject.title,
+            assignments: subject.assignments,
             latest: sorted.length ? sorted[0].deadline : false,
         }
     })
 
 // INPUT: [ { title: subjectName, assignments: <arr> }, … ]
 const generateHomeworkBubbles = (arr) => {
-    const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
+    const subjects = sortByParam(getSubjectsSorted(arr), 'latest')
     return subjects.map((subject) => {
         console.log("DEBUG R")
         console.log(subject)
