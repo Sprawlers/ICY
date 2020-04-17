@@ -42,7 +42,12 @@
       "flex": 3,
       "align": "end",
       "gravity": "center",
-      "size": "xxs"
+      "size": "xxs",
+      "action": {
+        "type": "uri",
+        "label": "calculus ii solution",
+        "uri": "https://winnaries.sgp1.digitaloceanspaces.com/icy/"
+      }
     }
   ]
 }
