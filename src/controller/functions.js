@@ -154,6 +154,8 @@ const generateStats = async (hwArr, notesArr) => {
       await Promise.map(
         hwArr.filter((obj) => obj.title === courseName),
         async (obj) => {
+          console.log("DEBUG HW")
+          console.log(obj)
           str += '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks\n'
         }
       )
@@ -167,6 +169,8 @@ const generateStats = async (hwArr, notesArr) => {
       await Promise.map(
         hwArr.filter((obj) => obj.title === courseName),
         async (obj) => {
+          console.log("DEBUG NOTE")
+          console.log(obj)
           str += '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks\n'
         }
       )
