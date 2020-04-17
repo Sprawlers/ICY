@@ -31,8 +31,8 @@ const handlePostback = async (event, client, userObject) => {
       query = intentResponse.queryResult
       replyMsg.text = query.fulfillmentText
       postbacklog.type = 'message'
-      postbacklog.data.bot = date.text
-      await client.replyMessage(event.replyToken, [date, replyMsg])
+      postbacklog.data.bot = replyMsg.text
+      await client.replyMessage(event.replyToken, replyMsg)
       break
     case 'richmenu':
       await clearContext(userID)

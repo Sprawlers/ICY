@@ -71,6 +71,11 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       replyMsg.text = "Sorry, I didn't get that!"
       await client.replyMessage(replyToken, replyMsg)
       break
+    case 'Course_add':
+      await clearContext(userID)
+      replyMsg.text = "Sorry, I didn't get that!"
+      await client.replyMessage(replyToken, replyMsg)
+      break
     case 'Homework_subject':
       replyMsg.text = query.fulfillmentText
       //Generate quickreply JSON

@@ -52,15 +52,14 @@ function addFeedback(userID, profileName, type, text) {
   return Feedback.create({ userID, profileName, type, text })
 }
 
-function addHomework(subject, deadline, name, link) {
-  let obj = Homework.create({ name, deadline, link })
+async function addHomework(subject, deadline, name, link) {
+  let obj = await Homework.create({ name, deadline, link })
   return Course.findOneAndUpdate({ title: subject }, { $push: { assignments: obj._id } }, { upsert: true })
 }
 
 async function addExam(subject, name, date) {
   const expireAt = date
   let obj = await Exam.create({ name, date, expireAt })
-  console.log(obj)
   return Course.findOneAndUpdate({ title: subject }, { $push: { examDates: obj._id } }, { upsert: true })
 }
 
