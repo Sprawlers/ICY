@@ -124,7 +124,7 @@ const generateSubjectList = (courses) => ({
 const generateStats = async (hwArr, notesArr) => {
 	// DUPLICATED CODE NEEDS FIXING
 	let str = ''
-	str += '📕 HOMEWORK:\n'
+	str += '📕 HOMEWORK:\n----------\n'
 
 	let map1 = await Promise.map(hwArr, async (course) => {
 		let mapped = await Promise.map(
@@ -135,7 +135,7 @@ const generateStats = async (hwArr, notesArr) => {
 	})
 	str += map1.join('\n')
 
-	str += '\n\n🗒 NOTE:\n'
+	str += '\n\n🗒 NOTE:\n----------\n'
 	let map2 = await Promise.map(notesArr, async (course) => {
 		let mapped = await Promise.map(
 			course.notes,
