@@ -17,6 +17,19 @@ const generateCarousel = async (arr, altText, callback) => ({
 const generateHomeworkJSON = async (arr) => await generateCarousel(arr, 'homework', generateHomeworkBubbles)
 const generateNotesJSON = async (arr) => await generateCarousel(arr, 'notes', generateNotesBubbles)
 
+// INPUT: [ { title: subjectName, assignments: <arr> }, … ]
+const generateHomeworkBubbles = async (arr) => {
+    const subjects = sortByParam(getSubjectsSorted(arr), 'latest')
+    return await Promise.map(subjects, async (subject) => {
+        let bubble = clone(homeworkBubble)
+
+        bubble.body.action.data = 'homework/body/' + subject.title // for logging
+        bubble.body.contents[1].text = subject.title
+        bubble.body.contents = [...bubble.body.contents, ...(await generateTasksJSON(subject.assignments))]
+
+        return bubble
+    })
+}
 const generateNotesBubbles = async (arr) => {
     return await Promise.map(arr, async (subject) => {
         let bubble = clone(notesBubble)
@@ -26,18 +39,6 @@ const generateNotesBubbles = async (arr) => {
         bubble.body.contents = [...bubble.body.contents, ...(await generateEachNotesJSON(subject.notes))]
 
         return bubble
-    })
-}
-
-const generateEachNotesJSON = async (notes) => {
-    return await Promise.map(notes, async (task) => {
-        let json = clone(eachNotesJSON)
-        let [name, btn] = [...json.contents]
-        name.contents[0].text = task.name
-        btn.action.label = '-'
-        btn.action.uri = await shortenURL(task.link)
-        json.contents = [name, btn]
-        return json
     })
 }
 
@@ -59,6 +60,17 @@ const generateTasksJSON = async (assignments) => {
         return json
     })
 }
+const generateEachNotesJSON = async (notes) => {
+    return await Promise.map(notes, async (task) => {
+        let json = clone(eachNotesJSON)
+        let [name, btn] = [...json.contents]
+        name.contents[0].text = task.name
+        btn.action.label = '-'
+        btn.action.uri = await shortenURL(task.link)
+        json.contents = [name, btn]
+        return json
+    })
+}
 
 const sortByParam = (arr, param) => {
     const arrCopy = [...arr]
@@ -72,16 +84,13 @@ const sortByParam = (arr, param) => {
     return arrCopy
 }
 
-// Returns deadline in {(Month) (Day)} format
 const getDeadlineFromDate = (dateTimeObject) => {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     return monthNames[dateTimeObject.getMonth()] + ' ' + dateTimeObject.getDate()
-}
-
-// Local time string in HH:MM format
+} // format "{month} {day}"
 const getLocalTimeFromDate = (dateTimeObject) => moment(dateTimeObject).tz('Asia/Bangkok').format('HH:mm')
+const getLocalFromUTC = (UTCDateTime) => moment(UTCDateTime).tz('Asia/Bangkok')
 
-// Deep Clone
 const clone = (obj) => {
     if (obj === null || typeof obj !== 'object' || 'isActiveClone' in obj) return obj
 
@@ -96,7 +105,7 @@ const clone = (obj) => {
     })
 
     return temp
-}
+} // deep clone
 
 const getSubjectsSorted = (arr) =>
     arr.map((subject) => {
@@ -107,41 +116,10 @@ const getSubjectsSorted = (arr) =>
             latest: sorted.length ? sorted[0].deadline : false,
         }
     })
-
-// INPUT: [ { title: subjectName, assignments: <arr> }, … ]
-const generateHomeworkBubbles = async (arr) => {
-    const subjects = sortByParam(getSubjectsSorted(arr), 'latest')
-    return await Promise.map(subjects, async (subject) => {
-        let bubble = clone(homeworkBubble)
-
-        bubble.body.action.data = 'homework/body/' + subject.title // for logging
-        bubble.body.contents[1].text = subject.title
-        bubble.body.contents = [...bubble.body.contents, ...(await generateTasksJSON(subject.assignments))]
-
-        return bubble
-    })
-}
-
 const generateSubjectList = (courses) => ({
     type: 'text',
     text: 'Select from the following:\n' + courses.map((course) => '- ' + course.title).join('\n'),
 })
-
-const getLocalFromUTC = (UTCDateTime) => moment(UTCDateTime).tz('Asia/Bangkok')
-
-const shortenURL = async (URL) => {
-    const response = await request.post({
-        uri: 'https://api-ssl.bitly.com/v4/shorten',
-        headers: {
-            Authorization: `Bearer ${config.bitly_token}`,
-        },
-        body: {
-            long_url: URL,
-        },
-        json: true,
-    })
-    return response.link
-}
 
 const generateStats = async (hwArr, notesArr) => {
     // DUPLICATED CODE NEEDS FIXING
@@ -173,12 +151,27 @@ const generateStats = async (hwArr, notesArr) => {
         }
     )
 
+    console.log(str)
+
     return {
         type: 'text',
         text: str,
     }
 }
 
+const shortenURL = async (URL) => {
+    const response = await request.post({
+        uri: 'https://api-ssl.bitly.com/v4/shorten',
+        headers: {
+            Authorization: `Bearer ${config.bitly_token}`,
+        },
+        body: {
+            long_url: URL,
+        },
+        json: true,
+    })
+    return response.link
+}
 const getClicksFromURL = async (URL) => {
     URL = URL.replace(/(^\w+:|^)\/\//, '')
     console.log(URL)
