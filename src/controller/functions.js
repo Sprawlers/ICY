@@ -2,13 +2,14 @@ const moment = require('moment-timezone')
 const Promise = require('bluebird')
 const request = require('request-promise')
 const config = require('../config')
-const bubble = require('../json/homeworkJSON.json')
+const homeworkBubble = require('../json/homeworkJSON.json')
 const flexMessage = require('../json/flexTemplate.json')
+const taskJSON = require('../json/homeworkTasksJSON.json')
 
 const generateHomeworkJSON = (arr) => ({
     ...flexMessage,
     altText: "homework",
-    contents: {type: "carousel", contents: generateBubbles(arr)}
+    contents: {type: "carousel", contents: generateHomeworkBubbles(arr)}
 })
 
 const generateNotes = async (arr) => {
@@ -27,22 +28,28 @@ const generateNotes = async (arr) => {
     }
 }
 
-// Generate subject-specific JSON payload of assignment list given array of homework object and subject name
-const generateAssignments = async (arr, subjectName) => {
-    const assignments = arr.find(subject => subject.title === subjectName).assignments
-    const sorted = sortByParam(assignments, 'deadline')
-    let str = await Promise.map(sorted, async task => {
+const generateTasksJSON = async (subject) => {
+    const assignments = sortByParam(subject.assignments, 'deadline')
+    return await Promise.map(assignments, async task => {
+        let json = clone(taskJSON)
+
+        let [ name, btn ] = [...json.contents]
+        name  = name.contents
+
+        name[0].text = task.name
+
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
         const status = isOverdue
             ? '✅'
-            : '(📅 ' + getDeadlineFromDate(new Date(task.deadline)) + ' ' + getLocalTimeFromDate(new Date(task.deadline)) + ')'
-        return '- ' + task.name + ': ' + await shortenURL(task.link) + ' ' + status
+            : getDeadlineFromDate(new Date(task.deadline)) + ' ' + getLocalTimeFromDate(new Date(task.deadline))
+
+        name[1].contents[1] = status.toUpperCase()
+        btn.url = await shortenURL(task.link)
+
+        json = { ...json, contents: [ name, btn ]}
+
+        return json
     })
-    str = str.join('\n')
-    return {
-        type: 'text',
-        text: subjectName + '\n' + str,
-    }
 }
 
 const sortByParam = (arr, param) => {
@@ -94,24 +101,19 @@ const getSubjectAssignmentsSorted = (arr) =>
     })
 
 // Generates array of Line Flex Bubble message JSON
-const generateBubbles = (arr) => {
+const generateHomeworkBubbles = (arr) => {
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     return subjects.map((subject) => {
-        let bubbleClone = clone(bubble)
-        const displayedDeadline = subject.latest ? getDeadlineFromDate(new Date(subject.latest)) : '-'
-        // Set subject title
-        bubbleClone.header.contents[0].text = subject.title
-        bubbleClone.header.contents[0].action.data = 'homework/header/' + subject.title
+        let bubble = clone(homeworkBubble)
 
-        // Set subject deadline
-        bubbleClone.hero.contents[0].text = '📅 Deadline' + displayedDeadline
-        bubbleClone.hero.contents[0].contents[0].text = '📅 Deadline: '
-        bubbleClone.hero.contents[0].contents[1].text = displayedDeadline
-        bubbleClone.hero.contents[0].action.data = 'homework/hero/' + subject.title
+        bubble.body.action.data = 'homework/body/' + subject.title // for logging
+        bubble.body.contents[1].text = subject.title
+        bubble.body.contents = [
+            ...bubble.body.contents,
+            generateTasksJSON(subject)
+        ]
 
-        // Set post-back
-        bubbleClone.footer.contents[0].action.data = 'homework/solution/' + subject.title
-        return bubbleClone
+        return bubble
     })
 }
 
