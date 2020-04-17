@@ -28,9 +28,9 @@ const generateNotes = async (arr) => {
     }
 }
 
-const generateTasksJSON = async (subject) => {
-    const assignments = sortByParam(subject.assignments, 'deadline')
-    return await Promise.map(assignments, async task => {
+const generateTasksJSON = async (assignments) => {
+    const sorted = sortByParam(assignments, 'deadline')
+    return await Promise.map(sorted, async task => {
         let json = clone(taskJSON)
 
         let [ name, btn ] = [...json.contents]
@@ -91,24 +91,21 @@ const clone = (obj) => {
 }
 
 const getSubjectAssignmentsSorted = (arr) =>
-    arr.map((subject) => {
+    arr.map(subject => {
         console.log("DEBUG A")
         console.log(subject.assignments)
-        console.log(sortByParam(subject.assignments, 'deadline'))
+        console.log({...subject.assignments})
         const sorted = sortByParam(subject.assignments, 'deadline')
             .filter(task => new Date(task.deadline) - new Date(Date.now()) > 0)
         console.log("DEBUG D")
         console.log(sorted)
-        const ret = {
-            title: subject.title,
+        return {
+            name: subject.name,
             latest: sorted.length ? sorted[0].deadline : false,
         }
-        console.log("DEBUG C")
-        console.log(ret)
-        return ret
     })
 
-// Generates array of Line Flex Bubble message JSON
+// INPUT: [ { name: subjectName, assignments: <arr> }, … ]
 const generateHomeworkBubbles = (arr) => {
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     console.log("DEBUG B")
@@ -116,11 +113,11 @@ const generateHomeworkBubbles = (arr) => {
     return subjects.map((subject) => {
         let bubble = clone(homeworkBubble)
 
-        bubble.body.action.data = 'homework/body/' + subject.title // for logging
-        bubble.body.contents[1].text = subject.title
+        bubble.body.action.data = 'homework/body/' + subject.name // for logging
+        bubble.body.contents[1].text = subject.name
         bubble.body.contents = [
             ...bubble.body.contents,
-            generateTasksJSON(subject)
+            generateTasksJSON(subject.assignments)
         ]
 
         return bubble
