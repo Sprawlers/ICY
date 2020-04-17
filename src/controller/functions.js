@@ -144,6 +144,10 @@ const generateStats = async (hwArr, notesArr) => {
 		return course.title + ':\n' + mapped.join('\n')
 	})
 	str += map2.join('\n')
+
+	console.log('---------')
+	console.log(str)
+
 	return {
 		type: 'text',
 		text: str,
@@ -165,12 +169,12 @@ const shortenURL = async (URL) => {
 }
 const getClicksFromURL = async (URL) => {
 	URL = URL.replace(/(^\w+:|^)\/\//, '')
-	let response = await request.get({
+	console.log(URL)
+	const response = await request.get({
 		uri: `https://api-ssl.bitly.com/v4/bitlinks/${URL}/clicks/summary`,
 		headers: {
 			Authorization: `Bearer ${config.bitly_token}`,
 		},
-		json: true,
 	})
 	return response.total_clicks
 }
