@@ -66,6 +66,11 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       replyMsg.text = "Sorry, I didn't get that!"
       await client.replyMessage(replyToken, replyMsg)
       break
+    case 'Exam_add':
+      await clearContext(userID)
+      replyMsg.text = "Sorry, I didn't get that!"
+      await client.replyMessage(replyToken, replyMsg)
+      break
     case 'Homework_subject':
       replyMsg.text = query.fulfillmentText
       //Generate quickreply JSON
@@ -124,7 +129,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       break
     case 'Exam_date - yes':
       {
-        const params = queyr.parameters.fields
+        const params = query.parameters.fields
         const subject = params.subject.stringValue
         const name = params.name.stringValue
         const date = new Date(moment(new Date(params.date.stringValue)).subtract(7, 'hours'))
