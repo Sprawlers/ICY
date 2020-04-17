@@ -125,25 +125,26 @@ const generateStats = async (hwArr, notesArr) => {
     // DUPLICATED CODE NEEDS FIXING
     let str = ''
     str += 'Homework Links:\n'
-    await Promise.map(hwArr, async (course) => {
-        str += course.title + ':\n'
-        await Promise.map(course.assignments, async (obj) => {
-            str += '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks\n'
-            console.log('DEBUG str')
-            console.log(str)
-            console.log(await shortenURL(obj.link))
-            console.log(await getClicksFromURL(await shortenURL(obj.link)))
-        })
+
+    let map1 = await Promise.map(hwArr, async (course) => {
+        let mapped = await Promise.map(course.assignments, async(obj) => (
+            '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks'
+        ))
+        return course.title + ':\n' + mapped.join('\n')
     })
+    str += map1.join('\n')
+
+    str += '\nNote Links:\n'
+    let map2 = await Promise.map(notesArr, async (course) => {
+        let mapped = await Promise.map(course.notes, async(obj) => (
+            '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks'
+        ))
+        return course.title + ':\n' + mapped.join('\n')
+    })
+    str += map2.join('\n')
+
     console.log('---------')
     console.log(str)
-    str += '\nNote Links:\n'
-    await Promise.map(notesArr, async (course) => {
-        str += course.title + ':\n'
-        await Promise.map(course.notes, async (obj) => {
-            str += '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks\n'
-        })
-    })
 
     return {
         type: 'text',
