@@ -66,8 +66,8 @@ function addCourse(courseName, id, examDates = [], notes = []) {
   return Course.create({ title: courseName, id, examDates, notes })
 }
 
-async function addNotes(subject, name, link) {
-  let obj = await Note.create({ name, link })
+async function addNotes(subject, name, link, authorName, authorMajor) {
+  let obj = await Note.create({ name, link, author: { name: authorName, major: authorMajor } })
   return Course.findOneAndUpdate({ title: subject }, { $push: { notes: obj._id } }, { upsert: true })
 }
 
@@ -83,8 +83,8 @@ function addFeedback(userID, profileName, type, text) {
   return Feedback.create({ userID, profileName, type, text })
 }
 
-async function addHomework(subject, deadline, name, link) {
-  let obj = await Homework.create({ name, deadline, link })
+async function addHomework(subject, deadline, name, link, authorName, authorMajor) {
+  let obj = await Homework.create({ name, deadline, link, author: { name: authorName, major: authorMajor } })
   return Course.findOneAndUpdate({ title: subject }, { $push: { assignments: obj._id } }, { upsert: true })
 }
 

@@ -17,6 +17,7 @@ const homeworkSchema = new Schema(
     name: String,
     deadline: Date,
     link: String,
+    author: Object,
   },
   { versionKey: false }
 )
