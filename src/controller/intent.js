@@ -139,15 +139,17 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
         await client.replyMessage(replyToken, replyMsg)
       }
       break
-    case 'Homework_url - yes':
+    case 'Homework_author - yes':
       {
         const params = query.parameters.fields
         const subject = params.subject.stringValue
         const filename = params.filename.stringValue
         const deadline = new Date(moment(new Date(params.deadline.stringValue)).subtract(7, 'hours'))
         const url = params.url.stringValue
+        const authorName = params.author_name.stringValue
+        const authorMajor = params.author_major.stringValue
         replyMsg.text = query.fulfillmentText
-        await addHomework(subject, deadline, filename, url)
+        await addHomework(subject, deadline, filename, url, authorName, authorMajor)
         await client.replyMessage(replyToken, replyMsg)
       }
       break
