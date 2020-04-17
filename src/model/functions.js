@@ -8,9 +8,16 @@ const Exam = require('./schema/Exam')
 
 // Gets all homework documents, called with hw()
 async function getAllHomework() {
-  let obj = Course.find({}, { _id: 0, title: 1, assignments: 1 })
+  let obj = await Course.find({}, { _id: 0, title: 1, assignments: 1 })
+  for (let i = 0; i < obj.length; i++) {
+    let subject = obj[i]
+    for (let j = 0; j < subject.assignments.length; j++) {
+      let data = await Homework.find({ _id: subject.assignments[j] }, { _id: 0 })
+      subject.assignments[j] = data[0]
+    }
+  }
   console.log(obj)
-  return await Homework.find({})
+  return obj
 }
 
 function getUserByID(userID) {
