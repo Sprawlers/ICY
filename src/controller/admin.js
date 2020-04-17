@@ -7,7 +7,7 @@ const handleAdmin = async (event, client, userObject) => {
   const replyToken = event.replyToken
   const userMsg = event.message.text
   const replyMsg = { type: 'text' }
-  const adminCmd = { type: 'text', text: 'Commands\n- /upload hw\n- /upload notes\n- /add exam\n- /add course\n- /help' }
+  const adminCmd = { type: 'text', text: 'Commands\n- /broadcast\n- /upload hw\n- /upload notes\n- /add exam\n- /add course\n- /help' }
   const cmd = userMsg.substring(1)
   const intentResponse = await detectIntent(userID, cmd, 'en-US')
   const query = intentResponse.queryResult

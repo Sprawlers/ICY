@@ -4,6 +4,7 @@ const Feedback = require('./schema/Feedback')
 const Course = require('./schema/Course')
 const Log = require('./schema/Log')
 const Election = require('./schema/Election')
+const Exam = require('./schema/Exam')
 
 // Gets all homework documents, called with hw()
 async function getAllHomework() {
@@ -52,13 +53,14 @@ function addFeedback(userID, profileName, type, text) {
 }
 
 function addHomework(subject, deadline, name, link) {
-  const assignments = { name, deadline, link } // plural name so it can use ES6 destructure
-  return Homework.findOneAndUpdate({ title: subject }, { $push: { assignments } }, { upsert: true })
+  let obj = Homework.create({ name, deadline, link })
+  return Course.findOneAndUpdate({ title: subject }, { $push: { assignments: obj._id } }, { upsert: true })
 }
 
 function addExam(subject, name, date) {
-  const examDates = { name, date }
-  return Course.findOneAndUpdate({ title: subject }, { $push: { examDates } }, { upsert: true })
+  const expireAt = date
+  let obj = Exam.create({ name, date, expireAt })
+  return Course.findOneAndUpdate({ title: subject }, { $push: { examDates: obj._id } }, { upsert: true })
 }
 
 function addLog(userID, profileName, type, data) {
