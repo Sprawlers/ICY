@@ -24,6 +24,23 @@ async function getAllHomework() {
   return newObj
 }
 
+async function getAllNotes() {
+  let obj = await Course.find({}, { _id: 0, title: 1, notes: 1 })
+  let newObj = []
+  for (let i = 0; i < obj.length; i++) {
+    let subject = obj[i]
+    if (subject.notes.length) {
+      for (let j = 0; j < subject.notes.length; j++) {
+        let data = await Homework.find({ _id: subject.notes[j] }, { _id: 0 })
+        subject.notes[j] = data[0]
+      }
+      newObj.push(subject)
+    }
+  }
+  console.log(newObj)
+  return newObj
+}
+
 function getUserByID(userID) {
   return User.findOne({ userID })
 }
@@ -93,6 +110,7 @@ module.exports = {
   getUserByID,
   getAllUsers,
   getAllCourses,
+  getAllNotes,
   getCourse,
   getAdminID,
   getVote,

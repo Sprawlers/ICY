@@ -39,7 +39,7 @@ const handlePostback = async (event, client, userObject) => {
       switch (data[1]) {
         case 'homework':
           //Generate reply JSON from homework collection
-          const payloadJSON = generateHomeworkJSON(await getAllHomework())
+          const payloadJSON = await generateHomeworkJSON(await getAllHomework())
           await client.replyMessage(event.replyToken, payloadJSON)
           break
         case 'notes':
