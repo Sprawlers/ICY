@@ -32,7 +32,11 @@ const generateNotesBubbles = async (arr) => {
 }
 
 const generateTasksJSON = async (assignments) => {
+    console.log("DEBUG A")
+    console.log(assignments)
+
     const sorted = sortByParam(assignments, 'deadline')
+
     return await Promise.map(sorted, async task => {
         let json = clone(taskJSON)
 
@@ -95,13 +99,8 @@ const clone = (obj) => {
 
 const getSubjectAssignmentsSorted = (arr) =>
     arr.map(subject => {
-        console.log("DEBUG A")
-        console.log(subject.assignments)
-        console.log({...subject.assignments})
         const sorted = sortByParam(subject.assignments, 'deadline')
             .filter(task => new Date(task.deadline) - new Date(Date.now()) > 0)
-        console.log("DEBUG D")
-        console.log(sorted)
         return {
             title: subject.title,
             latest: sorted.length ? sorted[0].deadline : false,
@@ -110,11 +109,7 @@ const getSubjectAssignmentsSorted = (arr) =>
 
 // INPUT: [ { title: subjectName, assignments: <arr> }, … ]
 const generateHomeworkBubbles = (arr) => {
-    console.log("DEBUG X")
-    console.log(arr)
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
-    console.log("DEBUG B")
-    console.log(subjects)
     return subjects.map((subject) => {
         let bubble = clone(homeworkBubble)
 
