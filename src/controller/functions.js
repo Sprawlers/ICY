@@ -12,7 +12,11 @@ const generateCarousel = (arr, altText, callback) => ({
     contents: {type: "carousel", contents: callback(arr)}
 })
 
-const generateHomeworkJSON = async arr => await generateCarousel(arr, "homework", generateHomeworkBubbles)
+const generateHomeworkJSON = async arr => {
+    const ret = await generateCarousel(arr, "homework", generateHomeworkBubbles)
+    console.log(JSON.stringify(ret))
+    return ret
+}
 const generateNotesJSON = arr => generateCarousel(arr, "notes", generateNotesBubbles)
 
 const generateNotesBubbles = async (arr) => {
@@ -35,7 +39,7 @@ const generateTasksJSON = async (assignments) => {
 
     const sorted = sortByParam(assignments, 'deadline')
 
-    const ret = await Promise.map(sorted, async task => {
+    return await Promise.map(sorted, async task => {
         let json = clone(taskJSON)
         let [ name, btn ] = [...json.contents]
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
@@ -45,16 +49,9 @@ const generateTasksJSON = async (assignments) => {
         name.contents[0].text = task.name
         name.contents[1].contents[1].text = status.toUpperCase()
         btn.url = await shortenURL(task.link)
-        console.log("NAME CONTENTS DEBUG")
-        console.log(name.contents)
-        console.log("LEVEL 2 DEBUG")
-        console.log(name.contents[1].contents)
         json.contents = [ name, btn ]
         return json
     })
-    console.log("PROM DEBUG")
-    console.log(ret)
-    return ret
 }
 
 const sortByParam = (arr, param) => {
@@ -119,8 +116,6 @@ const generateHomeworkBubbles = async arr => {
             ...await generateTasksJSON(subject.assignments)
         ]
 
-        console.log("DEBUG BUBBLE")
-        console.log(bubble)
         return bubble
     })
 }
