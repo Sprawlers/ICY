@@ -22,7 +22,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       break
     case 'Homework':
       //Generate reply JSON from homework collection
-      const homeworkJSON = generateHomeworkJSON(await getAllHomework())
+      const homeworkJSON = await generateHomeworkJSON(await getAllHomework())
       replyMsg.text = 'Homework Carousel'
       await client.replyMessage(replyToken, homeworkJSON)
       break

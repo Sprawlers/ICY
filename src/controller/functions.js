@@ -13,7 +13,6 @@ const generateCarousel = async (arr, altText, callback) => ({
 })
 
 const generateHomeworkJSON = async arr => await generateCarousel(arr, "homework", generateHomeworkBubbles)
-
 const generateNotesJSON = arr => generateCarousel(arr, "notes", generateNotesBubbles)
 
 const generateNotesBubbles = async (arr) => {
