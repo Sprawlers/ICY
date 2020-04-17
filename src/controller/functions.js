@@ -5,6 +5,8 @@ const config = require('../config')
 const homeworkBubble = require('../json/homeworkJSON.json')
 const flexMessage = require('../json/flexTemplate.json')
 const taskJSON = require('../json/homeworkTasksJSON.json')
+const notesBubble = require('../json/notesJSON.json')
+const eachNotesJSON = require('../json/notesEachNotesJSON.json')
 
 const generateCarousel = async (arr, altText, callback) => ({
     ...flexMessage,
@@ -17,7 +19,7 @@ const generateNotesJSON = async arr => await generateCarousel(arr, "notes", gene
 
 const generateNotesBubbles = async (arr) => {
     return await Promise.map(arr , async (subject) => {
-        let bubble = clone(homeworkBubble)
+        let bubble = clone(notesBubble)
 
         bubble.body.action.data = 'notes/body/' + subject.title // for logging
         bubble.body.contents[1].text = subject.title
@@ -32,7 +34,7 @@ const generateNotesBubbles = async (arr) => {
 
 const generateEachNotesJSON = async (notes) => {
     return await Promise.map(notes, async task => {
-        let json = clone(taskJSON)
+        let json = clone(eachNotesJSON)
         let [ name, btn ] = [...json.contents]
         name.contents[0].text = task.name
         btn.action.label = "-"

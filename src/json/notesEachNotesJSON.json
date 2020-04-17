@@ -1,0 +1,32 @@
+{
+  "type": "box",
+  "layout": "horizontal",
+  "contents": [
+    {
+      "type": "box",
+      "layout": "vertical",
+      "flex": 6,
+      "contents": [
+        {
+          "type": "text",
+          "text": "Assignment 1",
+          "weight": "bold",
+          "color": "#FFFFFF"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "url": "https://sgp1.digitaloceanspaces.com/winnaries/icy/icons/download.png",
+      "flex": 3,
+      "align": "end",
+      "gravity": "center",
+      "size": "xxs",
+      "action": {
+        "type": "uri",
+        "label": "-",
+        "uri": ""
+      }
+    }
+  ]
+}

@@ -1,6 +1,5 @@
 const moment = require('moment')
 const {
-  getAllCourses,
   getAllHomework,
   getAdminID,
   addFeedback,

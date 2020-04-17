@@ -1,0 +1,35 @@
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "md",
+    "action": {
+      "type": "postback",
+      "label": "body",
+      "data": ""
+    },
+    "contents": [
+      {
+        "type": "text",
+        "text": "Notes for",
+        "color": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "text": "",
+        "size": "lg",
+        "weight": "bold",
+        "color": "#FBB400"
+      },
+      {
+        "type": "separator"
+      }
+    ]
+  },
+  "styles": {
+    "body": {
+      "backgroundColor": "#344955"
+    }
+  }
+}
