@@ -147,19 +147,13 @@ const generateStats = async (hwArr, notesArr) => {
     // DUPLICATED CODE NEEDS FIXING
     let str = ''
     str += 'Homework Links:\n'
-    console.log("DEBUG HW1")
-    console.log(hwArr)
     str += await Promise.map(
         hwArr,
         async (course) => {
             str += course.title + ':\n'
-            console.log("DEBUG HW2")
-            console.log(course)
             await Promise.map(
                 course.assignments,
                 async (obj) => {
-                    console.log("DEBUG HW3")
-                    console.log(obj)
                     str += '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks\n'
                 }
             )
@@ -167,14 +161,12 @@ const generateStats = async (hwArr, notesArr) => {
     )
     str += '\nNote Links:\n'
     str += await Promise.map(
-        notesArr.map((obj) => obj.title),
-        async (courseName) => {
-            str += courseName + ':\n'
+        notesArr,
+        async (course) => {
+            str += course.title + ':\n'
             await Promise.map(
-                hwArr.filter((obj) => obj.title === courseName),
+                course.notes,
                 async (obj) => {
-                    console.log("DEBUG NOTE")
-                    console.log(obj)
                     str += '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks\n'
                 }
             )
