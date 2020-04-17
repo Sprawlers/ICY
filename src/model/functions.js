@@ -8,6 +8,8 @@ const Exam = require('./schema/Exam')
 
 // Gets all homework documents, called with hw()
 async function getAllHomework() {
+  let obj = Course.find({}, { _id: 0, title: 1, assignments: 1 })
+  console.log(obj)
   return await Homework.find({})
 }
 
