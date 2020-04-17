@@ -6,13 +6,16 @@ const homeworkBubble = require('../json/homeworkJSON.json')
 const flexMessage = require('../json/flexTemplate.json')
 const taskJSON = require('../json/homeworkTasksJSON.json')
 
-const generateHomeworkJSON = (arr) => ({
+const generateCarousel = (arr, altText, callback) => ({
     ...flexMessage,
-    altText: "homework",
-    contents: {type: "carousel", contents: generateHomeworkBubbles(arr)}
+    altText,
+    contents: {type: "carousel", contents: callback(arr)}
 })
 
-const generateNotes = async (arr) => {
+const generateHomeworkJSON = arr => generateCarousel(arr, "homework", generateHomeworkBubbles())
+const generateNotesJSON = arr => generateCarousel(arr, "notes", generateNotesBubbles())
+
+const generateNotesBubbles = async (arr) => {
     let str = await Promise.map(arr, async (course) => {
         let notes = await Promise.map(course.notes, async (note) => {
             const shortenedURL = await shortenURL(note.link)
@@ -28,9 +31,9 @@ const generateNotes = async (arr) => {
     }
 }
 
-const generateTasksJSON = async (subject) => {
-    const assignments = sortByParam(subject.assignments, 'deadline')
-    return await Promise.map(assignments, async task => {
+const generateTasksJSON = async (assignments) => {
+    const sorted = sortByParam(assignments, 'deadline')
+    return await Promise.map(sorted, async task => {
         let json = clone(taskJSON)
 
         let [ name, btn ] = [...json.contents]
@@ -91,24 +94,21 @@ const clone = (obj) => {
 }
 
 const getSubjectAssignmentsSorted = (arr) =>
-    arr.map((subject) => {
+    arr.map(subject => {
         console.log("DEBUG A")
         console.log(subject.assignments)
-        console.log(sortByParam(subject.assignments, 'deadline'))
+        console.log({...subject.assignments})
         const sorted = sortByParam(subject.assignments, 'deadline')
             .filter(task => new Date(task.deadline) - new Date(Date.now()) > 0)
         console.log("DEBUG D")
         console.log(sorted)
-        const ret = {
+        return {
             title: subject.title,
             latest: sorted.length ? sorted[0].deadline : false,
         }
-        console.log("DEBUG C")
-        console.log(ret)
-        return ret
     })
 
-// Generates array of Line Flex Bubble message JSON
+// INPUT: [ { title: subjectName, assignments: <arr> }, … ]
 const generateHomeworkBubbles = (arr) => {
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     console.log("DEBUG B")
@@ -120,7 +120,7 @@ const generateHomeworkBubbles = (arr) => {
         bubble.body.contents[1].text = subject.title
         bubble.body.contents = [
             ...bubble.body.contents,
-            generateTasksJSON(subject)
+            generateTasksJSON(subject.assignments)
         ]
 
         return bubble
@@ -159,7 +159,7 @@ const getClicksFromURL = async (URL) => {
 // Function exports
 module.exports = {
     generateHomeworkJSON, // fix this
-    generateNotes,
+    generateNotes: generateNotesJSON,
     generateSubjectList,
     getLocalFromUTC,
 }
