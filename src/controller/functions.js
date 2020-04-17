@@ -93,7 +93,8 @@ const clone = (obj) => {
 const getSubjectAssignmentsSorted = (arr) =>
     arr.map((subject) => {
         console.log("DEBUG A")
-        console.log(subject)
+        console.log(subject.assignments)
+        console.log(sortByParam(subject.assignments, 'deadline'))
         const sorted = sortByParam(subject.assignments, 'deadline')
             .filter(task => new Date(task.deadline) - new Date(Date.now()) > 0)
         console.log("DEBUG D")
