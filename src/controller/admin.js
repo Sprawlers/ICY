@@ -7,6 +7,7 @@ const handleAdmin = async (event, client, userObject) => {
   const replyToken = event.replyToken
   const userMsg = event.message.text
   const replyMsg = { type: 'text' }
+  const adminCmd = { type: 'text', text: 'Commands\n- /upload hw\n- /upload notes\n- /add exam\n- /help' }
   switch (userMsg) {
     case '/broadcast':
       {
@@ -43,9 +44,12 @@ const handleAdmin = async (event, client, userObject) => {
         await client.replyMessage(replyToken, [replyMsg, subjectList])
       }
       break
+    case '/help':
+      await client.replyMessage(replyToken, adminCmd)
+      break
     default:
       replyMsg.text = 'This command is not available!'
-      await client.replyMessage(replyToken, replyMsg)
+      await client.replyMessage(replyToken, [replyMsg, adminCmd])
       break
   }
   return replyMsg.text
