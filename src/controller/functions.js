@@ -110,10 +110,12 @@ const generateHomeworkBubbles = async arr => {
 
         bubble.body.action.data = 'homework/body/' + subject.title // for logging
         bubble.body.contents[1].text = subject.title
-        bubble.body.contents = [
+        const test = [
             ...bubble.body.contents,
             ...await generateTasksJSON(subject.assignments)
         ]
+        console.log(test)
+        bubble.body.contents = test
 
         console.log("DEBUG BUBBLE")
         console.log(bubble)
