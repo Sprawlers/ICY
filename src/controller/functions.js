@@ -131,6 +131,8 @@ const generateStats = async (hwArr, notesArr) => {
             str += '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks\n'
             console.log("DEBUG str")
             console.log(str)
+            console.log(await shortenURL(obj.link))
+            console.log(await getClicksFromURL(await shortenURL(obj.link)))
         })
     })
     str += '\nNote Links:\n'
