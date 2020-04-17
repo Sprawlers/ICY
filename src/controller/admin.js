@@ -1,4 +1,4 @@
-const { detectIntent } = require('./dialogflow')
+const { detectIntent, clearContext } = require('./dialogflow')
 const { generateSubjectList } = require('./functions')
 const { getAllCourses } = require('../model/functions')
 
@@ -38,6 +38,7 @@ const handleAdmin = async (event, client, userObject) => {
       await client.replyMessage(replyToken, adminCmd)
       break
     default:
+      await clearContext(userID)
       replyMsg.text = 'This command is not available!'
       await client.replyMessage(replyToken, [replyMsg, adminCmd])
       break
