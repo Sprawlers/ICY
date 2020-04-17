@@ -11,6 +11,7 @@ const handleAdmin = async (event, client, userObject) => {
   const cmd = userMsg.substring(1)
   const intentResponse = await detectIntent(userID, cmd, 'en-US')
   const query = intentResponse.queryResult
+  const subjectList = generateSubjectList(await getAllCourses())
   switch (userMsg) {
     case '/broadcast':
       replyMsg.text = query.fulfillmentText
@@ -18,17 +19,14 @@ const handleAdmin = async (event, client, userObject) => {
       break
     case '/upload hw':
       replyMsg.text = query.fulfillmentText
-      const subjectList = generateSubjectList(await getAllCourses())
       await client.replyMessage(replyToken, [replyMsg, subjectList])
       break
     case '/upload notes':
       replyMsg.text = query.fulfillmentText
-      const subjectList = generateSubjectList(await getAllCourses())
       await client.replyMessage(replyToken, [replyMsg, subjectList])
       break
     case '/add exam':
       replyMsg.text = query.fulfillmentText
-      const subjectList = generateSubjectList(await getAllCourses())
       await client.replyMessage(replyToken, [replyMsg, subjectList])
       break
     case '/add course':
