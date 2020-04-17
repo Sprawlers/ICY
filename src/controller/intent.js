@@ -1,16 +1,7 @@
 const moment = require('moment')
-const {
-  getAllHomework,
-  getAdminID,
-  addFeedback,
-  addHomework,
-  addNotes,
-  addExam,
-  addCourse,
-  getAllNotes,
-} = require('../model/functions')
+const { getAllHomework, getAdminID, addFeedback, addHomework, addNotes, addExam, addCourse, getAllNotes } = require('../model/functions')
 const { generateHomeworkJSON, generateNotes } = require('./functions')
-const { clearContext } = require('./dialogflow')
+const { clearContext, detectIntent } = require('./dialogflow')
 
 const handleIntent = async (intentResponse, userObject, client, replyToken) => {
   const replyMsg = { type: 'text' }
@@ -129,6 +120,15 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       }
       await client.replyMessage(replyToken, examDate)
       break
+    case 'Notes_type':
+      if (query.queryText === '1') replyMsg.text = query.fulfillmentText
+      else {
+        const intentResponse = await detectIntent(userID, '- -', 'en-US')
+        const query = intentResponse.queryResult
+        replyMsg.text = query.fulfillmentText
+      }
+      await client.replyMessage(replyToken, replyMsg)
+      break
     case 'Course_id - yes':
       {
         const params = query.parameters.fields
@@ -162,15 +162,17 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
         await client.replyMessage(replyToken, replyMsg)
       }
       break
-    case 'Notes_url - yes':
+    case 'Notes_author - yes':
       {
         const params = query.parameters.fields
         const subject = params.subject.stringValue
-        //Convert deadline to UTC
         const filename = params.filename.stringValue
         const url = params.url.stringValue
+        const type = params.type.stringValue
+        const authorName = params.author_name.stringValue
+        const authorMajor = params.author_major.stringValue
         replyMsg.text = query.fulfillmentText
-        await addNotes(subject, filename, url)
+        await addNotes(subject, filename, url, type, authorName, authorMajor)
         await client.replyMessage(replyToken, replyMsg)
       }
       break

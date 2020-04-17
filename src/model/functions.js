@@ -66,8 +66,8 @@ function addCourse(courseName, id, examDates = [], notes = []) {
   return Course.create({ title: courseName, id, examDates, notes })
 }
 
-async function addNotes(subject, name, link) {
-  let obj = await Note.create({ name, link })
+async function addNotes(subject, name, link, authorName, authorMajor) {
+  let obj = await Note.create({ name, link, author: { name: authorName, major: authorMajor } })
   return Course.findOneAndUpdate({ title: subject }, { $push: { notes: obj._id } }, { upsert: true })
 }
 
