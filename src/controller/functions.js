@@ -54,9 +54,10 @@ const generateTasksJSON = async (assignments) => {
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
         const status = isOverdue
             ? '✅'
-            : getDeadlineFromDate(new Date(task.deadline)) + ' at ' + getLocalTimeFromDate(new Date(task.deadline))
+            : getDeadlineFromDate(new Date(task.deadline))
+            .toUpperCase() + ' at ' + getLocalTimeFromDate(new Date(task.deadline))
         name.contents[0].text = task.name
-        name.contents[1].contents[1].text = status.toUpperCase()
+        name.contents[1].contents[1].text = status
         btn.action.label = "-"
         btn.action.uri = await shortenURL(task.link)
         json.contents = [ name, btn ]
