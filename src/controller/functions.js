@@ -92,19 +92,24 @@ const clone = (obj) => {
 
 const getSubjectAssignmentsSorted = (arr) =>
     arr.map((subject) => {
+        console.log("DEBUG A")
+        console.log(subject)
         const sorted = sortByParam(subject.assignments, 'deadline')
             .filter(subject => new Date(subject.deadline) - new Date(Date.now()) > 0)
-        return {
+        const ret = {
             title: subject.title,
             latest: sorted.length ? sorted[0].deadline : false,
         }
+        console.log("DEBUG C")
+        console.log(ret)
+        return ret
     })
 
 // Generates array of Line Flex Bubble message JSON
 const generateHomeworkBubbles = (arr) => {
-    console.log("DEBUG")
-    console.log(arr)
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
+    console.log("DEBUG B")
+    console.log(subjects)
     return subjects.map((subject) => {
         let bubble = clone(homeworkBubble)
 
