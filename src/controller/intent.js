@@ -121,13 +121,17 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       await client.replyMessage(replyToken, examDate)
       break
     case 'Notes_type':
-      if (query.queryText === '1') replyMsg.text = query.fulfillmentText
-      else {
-        const intentResponse = await detectIntent(userID, '- -', 'en-US')
-        const query = intentResponse.queryResult
-        replyMsg.text = query.fulfillmentText
+      {
+        const params = query.parameters.fields
+        const type = params.type.stringValue
+        if (type === 'Notes') replyMsg.text = query.fulfillmentText
+        else {
+          const intentResponse = await detectIntent(userID, 'None None', 'en-US')
+          const query = intentResponse.queryResult
+          replyMsg.text = query.fulfillmentText
+        }
+        await client.replyMessage(replyToken, replyMsg)
       }
-      await client.replyMessage(replyToken, replyMsg)
       break
     case 'Course_id - yes':
       {
