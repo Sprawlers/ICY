@@ -10,7 +10,7 @@ const examSchema = new Schema(
   { versionKey: false }
 )
 
-examSchema.createIndex({ expireAt: 1 }, { expireAfterSeconds: 0 })
+examSchema.index({ expireAt: 1 }, { expireAfterSeconds: 0 })
 
 const examModel = mongoose.model('exams', examSchema, 'exams')
 module.exports = examModel
