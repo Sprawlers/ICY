@@ -60,6 +60,7 @@ function addHomework(subject, deadline, name, link) {
 function addExam(subject, name, date) {
   const expireAt = date
   let obj = Exam.create({ name, date, expireAt })
+  console.log(obj)
   return Course.findOneAndUpdate({ title: subject }, { $push: { examDates: obj._id } }, { upsert: true })
 }
 
