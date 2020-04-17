@@ -149,17 +149,14 @@ const generateStats = async (hwArr, notesArr) => {
     str += 'Homework Links:\n'
     console.log("DEBUG HW1")
     console.log(hwArr)
-    const coursesWithHW = hwArr.map(obj => obj.title)
     str += await Promise.map(
-        coursesWithHW,
+        hwArr,
         async (course) => {
-            str += course + ':\n'
-            const courseHW = hwArr.filter((obj) => obj.title === course)
+            str += course.title + ':\n'
             console.log("DEBUG HW2")
             console.log(course)
-            console.log(courseHW)
             await Promise.map(
-                courseHW,
+                course.assignments,
                 async (obj) => {
                     console.log("DEBUG HW3")
                     console.log(obj)
