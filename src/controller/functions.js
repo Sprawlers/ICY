@@ -12,7 +12,7 @@ const generateCarousel = (arr, altText, callback) => ({
     contents: {type: "carousel", contents: callback(arr)}
 })
 
-const generateHomeworkJSON = arr => generateCarousel(arr, "homework", generateHomeworkBubbles)
+const generateHomeworkJSON = async arr => await generateCarousel(arr, "homework", generateHomeworkBubbles)
 const generateNotesJSON = arr => generateCarousel(arr, "notes", generateNotesBubbles)
 
 const generateNotesBubbles = async (arr) => {
@@ -103,16 +103,16 @@ const getSubjectsSorted = (arr) =>
     })
 
 // INPUT: [ { title: subjectName, assignments: <arr> }, … ]
-const generateHomeworkBubbles = (arr) => {
+const generateHomeworkBubbles = async arr => {
     const subjects = sortByParam(getSubjectsSorted(arr), 'latest')
-    return subjects.map((subject) => {
+    return await Promise.map(subjects , async (subject) => {
         let bubble = clone(homeworkBubble)
 
         bubble.body.action.data = 'homework/body/' + subject.title // for logging
         bubble.body.contents[1].text = subject.title
         bubble.body.contents = [
             ...bubble.body.contents,
-            generateTasksJSON(subject.assignments)
+            await generateTasksJSON(subject.assignments)
         ]
 
         console.log("DEBUG BUBBLE")
