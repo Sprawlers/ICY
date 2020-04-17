@@ -151,6 +151,5 @@ module.exports = {
     generateHomeworkJSON, // fix this
     generateNotes,
     generateSubjectList,
-    generateAssignments,
     getLocalFromUTC,
 }
