@@ -6,17 +6,14 @@ const homeworkBubble = require('../json/homeworkJSON.json')
 const flexMessage = require('../json/flexTemplate.json')
 const taskJSON = require('../json/homeworkTasksJSON.json')
 
-const generateCarousel = (arr, altText, callback) => ({
+const generateCarousel = async (arr, altText, callback) => ({
     ...flexMessage,
     altText,
-    contents: {type: "carousel", contents: callback(arr)}
+    contents: {type: "carousel", contents: await callback(arr)}
 })
 
-const generateHomeworkJSON = async arr => {
-    const ret = await generateCarousel(arr, "homework", generateHomeworkBubbles)
-    console.log(JSON.stringify(ret))
-    return ret
-}
+const generateHomeworkJSON = async arr => await generateCarousel(arr, "homework", generateHomeworkBubbles)
+
 const generateNotesJSON = arr => generateCarousel(arr, "notes", generateNotesBubbles)
 
 const generateNotesBubbles = async (arr) => {
