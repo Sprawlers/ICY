@@ -100,12 +100,12 @@ const getSubjectAssignmentsSorted = (arr) =>
         console.log("DEBUG D")
         console.log(sorted)
         return {
-            name: subject.name,
+            title: subject.title,
             latest: sorted.length ? sorted[0].deadline : false,
         }
     })
 
-// INPUT: [ { name: subjectName, assignments: <arr> }, … ]
+// INPUT: [ { title: subjectName, assignments: <arr> }, … ]
 const generateHomeworkBubbles = (arr) => {
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     console.log("DEBUG B")
@@ -113,8 +113,8 @@ const generateHomeworkBubbles = (arr) => {
     return subjects.map((subject) => {
         let bubble = clone(homeworkBubble)
 
-        bubble.body.action.data = 'homework/body/' + subject.name // for logging
-        bubble.body.contents[1].text = subject.name
+        bubble.body.action.data = 'homework/body/' + subject.title // for logging
+        bubble.body.contents[1].text = subject.title
         bubble.body.contents = [
             ...bubble.body.contents,
             generateTasksJSON(subject.assignments)
