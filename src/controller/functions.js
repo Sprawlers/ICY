@@ -37,22 +37,15 @@ const generateTasksJSON = async (assignments) => {
 
     return await Promise.map(sorted, async task => {
         let json = clone(taskJSON)
-
         let [ name, btn ] = [...json.contents]
-        name  = name.contents
-
-        name[0].text = task.name
-
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
         const status = isOverdue
             ? '✅'
             : getDeadlineFromDate(new Date(task.deadline)) + ' ' + getLocalTimeFromDate(new Date(task.deadline))
-
-        name[1].contents[1] = status.toUpperCase()
+        name.contents[0].text = task.name
+        name.contents[1].contents[1] = status.toUpperCase()
         btn.url = await shortenURL(task.link)
-
-        json = { ...json, contents: [ name, btn ]}
-
+        json.contents = [ name, btn ]
         return json
     })
 }
