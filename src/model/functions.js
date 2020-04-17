@@ -32,7 +32,7 @@ async function getAllNotes() {
     let subject = obj[i]
     if (subject.notes.length) {
       for (let j = 0; j < subject.notes.length; j++) {
-        let data = await Homework.find({ _id: subject.notes[j] }, { _id: 0 })
+        let data = await Note.find({ _id: subject.notes[j] }, { _id: 0 })
         subject.notes[j] = data[0]
       }
       newObj.push(subject)
