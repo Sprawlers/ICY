@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { getAllCourses, getAllHomework, getAdminID, addFeedback, addHomework, addNotes } = require('../model/functions')
+const { getAllCourses, getAllHomework, getAdminID, addFeedback, addHomework, addNotes, addExam } = require('../model/functions')
 const { generateHomeworkJSON, generateNotes } = require('./functions')
 const { clearContext } = require('./dialogflow')
 
@@ -88,6 +88,28 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
       }
       await client.replyMessage(replyToken, datetime)
       break
+    case 'Exam_name':
+      replyMsg.text = query.fulfillmentText
+      //Generate quickreply JSON
+      const examDate = {
+        type: 'text',
+        text: replyMsg.text,
+        quickReply: {
+          items: [
+            {
+              type: 'action',
+              action: {
+                type: 'datetimepicker',
+                label: 'Select date',
+                data: 'examDate',
+                mode: 'datetime',
+              },
+            },
+          ],
+        },
+      }
+      await client.replyMessage(replyToken, examDate)
+      break
     case 'Homework_url - yes':
       {
         const params = query.parameters.fields
@@ -97,6 +119,17 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
         const url = params.url.stringValue
         replyMsg.text = query.fulfillmentText
         await addHomework(subject, deadline, filename, url)
+        await client.replyMessage(replyToken, replyMsg)
+      }
+      break
+    case 'Exam_date - yes':
+      {
+        const params = queyr.parameters.fields
+        const subject = params.subject.stringValue
+        const name = params.name.stringValue
+        const date = new Date(moment(new Date(params.date.stringValue)).subtract(7, 'hours'))
+        replyMsg.text = query.fulfillmentText
+        await addExam(subject, name, date)
         await client.replyMessage(replyToken, replyMsg)
       }
       break

@@ -5,6 +5,7 @@ const { getAllHomework, getAllCourses } = require('../../model/functions')
 const handlePostback = async (event, client, userObject) => {
   //Initialize replyMsg and postbacklog
   const replyMsg = { type: 'text' }
+  const date = { type: 'text' }
   const postbacklog = { data: {} }
   const postback = event.postback
   const userID = userObject.userID
@@ -15,9 +16,17 @@ const handlePostback = async (event, client, userObject) => {
   console.log(data)
   switch (data[0]) {
     case 'deadline':
-      const date = { type: 'text' }
       date.text = postback.params.datetime
       //detectIntent by dialogflow API and get response in intentResponse
+      intentResponse = await detectIntent(userID, date.text, 'en-US')
+      query = intentResponse.queryResult
+      replyMsg.text = query.fulfillmentText
+      postbacklog.type = 'message'
+      postbacklog.data.bot = date.text
+      await client.replyMessage(event.replyToken, [date, replyMsg])
+      break
+    case 'examDate':
+      date.text = postback.params.datetime
       intentResponse = await detectIntent(userID, date.text, 'en-US')
       query = intentResponse.queryResult
       replyMsg.text = query.fulfillmentText

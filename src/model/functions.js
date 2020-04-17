@@ -56,6 +56,11 @@ function addHomework(subject, deadline, name, link) {
   return Homework.findOneAndUpdate({ title: subject }, { $push: { assignments } }, { upsert: true })
 }
 
+function addExam(subject, name, date) {
+  const examDates = { name, date }
+  return Course.findOneAndUpdate({ title: subject }, { $push: { examDates } }, { upsert: true })
+}
+
 function addLog(userID, profileName, type, data) {
   return Log.create({ userID, profileName, type, data })
 }
@@ -77,6 +82,7 @@ module.exports = {
   getAdminID,
   getVote,
   addHomework,
+  addExam,
   addNotes,
   addUser,
   addFeedback,

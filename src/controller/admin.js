@@ -34,6 +34,15 @@ const handleAdmin = async (event, client, userObject) => {
         await client.replyMessage(replyToken, [replyMsg, subjectList])
       }
       break
+    case '/add exam':
+      {
+        const intentResponse = await detectIntent(userID, 'add exam', 'en-US')
+        const query = intentResponse.queryResult
+        replyMsg.text = query.fulfillmentText
+        const subjectList = generateSubjectList(await getAllCourses())
+        await client.replyMessage(replyToken, [replyMsg, subjectList])
+      }
+      break
     default:
       replyMsg.text = 'This command is not available!'
       await client.replyMessage(replyToken, replyMsg)
