@@ -103,6 +103,8 @@ const getSubjectAssignmentsSorted = (arr) =>
 // Generates array of Line Flex Bubble message JSON
 const generateHomeworkBubbles = (arr) => {
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
+    console.log("DEBUG")
+    console.log(subjects)
     return subjects.map((subject) => {
         let bubble = clone(homeworkBubble)
 
