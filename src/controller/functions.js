@@ -147,6 +147,8 @@ const generateStats = async (hwArr, notesArr) => {
     // DUPLICATED CODE NEEDS FIXING
     let str = ''
     str += 'Homework Links:\n'
+    console.log("DEBUG HW1")
+    console.log(hwArr)
     const coursesWithHW = hwArr.map(obj => obj.title)
     str += await Promise.map(
         coursesWithHW,
