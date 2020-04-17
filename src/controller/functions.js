@@ -46,6 +46,8 @@ const generateTasksJSON = async (assignments) => {
         name.contents[1].contents[1].text = status.toUpperCase()
         btn.url = await shortenURL(task.link)
         json.contents = [ name, btn ]
+        console.log("INDIVIDUAL JSON DEBUG")
+        console.log(json)
         return json
     })
     console.log("PROM DEBUG")
@@ -110,12 +112,10 @@ const generateHomeworkBubbles = async arr => {
 
         bubble.body.action.data = 'homework/body/' + subject.title // for logging
         bubble.body.contents[1].text = subject.title
-        const test = [
+        bubble.body.contents = [
             ...bubble.body.contents,
             ...await generateTasksJSON(subject.assignments)
         ]
-        console.log(test)
-        bubble.body.contents = test
 
         console.log("DEBUG BUBBLE")
         console.log(bubble)
