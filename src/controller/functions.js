@@ -32,8 +32,6 @@ const generateNotesBubbles = async (arr) => {
 }
 
 const generateTasksJSON = async (assignments) => {
-    console.log("DEBUG A")
-    console.log(assignments)
 
     const sorted = sortByParam(assignments, 'deadline')
 
@@ -111,6 +109,8 @@ const getSubjectAssignmentsSorted = (arr) =>
 const generateHomeworkBubbles = (arr) => {
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     return subjects.map((subject) => {
+        console.log("DEBUG R")
+        console.log(subject.assignments)
         let bubble = clone(homeworkBubble)
 
         bubble.body.action.data = 'homework/body/' + subject.title // for logging
