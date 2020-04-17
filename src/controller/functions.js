@@ -16,19 +16,30 @@ const generateHomeworkJSON = async arr => await generateCarousel(arr, "homework"
 const generateNotesJSON = async arr => await generateCarousel(arr, "notes", generateNotesBubbles)
 
 const generateNotesBubbles = async (arr) => {
-    let str = await Promise.map(arr, async (course) => {
-        let notes = await Promise.map(course.notes, async (note) => {
-            const shortenedURL = await shortenURL(note.link)
-            return '- ' + note.name + ': ' + shortenedURL
-        })
-        notes = notes.join('\n')
-        return course.title + '\n' + notes
+    return await Promise.map(arr , async (subject) => {
+        let bubble = clone(homeworkBubble)
+
+        bubble.body.action.data = 'notes/body/' + subject.title // for logging
+        bubble.body.contents[1].text = subject.title
+        bubble.body.contents = [
+            ...bubble.body.contents,
+            ...await generateEachNotesJSON(subject.notes)
+        ]
+
+        return bubble
     })
-    str = str.join('\n')
-    return {
-        type: 'text',
-        text: '📕 NOTES 📕\n' + str
-    }
+}
+
+const generateEachNotesJSON = async (notes) => {
+    return await Promise.map(notes, async task => {
+        let json = clone(taskJSON)
+        let [ name, btn ] = [...json.contents]
+        name.contents[0].text = task.name
+        btn.action.label = "-"
+        btn.action.uri = await shortenURL(task.link)
+        json.contents = [ name, btn ]
+        return json
+    })
 }
 
 const generateTasksJSON = async (assignments) => {
