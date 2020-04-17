@@ -95,7 +95,9 @@ const getSubjectAssignmentsSorted = (arr) =>
         console.log("DEBUG A")
         console.log(subject)
         const sorted = sortByParam(subject.assignments, 'deadline')
-            .filter(subject => new Date(subject.deadline) - new Date(Date.now()) > 0)
+            .filter(task => new Date(task.deadline) - new Date(Date.now()) > 0)
+        console.log("DEBUG D")
+        console.log(sorted)
         const ret = {
             title: subject.title,
             latest: sorted.length ? sorted[0].deadline : false,
