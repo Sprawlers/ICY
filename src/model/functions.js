@@ -16,8 +16,7 @@ async function getAllHomework() {
     if (subject.assignments.length) {
       for (let j = 0; j < subject.assignments.length; j++) {
         let data = await Homework.find({ _id: subject.assignments[j] }, { _id: 0 })
-        console.log(data)
-        if (!data.length) await Course.update({ _id: subject._id }, { $pull: { assignments: { $in: [subject.assignments[j]] } } })
+        if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { assignments: { $in: [subject.assignments[j]] } } })
         subject.assignments[j] = data[0]
       }
       newObj.push(subject)
@@ -35,8 +34,7 @@ async function getAllNotes() {
     if (subject.notes.length) {
       for (let j = 0; j < subject.notes.length; j++) {
         let data = await Note.find({ _id: subject.notes[j] }, { _id: 0 })
-        console.log(data)
-        if (!data.length) await Course.update({ _id: subject._id }, { $pull: { notes: { $in: [subject.notes[j]] } } })
+        if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { notes: { $in: [subject.notes[j]] } } })
         subject.notes[j] = data[0]
       }
       newObj.push(subject)
