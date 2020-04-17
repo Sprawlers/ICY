@@ -110,6 +110,8 @@ const getSubjectAssignmentsSorted = (arr) =>
 
 // INPUT: [ { title: subjectName, assignments: <arr> }, … ]
 const generateHomeworkBubbles = (arr) => {
+    console.log("DEBUG X")
+    console.log(arr)
     const subjects = sortByParam(getSubjectAssignmentsSorted(arr), 'latest')
     console.log("DEBUG B")
     console.log(subjects)
