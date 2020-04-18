@@ -26,13 +26,14 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 		case 'Feedback_save':
 			const adminID = await getAdminID()
 			replyMsg.text = 'Feedback submitted'
-			const feedback = query.parameters.fields.details.stringValue
-			userMsg
-				? await addFeedback(userID, userObject.profileName, 'message', userMsg)
-				: await addFeedback(userID, userObject.profileName, 'message', feedback)
+			let feedback = query.parameters.fields.details.stringValue
+			if (userMsg) {
+				await addFeedback(userID, userObject.profileName, 'message', userMsg)
+				feedback = userMsg
+			} else await addFeedback(userID, userObject.profileName, 'message', feedback)
 			const feedbackMsg = {
 				type: 'text',
-				text: 'Feedback from user: ' + feedback,
+				text: `Feedback from user, ${userObject.profileName}:\n` + feedback,
 			}
 			//Multicast to all admin
 			await client.multicast(adminID, feedbackMsg)
