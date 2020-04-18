@@ -2,12 +2,13 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const examSchema = new Schema(
-  {
-    name: String,
-    date: Date,
-    expireAt: Date,
-  },
-  { versionKey: false }
+	{
+		name: String,
+		date: Date,
+		duration: Number,
+		expireAt: Date,
+	},
+	{ versionKey: false }
 )
 
 examSchema.index({ expireAt: 1 }, { expireAfterSeconds: 0 })

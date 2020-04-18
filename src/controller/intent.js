@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { getAllHomework, getAdminID, addFeedback, addHomework, addNotes, addExam, addCourse, getAllNotes } = require('../model/functions')
+const { getAllHomework, getAdminID, addFeedback, addHomework, addNotes, addExam, addCourse, getAllNotes, getAllExams } = require('../model/functions')
 const { generateHomeworkJSON, generateNotesJSON, generateRegularMessageJSON } = require('./functions')
 const { clearContext, detectIntent } = require('./dialogflow')
 const { JSONfile } = require('../json/JSONcontroller')
@@ -15,9 +15,18 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 	switch (intent) {
 		case 'Homework':
 			//Generate reply JSON from homework collection
+			await getAllExams()
 			const homeworkJSON = await generateHomeworkJSON(await getAllHomework())
 			replyMsg.text = 'Homework Carousel'
 			await client.replyMessage(replyToken, homeworkJSON)
+			break
+		case 'Notes':
+			//Get all courses from courses collection and generate notesList from courses
+			replyMsg.text = 'Notes list'
+			const notesList = await generateNotesJSON(await getAllNotes())
+			await client.replyMessage(replyToken, notesList)
+			break
+		case 'Exams':
 			break
 		case 'Feedback':
 			replyMsg.text = 'Feedback JSON'
@@ -152,14 +161,15 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 				await client.replyMessage(replyToken, replyMsg)
 			}
 			break
-		case 'Exam_date - yes':
+		case 'Exam_duration - yes':
 			{
 				const params = query.parameters.fields
 				const subject = params.subject.stringValue
 				const name = params.name.stringValue
 				const date = new Date(moment(new Date(params.date.stringValue)).subtract(7, 'hours'))
+				const duration = params.duration.structValue.fields.amount.numberValue
 				replyMsg.text = query.fulfillmentText
-				await addExam(subject, name, date)
+				await addExam(subject, name, date, duration)
 				await client.replyMessage(replyToken, replyMsg)
 			}
 			break
@@ -176,12 +186,6 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 				await addNotes(subject, filename, url, type, authorName, authorMajor)
 				await client.replyMessage(replyToken, replyMsg)
 			}
-			break
-		case 'Notes':
-			//Get all courses from courses collection and generate notesList from courses
-			replyMsg.text = 'Notes list'
-			const notesList = await generateNotesJSON(await getAllNotes())
-			await client.replyMessage(replyToken, notesList)
 			break
 		default:
 			replyMsg.text = query.fulfillmentText
