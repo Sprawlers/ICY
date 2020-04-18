@@ -53,6 +53,8 @@ const handlePostback = async (event, client, userObject) => {
 					replyMsg.text = 'Feedback JSON'
 					await client.replyMessage(replyToken, JSONfile('feedback'))
 					break
+				case 'exams':
+					break
 				default:
 					replyMsg.text = data[1].toUpperCase() + ' function is not available yet.'
 					await client.replyMessage(replyToken, replyMsg)
