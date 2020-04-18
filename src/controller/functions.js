@@ -71,7 +71,7 @@ const generateTemplateB = async (templateMap) => await Promise.map(templateMap, 
 const generateTasksJSON = async (assignments) => {
     console.log("DEBUG")
     console.log(assignments)
-    const sorted = sortByParam(overdueSorted, 'deadline')
+    const sorted = sortByParam(assignments, 'deadline')
     const templateMap = sorted.map(task => {
         const status = task.deadline
             ? getDeadlineFromDate(new Date(task.deadline)).toUpperCase() + ' at ' + getLocalTimeFromDate(new Date(task.deadline))
