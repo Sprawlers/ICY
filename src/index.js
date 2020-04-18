@@ -40,13 +40,6 @@ app.post('/webhook', async (req, res) => {
 	const lineConfig = config.line
 	// Set a new client
 	const client = new line.Client(lineConfig)
-
-	// Generate signature for comparing with line headers.
-	// const text = JSON.stringify(req.body)
-	// const signature = crypto.createHmac('SHA256', lineConfig.channelSecret).update(text).digest('base64').toString()
-	// if (signature !== req.headers['x-line-signature']) {
-	// 	return res.status(401).send('Unauthorized')
-	// }
 	res.sendStatus(200)
 	// Set event
 	const event = req.body.events[0]
