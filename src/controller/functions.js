@@ -35,11 +35,14 @@ const generateExamMessageJSON = arr => {
 const generateEachExamsJSON = arr => arr.map(obj => {
     const json = clone(JSONfile('singleExam'))
     let [left, right] = json.contents
+    let time = getLocalTimeFromDate(new Date(obj.date))
+    if (new Date(obj.date).getUTCHours() === 0 && new Date(obj.date).getUTCMinutes() === 0)
+        time = " "
     const duration = (obj.duration === 0)?'':' (' + obj.duration + 'm)'
     left.contents[0].text = obj.title
     left.contents[1].text = obj.name
     right.contents[0].text = getDeadlineFromDate(new Date(obj.date))
-    right.contents[1].text = getLocalTimeFromDate(new Date(obj.date)) + duration
+    right.contents[1].text = time + duration
     json.contents = [left, right]
     return json
 })
