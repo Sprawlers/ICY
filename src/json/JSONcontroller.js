@@ -11,4 +11,6 @@ const dict = {
     'homeworkTasksJSON': homeworkTasksJSON
 }
 
-export default templateName => dict[templateName]
+module.exports = {
+    JSONfile: templateName => dict[templateName]
+}

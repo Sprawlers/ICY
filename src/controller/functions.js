@@ -7,7 +7,7 @@ const flexMessage = require('../json/flexTemplate.json')
 const taskJSON = require('../json/homeworkTasksJSON.json')
 const notesBubble = require('../json/notesJSON.json')
 const eachNotesJSON = require('../json/notesEachNotesJSON.json')
-const JSONfile = require('../json/JSONcontroller')
+const {JSONfile} = require('../json/JSONcontroller')
 
 const generateCarousel = async (arr, altText, callback) => ({
 	...flexMessage,
