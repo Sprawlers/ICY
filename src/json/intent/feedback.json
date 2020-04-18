@@ -1,0 +1,143 @@
+{
+	"type": "flex",
+	"altText": "Wanna give us a feedback, eh?",
+	"contents": {
+		"type": "bubble",
+		"direction": "ltr",
+		"body": {
+			"type": "box",
+			"layout": "vertical",
+			"spacing": "md",
+			"contents": [
+				{
+					"type": "box",
+					"layout": "baseline",
+					"contents": [
+						{
+							"type": "spacer",
+							"size": "xl"
+						},
+						{
+							"type": "text",
+							"text": "⭐ Please give your",
+							"flex": 0,
+							"align": "center",
+							"weight": "regular",
+							"color": "#FFFFFF"
+						},
+						{
+							"type": "text",
+							"text": "feedback",
+							"margin": "sm",
+							"weight": "bold",
+							"color": "#FFB400"
+						}
+					]
+				},
+				{
+					"type": "separator"
+				},
+				{
+					"type": "box",
+					"layout": "baseline",
+					"contents": [
+						{
+							"type": "text",
+							"text": "This can be anything you would like to tell us, for example:",
+							"flex": 0,
+							"align": "start",
+							"weight": "regular",
+							"color": "#FFFFFF",
+							"wrap": true
+						}
+					]
+				},
+				{
+					"type": "box",
+					"layout": "baseline",
+					"contents": [
+						{
+							"type": "text",
+							"text": "1",
+							"flex": 1,
+							"weight": "bold",
+							"color": "#FBB400"
+						},
+						{
+							"type": "text",
+							"text": "A new feature request",
+							"flex": 9,
+							"color": "#FFFFFF",
+							"wrap": true
+						}
+					]
+				},
+				{
+					"type": "box",
+					"layout": "baseline",
+					"contents": [
+						{
+							"type": "text",
+							"text": "2",
+							"flex": 1,
+							"weight": "bold",
+							"color": "#FBB400"
+						},
+						{
+							"type": "text",
+							"text": "A design recommendation",
+							"flex": 9,
+							"color": "#FFFFFF",
+							"wrap": true
+						}
+					]
+				},
+				{
+					"type": "box",
+					"layout": "baseline",
+					"contents": [
+						{
+							"type": "text",
+							"text": "3",
+							"flex": 1,
+							"weight": "bold",
+							"color": "#FBB400"
+						},
+						{
+							"type": "text",
+							"text": "A trouble you encountered while using ICY",
+							"flex": 9,
+							"color": "#FFFFFF",
+							"wrap": true
+						}
+					]
+				},
+				{
+					"type": "box",
+					"layout": "baseline",
+					"contents": [
+						{
+							"type": "text",
+							"text": "4",
+							"flex": 1,
+							"weight": "bold",
+							"color": "#FBB400"
+						},
+						{
+							"type": "text",
+							"text": "The possibilities are endless!",
+							"flex": 9,
+							"color": "#FFFFFF",
+							"wrap": true
+						}
+					]
+				}
+			]
+		},
+		"styles": {
+			"body": {
+				"backgroundColor": "#344955"
+			}
+		}
+	}
+}
