@@ -74,6 +74,8 @@ const generateTasksJSON = async (assignments) => {
         if(new Date(task.deadline) - new Date(Date.now()) < 0) taskCopy.deadline = false
         return taskCopy
     }), 'deadline')
+    console.log("DEBUG")
+    console.log(sorted)
     const templateMap = sorted.map(task => {
         const status = task.deadline
             ? getDeadlineFromDate(new Date(task.deadline)).toUpperCase() + ' at ' + getLocalTimeFromDate(new Date(task.deadline))
