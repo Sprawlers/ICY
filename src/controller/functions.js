@@ -12,12 +12,12 @@ const generateCarousel = async (altText, bubbles) => ({
 })
 
 const generateHomeworkJSON = async (arr) => {
-    return await generateCarousel('homework',
+    return await generateCarousel('Homework',
         generateTemplateA(arr, 'hw', generateTasksJSON, ['homework/body', 'Homework Solutions for'])
     )
 }
 const generateNotesJSON = async (arr) => {
-    return await generateCarousel('notes',
+    return await generateCarousel('Notes',
         generateTemplateA(arr, 'notes', generateEachNotesJSON, ['notes/body', 'Notes and Texts for'])
     )
 }
@@ -37,7 +37,7 @@ const generateEachExamsJSON = arr => arr.map(obj => {
     let [left, right] = json.contents
     let time = getLocalTimeFromDate(new Date(obj.date))
     if (new Date(obj.date).getUTCHours() === 0 && new Date(obj.date).getUTCMinutes() === 0)
-        time = " "
+        time = "TBA"
     const duration = (obj.duration === 0)?'':' (' + obj.duration + 'm)'
     left.contents[0].text = obj.title
     left.contents[1].text = obj.name
