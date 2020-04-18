@@ -1,0 +1,28 @@
+{
+  "type": "flex",
+  "altText": "*the bot message goes to here*",
+  "contents": {
+    "type": "bubble",
+    "direction": "ltr",
+    "body": {
+      "type": "box",
+      "layout": "baseline",
+      "spacing": "sm",
+      "contents": [
+        {
+          "type": "text",
+          "text": "*the bot message goes to here*",
+          "flex": 0,
+          "weight": "regular",
+          "color": "#FFFFFF",
+          "wrap": true
+        }
+      ]
+    },
+    "styles": {
+      "body": {
+        "backgroundColor": "#344955"
+      }
+    }
+  }
+}
