@@ -70,10 +70,10 @@ const generateTemplateB = async (templateMap) => await Promise.map(templateMap, 
 
 const generateTasksJSON = async (assignments) => {
     const sorted = sortByParam(assignments, 'deadline').map(task => {
-        console.log("DEBUG")
-        console.log(task)
         let taskCopy = {...task}
         if(new Date(task.deadline) - new Date(Date.now()) < 0) taskCopy.deadline = false
+        console.log("DEBUG")
+        console.log(task)
         return taskCopy
     })
     const templateMap = sorted.map(task => {
