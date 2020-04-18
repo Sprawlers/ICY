@@ -2,11 +2,7 @@ const moment = require('moment-timezone')
 const Promise = require('bluebird')
 const request = require('request-promise')
 const config = require('../config')
-const homeworkBubble = require('../json/homeworkJSON.json')
 const flexMessage = require('../json/flexTemplate.json')
-const taskJSON = require('../json/homeworkTasksJSON.json')
-const notesBubble = require('../json/notesJSON.json')
-const eachNotesJSON = require('../json/notesEachNotesJSON.json')
 const {JSONfile} = require('../json/JSONcontroller')
 
 const generateCarousel = async (altText, bubbles) => ({
@@ -15,19 +11,19 @@ const generateCarousel = async (altText, bubbles) => ({
     contents: {type: 'carousel', contents: await bubbles},
 })
 
-const generateHomeworkJSON = async (arr) => (
-    await generateCarousel('homework',
-        generateBubbles(arr, 'hw', generateTasksJSON, ['homework/body', 'Homework Solutions for'])
+const generateHomeworkJSON = async (arr) => {
+    return await generateCarousel('homework',
+        generateTemplateA(arr, 'hw', generateTasksJSON, ['homework/body', 'Homework Solutions for'])
     )
-)
+}
 const generateNotesJSON = async (arr) => {
-    await generateCarousel('notes',
-        generateBubbles(arr, 'notes', generateEachNotesJSON, ['notes/body', 'Notes and Texts for'])
+    return await generateCarousel('notes',
+        generateTemplateA(arr, 'notes', generateEachNotesJSON, ['notes/body', 'Notes and Texts for'])
     )
 }
 
 // INPUT example: [ { title: subjectName, <assignments/notes>: <arr> }, … ]
-const generateBubbles = async (arr, type, callback, data = ['Subheading', 'Heading']) => {
+const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Heading']) => {
     let [subjects, callbackParam] = [arr, null]
     switch (type) {
         case 'hw':
@@ -48,7 +44,6 @@ const generateBubbles = async (arr, type, callback, data = ['Subheading', 'Headi
         return bubble
     })
 }
-
 const generateTemplateB = async (templateMap) => await Promise.map(templateMap, async (obj) => {
     let json = clone(JSONfile('TemplateB'))
     let [left, middle, right] = [...json.contents]
@@ -65,6 +60,8 @@ const generateTemplateB = async (templateMap) => await Promise.map(templateMap, 
 const generateTasksJSON = async (assignments) => {
     const sorted = sortByParam(assignments, 'deadline')
     const templateMap = await Promise.map(sorted, async task => {
+        console.log("DEBUG")
+        console.log(task)
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
         const status = isOverdue
             ? '✅'
@@ -82,7 +79,6 @@ const generateTasksJSON = async (assignments) => {
     })
     return generateTemplateB(templateMap)
 }
-
 const generateEachNotesJSON = async (notes) => {
     const templateMap = await Promise.map(notes, async note => {
         const [ left, middle, right ] = [{
