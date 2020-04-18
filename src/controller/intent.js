@@ -1,6 +1,6 @@
 const moment = require('moment')
 const { getAllHomework, getAdminID, addFeedback, addHomework, addNotes, addExam, addCourse, getAllNotes } = require('../model/functions')
-const { generateHomeworkJSON, generateNotes } = require('./functions')
+const { generateHomeworkJSON, generateNotesJSON } = require('./functions')
 const { clearContext, detectIntent } = require('./dialogflow')
 
 const handleIntent = async (intentResponse, userObject, client, replyToken) => {
@@ -185,7 +185,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
     case 'Notes':
       //Get all courses from courses collection and generate notesList from courses
       replyMsg.text = 'Notes list'
-      const notesList = await generateNotes(await getAllNotes())
+      const notesList = await generateNotesJSON(await getAllNotes())
       await client.replyMessage(replyToken, notesList)
       break
     default:
