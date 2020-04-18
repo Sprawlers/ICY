@@ -31,7 +31,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 			replyMsg.text = 'Feedback JSON'
 			await client.replyMessage(replyToken, feedbackJSON)
 			break
-		case 'save_feedback':
+		case 'Feedback_save':
 			const feedbackConfirmJSON = require('../json/intent/feedback_confirm.json')
 			replyMsg.text = 'Feedback confirm'
 			await client.replyMessage(replyToken, feedbackConfirmJSON)
