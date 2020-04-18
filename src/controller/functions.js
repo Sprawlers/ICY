@@ -69,7 +69,7 @@ const generateTemplateB = async (templateMap) => await Promise.map(templateMap, 
 })
 
 const generateTasksJSON = async (assignments) => {
-    const overdueSorted = assignments.map(task => ({
+    const overdueSorted = [...assignments].map(task => ({
         ...task,
         deadline: new Date(task.deadline) - new Date(Date.now()) < 0? false: task.deadline
     }))
