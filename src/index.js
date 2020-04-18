@@ -4,7 +4,6 @@ const line = require('@line/bot-sdk')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
-const crypto = require('crypto')
 const app = express()
 
 // Import appropriate class
