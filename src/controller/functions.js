@@ -36,7 +36,7 @@ const generateBubbles = async (arr, type, callback, data = ['Subheading', 'Headi
             callbackParam = "notes"
             break
     }
-    return await Promise.map(subjects, async (subject) => {
+    return await Promise.map(subjects, async (subject, callbackParam) => {
         let bubble = clone(JSONfile('TemplateA'))
 
         bubble.body.action.data = data[0] + subject.title // for logging
@@ -44,8 +44,6 @@ const generateBubbles = async (arr, type, callback, data = ['Subheading', 'Headi
         bubble.body.contents[1].text = subject.title
         bubble.body.contents = [...bubble.body.contents, ...(await callback(subject[callbackParam]))]
 
-        console.log("DEBUG bubble")
-        console.log(bubble)
         return bubble
     })
 }
