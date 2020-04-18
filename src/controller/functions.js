@@ -36,7 +36,7 @@ const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Hea
     return await Promise.map(subjects, async (subject) => {
         let bubble = clone(JSONfile('TemplateA'))
 
-        bubble.body.action.data = data[0] + subject.title // for logging
+        bubble.body.action.data = data[0] + '/' + subject.title // for logging
         bubble.body.contents[0].text = data[1]
         bubble.body.contents[1].text = subject.title
         switch (type) {
@@ -55,10 +55,6 @@ const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Hea
                 ]
                 break
         }
-
-        console.log("DEBUG")
-        console.log(bubble.body.contents)
-
         return bubble
     })
 }
@@ -115,9 +111,9 @@ const generateEachNotesJSON = async (notes) => {
 const sortByParam = (arr, param) => {
     const arrCopy = [...arr]
     arrCopy.sort((a, b) => {
-        if (!a[param]) return 1
+        if (!a[param] || a[param] < 0) return 1
         let dateA = new Date(a[param])
-        if (!b[param]) return -1
+        if (!b[param] || b[param] < 0) return -1
         let dateB = new Date(b[param])
         return dateA - dateB
     })
@@ -218,7 +214,7 @@ const getClicksFromURL = async (URL) => {
 // Function exports
 module.exports = {
     generateHomeworkJSON, // fix this
-    generateNotes: generateNotesJSON,
+    generateNotesJSON,
     generateSubjectList,
     getLocalFromUTC,
     generateStats,
