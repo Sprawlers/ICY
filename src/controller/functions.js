@@ -72,12 +72,13 @@ const generateTemplateB = async (templateMap) => await Promise.map(templateMap, 
 })
 
 const generateTasksJSON = async (assignments) => {
-    const sorted = sortByParam(assignments, 'deadline')
+    const sorted = sortByParam(assignments, 'deadline').forEach(task => {
+        if(new Date(task.deadline) - new Date(Date.now()) < 0) task.deadline = false
+    })
     const templateMap = sorted.map(task => {
-        const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
-        const status = isOverdue
-            ? '✅'
-            : getDeadlineFromDate(new Date(task.deadline)).toUpperCase() + ' at ' + getLocalTimeFromDate(new Date(task.deadline))
+        const status = task.deadline
+            ? getDeadlineFromDate(new Date(task.deadline)).toUpperCase() + ' at ' + getLocalTimeFromDate(new Date(task.deadline))
+            : '✅'
         const [left, middle, right] = [{
             title: task.name,
             subtitle: ['Due', status]
@@ -111,9 +112,9 @@ const generateEachNotesJSON = async (notes) => {
 const sortByParam = (arr, param) => {
     const arrCopy = [...arr]
     arrCopy.sort((a, b) => {
-        if (!a[param] || a[param] < 0) return 1
+        if (!a[param]) return 1
         let dateA = new Date(a[param])
-        if (!b[param] || b[param] < 0) return -1
+        if (!b[param]) return -1
         let dateB = new Date(b[param])
         return dateA - dateB
     })
