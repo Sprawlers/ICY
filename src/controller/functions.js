@@ -81,10 +81,10 @@ const generateEachNotesJSON = async (notes) => {
     const templateMap = notes.map(note => {
         const [ left, middle, right ] = [{
             title: note.name,
-            subtitle: [note.type, '']
+            subtitle: [note.type, ' ']
         }, {
-            title: note.hasOwnProperty('author')? note.author.name: '',
-            subtitle: note.hasOwnProperty('author')? note.author.major: ''
+            title: note.hasOwnProperty('author')? note.author.name: ' ',
+            subtitle: note.hasOwnProperty('author')? note.author.major: ' '
         }, {
             uri: note.link
         }]
