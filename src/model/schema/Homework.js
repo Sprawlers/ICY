@@ -5,15 +5,19 @@ const Schema = mongoose.Schema
  * Homework Model
  *
  * title: name of the subject
- * deadline: due date of the latest assignment
- * links: object containing urls to different homework assignments
+ * assignments: object containing assignment objects (one course/subject may contain more than one assignment)
+ * - assignment object format:
+ *   -> deadline: DateTime object containing the assignment deadline
+ *   -> link: link to the assignment
+ *   -> note: (additional) anything that should be mentioned
  *
  */
 const homeworkSchema = new Schema(
   {
-    title: String,
+    name: String,
     deadline: Date,
-    links: Object,
+    link: String,
+    author: Object,
   },
   { versionKey: false }
 )

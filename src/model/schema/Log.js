@@ -11,17 +11,17 @@ const Schema = mongoose.Schema
  *
  */
 const logSchema = new Schema(
-  {
-    userID: String,
-    profileName: String,
-    type: String,
-    data: Object,
-  },
-  { timestamps: true, versionKey: false }
+	{
+		userID: String,
+		profileName: String,
+		type: String,
+		data: Object,
+	},
+	{ timestamps: true, versionKey: false }
 )
 
 //set expire time for logSchema
-logSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 * 60 * 24 })
+logSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 7 * 2 })
 
 const logModel = mongoose.model('log', logSchema, 'log')
 

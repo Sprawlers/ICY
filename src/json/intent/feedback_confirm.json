@@ -1,0 +1,58 @@
+{
+	"type": "flex",
+	"altText": "Confirm your feedback?",
+	"contents": {
+		"type": "bubble",
+		"direction": "ltr",
+		"body": {
+			"type": "box",
+			"layout": "vertical",
+			"spacing": "md",
+			"contents": [
+				{
+					"type": "text",
+					"text": "💭 Confirm your feedback?",
+					"align": "center",
+					"weight": "bold",
+					"color": "#FFFFFF",
+					"wrap": true
+				},
+				{
+					"type": "separator"
+				},
+				{
+					"type": "box",
+					"layout": "horizontal",
+					"spacing": "md",
+					"contents": [
+						{
+							"type": "button",
+							"action": {
+								"type": "message",
+								"label": "No",
+								"text": "No"
+							},
+							"color": "#FFF0CC",
+							"style": "secondary"
+						},
+						{
+							"type": "button",
+							"action": {
+								"type": "message",
+								"label": "Yes",
+								"text": "Yes"
+							},
+							"color": "#FFB400",
+							"style": "secondary"
+						}
+					]
+				}
+			]
+		},
+		"styles": {
+			"body": {
+				"backgroundColor": "#344955"
+			}
+		}
+	}
+}

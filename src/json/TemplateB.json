@@ -1,0 +1,75 @@
+{
+  "type": "box",
+  "layout": "horizontal",
+  "contents": [
+    {
+      "type": "box",
+      "layout": "vertical",
+      "flex": 6,
+      "contents": [
+        {
+          "type": "text",
+          "text": "<Title text here>",
+          "weight": "bold",
+          "color": "#FFFFFF"
+        },
+        {
+          "type": "box",
+          "layout": "baseline",
+          "contents": [
+            {
+              "type": "text",
+              "text": "<White sub-title text here>",
+              "flex": 0,
+              "size": "xxs",
+              "color": "#FFFFFF"
+            },
+            {
+              "type": "text",
+              "text": "<Yellow sub-title text here>",
+              "flex": 0,
+              "margin": "sm",
+              "size": "xxs",
+              "color": "#FBB400"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "box",
+      "layout": "vertical",
+      "flex": 3,
+      "contents": [
+        {
+          "type": "text",
+          "text": "<Title text here>",
+          "align": "center",
+          "weight": "bold",
+          "color": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "text": "<Sub-title text here>",
+          "flex": 0,
+          "size": "xxs",
+          "align": "center",
+          "color": "#FFFFFF"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "url": "https://sgp1.digitaloceanspaces.com/winnaries/icy/icons/download.png",
+      "flex": 3,
+      "align": "end",
+      "gravity": "center",
+      "size": "xxs",
+      "action": {
+        "type": "uri",
+        "label": "-",
+        "uri": "<Link here>"
+      }
+    }
+  ]
+}

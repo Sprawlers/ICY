@@ -1,0 +1,35 @@
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "md",
+    "action": {
+      "type": "postback",
+      "label": "body",
+      "data": "<Postback data here>"
+    },
+    "contents": [
+      {
+        "type": "text",
+        "text": "<Heading text here>",
+        "color": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "text": "<Sub-heading text here>",
+        "size": "lg",
+        "weight": "bold",
+        "color": "#FBB400"
+      },
+      {
+        "type": "separator"
+      }
+    ]
+  },
+  "styles": {
+    "body": {
+      "backgroundColor": "#344955"
+    }
+  }
+}

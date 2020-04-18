@@ -1,0 +1,38 @@
+{
+	"type": "flex",
+	"altText": "You canceled the feedback",
+	"contents": {
+		"type": "bubble",
+		"direction": "ltr",
+		"body": {
+			"type": "box",
+			"layout": "baseline",
+			"spacing": "sm",
+			"contents": [
+				{
+					"type": "spacer",
+					"size": "sm"
+				},
+				{
+					"type": "text",
+					"text": "🗑️ Your feedback was",
+					"flex": 0,
+					"align": "center",
+					"weight": "regular",
+					"color": "#FFFFFF"
+				},
+				{
+					"type": "text",
+					"text": "canceled",
+					"weight": "bold",
+					"color": "#FFB400"
+				}
+			]
+		},
+		"styles": {
+			"body": {
+				"backgroundColor": "#344955"
+			}
+		}
+	}
+}

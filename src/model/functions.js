@@ -3,58 +3,113 @@ const User = require('./schema/User')
 const Feedback = require('./schema/Feedback')
 const Course = require('./schema/Course')
 const Log = require('./schema/Log')
+const Election = require('./schema/Election')
+const Exam = require('./schema/Exam')
+const Note = require('./schema/Note')
 
 // Gets all homework documents, called with hw()
 async function getAllHomework() {
-  return await Homework.find({})
+  let obj = await Course.find({}, { _id: 0, title: 1, assignments: 1 })
+  let newObj = []
+  for (let i = 0; i < obj.length; i++) {
+    let subject = obj[i]
+    if (subject.assignments.length) {
+      for (let j = 0; j < subject.assignments.length; j++) {
+        let data = await Homework.find({ _id: subject.assignments[j] }, { _id: 0 })
+        if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { assignments: { $in: [subject.assignments[j]] } } })
+        else subject.assignments[j] = data[0]
+      }
+      newObj.push(subject)
+    }
+  }
+  console.log(newObj)
+  return newObj
 }
 
-// Gets a user by UUID
+async function getAllNotes() {
+  let obj = await Course.find({}, { _id: 0, title: 1, notes: 1 })
+  let newObj = []
+  for (let i = 0; i < obj.length; i++) {
+    let subject = obj[i]
+    if (subject.notes.length) {
+      for (let j = 0; j < subject.notes.length; j++) {
+        let data = await Note.find({ _id: subject.notes[j] }, { _id: 0 })
+        if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { notes: { $in: [subject.notes[j]] } } })
+        else subject.notes[j] = data[0]
+      }
+      newObj.push(subject)
+    }
+  }
+  console.log(newObj)
+  return newObj
+}
+
 function getUserByID(userID) {
   return User.findOne({ userID })
 }
 
-// Gets all users
 async function getAllUsers() {
   return await User.find({})
 }
 
-// Gets all admin users
 function getAdminID() {
   return User.distinct('userID', { isAdmin: true })
 }
 
-// Gets all subjects
 async function getAllCourses() {
   return await Course.find({})
 }
 
-// Adds a new user
+function getCourse(courseName) {
+  return Course.findOne({ title: courseName })
+}
+
+function addCourse(courseName, id, examDates = [], notes = []) {
+  return Course.create({ title: courseName, id, examDates, notes })
+}
+
+async function addNotes(subject, name, link, type, authorName, authorMajor) {
+  let createObj = { name, link, type }
+  if (type === 'Notes') {
+    createObj.author = { name: authorName, major: authorMajor }
+  }
+  let obj = await Note.create(createObj)
+  return Course.findOneAndUpdate({ title: subject }, { $push: { notes: obj._id } }, { upsert: true })
+}
+
 function addUser(userID, profileName) {
   return User.create({ userID, profileName, isAdmin: false })
 }
 
-// Deletes a user
 function delUser(userID) {
   return User.deleteOne({ userID })
 }
 
-// Adds a new feedback
 function addFeedback(userID, profileName, type, text) {
   return Feedback.create({ userID, profileName, type, text })
 }
 
-// Adds a new homework assignment given parameters
-async function addHomework(subject, deadline, filename, link) {
-  const hw = {}
-  hw['deadline'] = deadline
-  hw['links.' + filename] = link
-  const objCopy = await Homework.findOneAndUpdate({ title: subject }, { $set: hw }, { upsert: true })
-  return objCopy
+async function addHomework(subject, deadline, name, link, authorName, authorMajor) {
+  let obj = await Homework.create({ name, deadline, link, author: { name: authorName, major: authorMajor } })
+  return Course.findOneAndUpdate({ title: subject }, { $push: { assignments: obj._id } }, { upsert: true })
+}
+
+async function addExam(subject, name, date) {
+  const expireAt = date
+  let obj = await Exam.create({ name, date, expireAt })
+  return Course.findOneAndUpdate({ title: subject }, { $push: { examDates: obj._id } }, { upsert: true })
 }
 
 function addLog(userID, profileName, type, data) {
   return Log.create({ userID, profileName, type, data })
+}
+
+function addVote(userID, profileName, vote) {
+  return Election.create({ userID, profileName, vote })
+}
+
+function getVote(userID) {
+  return Election.findOne({ userID })
 }
 
 module.exports = {
@@ -62,10 +117,17 @@ module.exports = {
   getUserByID,
   getAllUsers,
   getAllCourses,
+  getAllNotes,
+  getCourse,
   getAdminID,
+  getVote,
   addHomework,
+  addExam,
+  addNotes,
   addUser,
   addFeedback,
   addLog,
+  addCourse,
+  addVote,
   delUser,
 }
