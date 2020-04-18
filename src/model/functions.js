@@ -45,7 +45,7 @@ async function getAllNotes() {
 }
 
 async function getAllExams() {
-	let obj = await Coursefind({}, { _id: 0, title: 1, examDates: 1 })
+	let obj = await Course.find({}, { _id: 0, title: 1, examDates: 1 })
 	let arr = []
 	for (let i = 0; i < obj.length; i++) {
 		let subject = obj[i]
@@ -54,8 +54,7 @@ async function getAllExams() {
 				let data = await Exam.find({ _id: subject.examDates[j] }, { _id: 0 })
 				if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { examDates: { $in: [subject.examDates[j]] } } })
 				else {
-					let newObj = data[0]
-					newObj.title = subject.title
+					let newObj = { title: subject.title, name: data[0].name, date: data[0].date, duration: data[0].duration }
 					arr.push(newObj)
 				}
 			}
