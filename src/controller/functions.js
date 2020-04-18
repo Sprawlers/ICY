@@ -38,7 +38,7 @@ const generateEachExamsJSON = arr => arr.map(obj => {
     left.contents[0].text = obj.title
     left.contents[1].text = obj.name
     right.contents[0].text = getDeadlineFromDate(new Date(obj.date))
-    right.contents[1].text = getLocalTimeFromDate(new Date(obj.date)) + ' (' + obj.duration + 'm)'
+    right.contents[1].text = getLocalTimeFromDate(new Date(obj.date)) + ' (' + obj.duration?obj.duration:'-' + 'm)'
     json.contents = [left, right]
     return json
 })
