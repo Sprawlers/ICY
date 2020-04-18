@@ -15,7 +15,6 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 	switch (intent) {
 		case 'Homework':
 			//Generate reply JSON from homework collection
-			await getAllExams()
 			const homeworkJSON = await generateHomeworkJSON(await getAllHomework())
 			replyMsg.text = 'Homework Carousel'
 			await client.replyMessage(replyToken, homeworkJSON)
