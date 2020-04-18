@@ -9,144 +9,144 @@ const Note = require('./schema/Note')
 
 // Gets all homework documents, called with hw()
 async function getAllHomework() {
-    let obj = await Course.find({}, {_id: 0, title: 1, assignments: 1})
-    let newObj = []
-    for (let i = 0; i < obj.length; i++) {
-        let subject = obj[i]
-        if (subject.assignments.length) {
-            for (let j = 0; j < subject.assignments.length; j++) {
-                let data = await Homework.find({_id: subject.assignments[j]}, {_id: 0})
-                if (!data.length) await Course.updateOne({title: subject.title}, {$pull: {assignments: {$in: [subject.assignments[j]]}}})
-                else subject.assignments[j] = data[0]
-            }
-            newObj.push(subject)
-        }
-    }
-    console.log(newObj)
-    return newObj
+	let obj = await Course.find({}, { _id: 0, title: 1, assignments: 1 })
+	let newObj = []
+	for (let i = 0; i < obj.length; i++) {
+		let subject = obj[i]
+		if (subject.assignments.length) {
+			for (let j = 0; j < subject.assignments.length; j++) {
+				let data = await Homework.find({ _id: subject.assignments[j] }, { _id: 0 })
+				if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { assignments: { $in: [subject.assignments[j]] } } })
+				else subject.assignments[j] = data[0]
+			}
+			newObj.push(subject)
+		}
+	}
+	console.log(newObj)
+	return newObj
 }
 
 async function getAllNotes() {
-    let obj = await Course.find({}, {_id: 0, title: 1, notes: 1})
-    let newObj = []
-    for (let i = 0; i < obj.length; i++) {
-        let subject = obj[i]
-        if (subject.notes.length) {
-            for (let j = 0; j < subject.notes.length; j++) {
-                let data = await Note.find({_id: subject.notes[j]}, {_id: 0})
-                if (!data.length) await Course.updateOne({title: subject.title}, {$pull: {notes: {$in: [subject.notes[j]]}}})
-                else subject.notes[j] = data[0]
-            }
-            newObj.push(subject)
-        }
-    }
-    console.log(newObj)
-    return newObj
+	let obj = await Course.find({}, { _id: 0, title: 1, notes: 1 })
+	let newObj = []
+	for (let i = 0; i < obj.length; i++) {
+		let subject = obj[i]
+		if (subject.notes.length) {
+			for (let j = 0; j < subject.notes.length; j++) {
+				let data = await Note.find({ _id: subject.notes[j] }, { _id: 0 })
+				if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { notes: { $in: [subject.notes[j]] } } })
+				else subject.notes[j] = data[0]
+			}
+			newObj.push(subject)
+		}
+	}
+	console.log(newObj)
+	return newObj
 }
 
 async function getAllExams() {
-    let obj = await Coursefind({}, {_id: 0, title: 1, examDates: 1})
-    let newObj = []
-    for (let i = 0; i < obj.length; i++) {
-        let subject = obj[i]
-        if (subject.examsDates.length) {
-            for (let j = 0; j < subject.examsDates.length; j++) {
-                let data = await Exam.find({_id: subject.examsDates[j]}, {_id: 0})
-                if (!data.length) await Course.updateOne({title: subject.title}, {$pull: {examsDates: {$in: [subject.examsDates[j]]}}})
-                else subject.examsDates[j] = data[0]
-            }
-            newObj.push(subject)
-        }
-    }
-    console.log(newObj)
-    return newObj
+	let obj = await Coursefind({}, { _id: 0, title: 1, examDates: 1 })
+	let newObj = []
+	for (let i = 0; i < obj.length; i++) {
+		let subject = obj[i]
+		if (subject.examDates.length) {
+			for (let j = 0; j < subject.examDates.length; j++) {
+				let data = await Exam.find({ _id: subject.examDates[j] }, { _id: 0 })
+				if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { examDates: { $in: [subject.examDates[j]] } } })
+				else subject.examsDates[j] = data[0]
+			}
+			newObj.push(subject)
+		}
+	}
+	console.log(newObj)
+	return newObj
 }
 
 function getUserByID(userID) {
-    return User.findOne({userID})
+	return User.findOne({ userID })
 }
 
 async function getAllUsers() {
-    return await User.find({})
+	return await User.find({})
 }
 
 function getAdminID() {
-    return User.distinct('userID', {isAdmin: true})
+	return User.distinct('userID', { isAdmin: true })
 }
 
 async function getAllCourses() {
-    return await Course.find({})
+	return await Course.find({})
 }
 
 function getCourse(courseName) {
-    return Course.findOne({title: courseName})
+	return Course.findOne({ title: courseName })
 }
 
 function addCourse(courseName, id, examDates = [], notes = []) {
-    return Course.create({title: courseName, id, examDates, notes})
+	return Course.create({ title: courseName, id, examDates, notes })
 }
 
 async function addNotes(subject, name, link, type, authorName, authorMajor) {
-    let createObj = {name, link, type}
-    if (type === 'Notes') {
-        createObj.author = {name: authorName, major: authorMajor}
-    }
-    let obj = await Note.create(createObj)
-    return Course.findOneAndUpdate({title: subject}, {$push: {notes: obj._id}}, {upsert: true})
+	let createObj = { name, link, type }
+	if (type === 'Notes') {
+		createObj.author = { name: authorName, major: authorMajor }
+	}
+	let obj = await Note.create(createObj)
+	return Course.findOneAndUpdate({ title: subject }, { $push: { notes: obj._id } }, { upsert: true })
 }
 
 function addUser(userID, profileName) {
-    return User.create({userID, profileName, isAdmin: false})
+	return User.create({ userID, profileName, isAdmin: false })
 }
 
 function delUser(userID) {
-    return User.deleteOne({userID})
+	return User.deleteOne({ userID })
 }
 
 function addFeedback(userID, profileName, type, text) {
-    return Feedback.create({userID, profileName, type, text})
+	return Feedback.create({ userID, profileName, type, text })
 }
 
 async function addHomework(subject, deadline, name, link, authorName, authorMajor) {
-    let obj = await Homework.create({name, deadline, link, author: {name: authorName, major: authorMajor}})
-    return Course.findOneAndUpdate({title: subject}, {$push: {assignments: obj._id}}, {upsert: true})
+	let obj = await Homework.create({ name, deadline, link, author: { name: authorName, major: authorMajor } })
+	return Course.findOneAndUpdate({ title: subject }, { $push: { assignments: obj._id } }, { upsert: true })
 }
 
 async function addExam(subject, name, date) {
-    const expireAt = date
-    let obj = await Exam.create({name, date, expireAt})
-    return Course.findOneAndUpdate({title: subject}, {$push: {examDates: obj._id}}, {upsert: true})
+	const expireAt = date
+	let obj = await Exam.create({ name, date, expireAt })
+	return Course.findOneAndUpdate({ title: subject }, { $push: { examDates: obj._id } }, { upsert: true })
 }
 
 function addLog(userID, profileName, type, data) {
-    return Log.create({userID, profileName, type, data})
+	return Log.create({ userID, profileName, type, data })
 }
 
 function addVote(userID, profileName, vote) {
-    return Election.create({userID, profileName, vote})
+	return Election.create({ userID, profileName, vote })
 }
 
 function getVote(userID) {
-    return Election.findOne({userID})
+	return Election.findOne({ userID })
 }
 
 module.exports = {
-    getAllHomework,
-    getUserByID,
-    getAllUsers,
-    getAllCourses,
-    getAllNotes,
-    getAllExams,
-    getCourse,
-    getAdminID,
-    getVote,
-    addHomework,
-    addExam,
-    addNotes,
-    addUser,
-    addFeedback,
-    addLog,
-    addCourse,
-    addVote,
-    delUser,
+	getAllHomework,
+	getUserByID,
+	getAllUsers,
+	getAllCourses,
+	getAllNotes,
+	getAllExams,
+	getCourse,
+	getAdminID,
+	getVote,
+	addHomework,
+	addExam,
+	addNotes,
+	addUser,
+	addFeedback,
+	addLog,
+	addCourse,
+	addVote,
+	delUser,
 }
