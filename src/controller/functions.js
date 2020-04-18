@@ -115,6 +115,8 @@ const generateTasksJSON = async (assignments) => {
 }
 const generateEachNotesJSON = async (notes) => {
     const templateMap = notes.map(note => {
+        console.log("DEBUG INIT")
+        console.log(note)
         const [left, middle, right] = [{
             title: note.name,
             subtitle: [note.type, ' ']
