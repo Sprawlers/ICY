@@ -73,6 +73,7 @@ const generateTemplateB = async (templateMap) => await Promise.map(templateMap, 
 
 const generateTasksJSON = async (assignments) => {
     const sorted = sortByParam(assignments, 'deadline').map(task => {
+        console.log(task)
         const taskCopy = clone(task)
         if(new Date(task.deadline) - new Date(Date.now()) < 0) taskCopy.deadline = false
         return taskCopy
