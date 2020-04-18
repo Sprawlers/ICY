@@ -17,6 +17,7 @@
           "type": "text",
           "text": "Second Lab Test",
           "wrap": true,
+          "size": "xxs",
           "flex": 3,
           "color": "#FFFFFF"
         }
@@ -37,6 +38,7 @@
         {
           "type": "text",
           "text": "13:00 (120m)",
+          "size": "xxs",
           "align": "end",
           "color": "#FFFFFF"
         }
