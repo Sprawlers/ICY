@@ -7,7 +7,7 @@ const flexMessage = require('../json/flexTemplate.json')
 const taskJSON = require('../json/homeworkTasksJSON.json')
 const notesBubble = require('../json/notesJSON.json')
 const eachNotesJSON = require('../json/notesEachNotesJSON.json')
-const json = require('../json/JSONcontroller')
+const JSONfile = require('../json/JSONcontroller')
 
 const generateCarousel = async (arr, altText, callback) => ({
 	...flexMessage,
@@ -47,7 +47,7 @@ const generateTasksJSON = async (assignments) => {
 	const sorted = sortByParam(assignments, 'deadline')
 
 	return await Promise.map(sorted, async (task) => {
-		let json = clone(json('homeworkTasksJSON'))
+		let json = clone(JSONfile('homeworkTasksJSON'))
 		let [name, btn] = [...json.contents]
 		const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
 		const status = isOverdue
