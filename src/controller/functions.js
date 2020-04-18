@@ -47,11 +47,15 @@ const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Hea
                 ]
                 break
             case 'notes':
-                bubble.body.contents = [
+                let notesContent = await callback(subject[callbackParam].filter(task => task.type === "Notes"))
+                if(notesContent.length !== 0) bubble.body.contents = [
                     ...bubble.body.contents,
-                    ...(await callback(subject[callbackParam].filter(task => task.type === "Notes"))),
-                    {type: 'separator'},
-                    ...(await callback(subject[callbackParam].filter(task => task.type === "Textbook")))
+                    notesContent
+                ]
+                let textContent = await callback(subject[callbackParam].filter(task => task.type === "Textbook"))
+                if(textContent.length !== 0) bubble.body.contents = [
+                    ...bubble.body.contents,
+                    textContent
                 ]
                 break
         }
@@ -73,11 +77,12 @@ const generateTemplateB = async (templateMap) => await Promise.map(templateMap, 
 
 const generateTasksJSON = async (assignments) => {
     const sorted = sortByParam(assignments, 'deadline').map(task => {
-        console.log(task)
         const taskCopy = clone(task)
         if(new Date(task.deadline) - new Date(Date.now()) < 0) taskCopy.deadline = false
         return taskCopy
     })
+    console.log("DEBUG")
+    console.log(sorted)
     const templateMap = sorted.map(task => {
         const status = task.deadline
             ? getDeadlineFromDate(new Date(task.deadline)).toUpperCase() + ' at ' + getLocalTimeFromDate(new Date(task.deadline))
