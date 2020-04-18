@@ -72,7 +72,7 @@ const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Hea
                 ]
                 break
             case 'notes':
-                let notesContent = await callback(subject[callbackParam].filter(task => task.type === "Notes"))
+                let notesContent = await callback(subject[callbackParam].filter(task => task.type === "Note"))
                 let textContent = await callback(subject[callbackParam].filter(task => task.type === "Textbook"))
                 if(notesContent.length !== 0) bubble.body.contents = [...bubble.body.contents, ...notesContent]
                 if(textContent.length !== 0) bubble.body.contents = [...bubble.body.contents, ...textContent]
