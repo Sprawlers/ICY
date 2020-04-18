@@ -1,6 +1,6 @@
 {
 	"type": "flex",
-	"altText": "Wanna give us a feedback, eh?",
+	"altText": "Wanna give us your feedback, eh?",
 	"contents": {
 		"type": "bubble",
 		"direction": "ltr",
@@ -15,11 +15,11 @@
 					"contents": [
 						{
 							"type": "spacer",
-							"size": "xl"
+							"size": "lg"
 						},
 						{
 							"type": "text",
-							"text": "⭐ Please give your",
+							"text": "⭐ Please type your",
 							"flex": 0,
 							"align": "center",
 							"weight": "regular",
@@ -131,6 +131,17 @@
 							"wrap": true
 						}
 					]
+				},
+				{
+					"type": "separator"
+				},
+				{
+					"type": "text",
+					"text": "limited to one message per submission",
+					"size": "xs",
+					"align": "center",
+					"color": "#FFFFFF",
+					"wrap": true
 				}
 			]
 		},
