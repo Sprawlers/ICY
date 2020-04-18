@@ -30,14 +30,20 @@ const generateBubbles = async (arr, type, callback, data = ['Subheading', 'Headi
     let [subjects, callbackParam] = [arr, null]
     switch (type) {
         case 'hw':
-            [subjects, callbackParam] = [sortByParam(getSubjectsSorted(arr), 'latest'), "assignments"]
+            console.log("DEBUG SWITCH")
+                console.log(arr)
+                [subjects, callbackParam] = [sortByParam(getSubjectsSorted(arr), 'latest'), "assignments"]
             break
         case 'notes':
             callbackParam = "notes"
             break
     }
-    return await Promise.map(subjects, async (subject, callbackParam) => {
+    return await Promise.map(subjects, async (subject, data, callbackParam) => {
         let bubble = clone(JSONfile('TemplateA'))
+
+        console.log("DEBUG")
+        console.log(data)
+        console.log(callbackParam)
 
         bubble.body.action.data = data[0] + subject.title // for logging
         bubble.body.contents[0].text = data[1]
