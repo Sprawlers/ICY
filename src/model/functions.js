@@ -112,9 +112,10 @@ async function addHomework(subject, deadline, name, link, authorName, authorMajo
 	return Course.findOneAndUpdate({ title: subject }, { $push: { assignments: obj._id } }, { upsert: true })
 }
 
-async function addExam(subject, name, date) {
+async function addExam(subject, name, date, duration) {
+	duration *= 60 * 1000
 	const expireAt = date
-	let obj = await Exam.create({ name, date, expireAt })
+	let obj = await Exam.create({ name, date, duration, expireAt })
 	return Course.findOneAndUpdate({ title: subject }, { $push: { examDates: obj._id } }, { upsert: true })
 }
 

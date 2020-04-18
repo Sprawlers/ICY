@@ -136,12 +136,6 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 				await client.replyMessage(replyToken, replyMsg)
 			}
 			break
-		case 'Exam_duration':
-			{
-				const params = query.parameters.fields
-				console.log(params.duration.structValue.fields)
-			}
-			break
 		case 'Course_id - yes':
 			{
 				const params = query.parameters.fields
@@ -172,8 +166,9 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 				const subject = params.subject.stringValue
 				const name = params.name.stringValue
 				const date = new Date(moment(new Date(params.date.stringValue)).subtract(7, 'hours'))
+				const duration = params.duration.structValue.fields.amount.numberValue
 				replyMsg.text = query.fulfillmentText
-				await addExam(subject, name, date)
+				await addExam(subject, name, date, duration)
 				await client.replyMessage(replyToken, replyMsg)
 			}
 			break

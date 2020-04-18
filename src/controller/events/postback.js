@@ -34,7 +34,7 @@ const handlePostback = async (event, client, userObject) => {
 			replyMsg.text = query.fulfillmentText
 			postbacklog.type = 'message'
 			postbacklog.data.bot = replyMsg.text
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, [date, replyMsg])
 			break
 		case 'richmenu':
 			await clearContext(userID)
