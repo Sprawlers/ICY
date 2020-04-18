@@ -12,7 +12,7 @@
         {
           "type": "text",
           "text": "*the bot message goes to here*",
-          "flex": 0,
+          "align": "center",
           "weight": "regular",
           "color": "#FFFFFF",
           "wrap": true
