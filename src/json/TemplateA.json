@@ -7,7 +7,7 @@
     "action": {
       "type": "postback",
       "label": "body",
-      "data": ""
+      "data": "<Postback data here>"
     },
     "contents": [
       {

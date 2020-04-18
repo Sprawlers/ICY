@@ -3,6 +3,7 @@ const TemplateB = require('./TemplateB.json')
 const TemplateC = require('./TemplateC.json')
 const homeworkTasksJSON = require('./homeworkTasksJSON.json')
 
+// Refer to image of each template in images folder
 const dict = {
     'TemplateA': TemplateA,
     'TemplateB': TemplateB,
@@ -10,4 +11,4 @@ const dict = {
     'homeworkTasksJSON': homeworkTasksJSON
 }
 
-module.exports = templateName => dict[templateName]
+export default templateName => dict[templateName]

@@ -22,9 +22,10 @@ const generateNotesJSON = async (arr) => await generateCarousel(arr, 'notes', ge
 const generateHomeworkBubbles = async (arr) => {
 	const subjects = sortByParam(getSubjectsSorted(arr), 'latest')
 	return await Promise.map(subjects, async (subject) => {
-		let bubble = clone(homeworkBubble)
+		let bubble = clone(JSONfile('TemplateA'))
 
 		bubble.body.action.data = 'homework/body/' + subject.title // for logging
+		bubble.body.contents[0].text = 'Homework Solutions for'
 		bubble.body.contents[1].text = subject.title
 		bubble.body.contents = [...bubble.body.contents, ...(await generateTasksJSON(subject.assignments))]
 
