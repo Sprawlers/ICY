@@ -130,7 +130,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 			{
 				const params = query.parameters.fields
 				const type = params.type.stringValue
-				if (type === 'Notes') replyMsg.text = query.fulfillmentText
+				if (type === 'Note') replyMsg.text = query.fulfillmentText
 				else {
 					const intentResponse = await detectIntent(userID, 'None None', 'en-US')
 					const query = intentResponse.queryResult
