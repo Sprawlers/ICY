@@ -15,7 +15,7 @@ const handleMessage = async (event, client, userObject) => {
 		messagelog.user = 'Non-Text Format'
 		replyMsg.text = 'Only text input!'
 		messagelog.bot = replyMsg.text
-		await client.replyMessage(replyToken, JSONfile('text-only'))
+		await client.replyMessage(replyToken, JSONfile('text_only'))
 		return messagelog
 	}
 	const userMsg = event.message.text
