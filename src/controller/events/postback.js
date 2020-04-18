@@ -9,7 +9,7 @@ const handlePostback = async (event, client, userObject) => {
 	const postbacklog = { data: {} }
 	const postback = event.postback
 	const userID = userObject.userID
-	const replyToken = replyToken
+	const replyToken = event.replyToken
 	let intentResponse = {}
 	let query = {}
 	//Split data from postback.data by '/' to make a decision
