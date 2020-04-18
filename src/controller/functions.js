@@ -39,7 +39,17 @@ const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Hea
         bubble.body.action.data = data[0] + subject.title // for logging
         bubble.body.contents[0].text = data[1]
         bubble.body.contents[1].text = subject.title
-        bubble.body.contents = [...bubble.body.contents, ...(await callback(subject[callbackParam]))]
+        switch (type) {
+            case 'hw':
+                bubble.body.contents.push(
+                    ...(await callback(subject[callbackParam].filter(task => task.type === "Notes"))),
+                    {"type": "separator"},
+                    ...(await callback(subject[callbackParam].filter(task => task.type === "Textbook")))
+                )
+                break
+            case 'notes':
+                bubble.body.contents.push(...(await callback(subject[callbackParam])))
+        }
 
         return bubble
     })
@@ -64,7 +74,7 @@ const generateTasksJSON = async (assignments) => {
         const status = isOverdue
             ? '✅'
             : getDeadlineFromDate(new Date(task.deadline)).toUpperCase() + ' at ' + getLocalTimeFromDate(new Date(task.deadline))
-        const [ left, middle, right ] = [{
+        const [left, middle, right] = [{
             title: task.name,
             subtitle: ['Due', status]
         }, {
@@ -73,22 +83,23 @@ const generateTasksJSON = async (assignments) => {
         }, {
             uri: task.link
         }]
-        return { left, middle, right }
+        return {left, middle, right}
     })
     return await generateTemplateB(templateMap)
 }
 const generateEachNotesJSON = async (notes) => {
     const templateMap = notes.map(note => {
-        const [ left, middle, right ] = [{
+        const [left, middle, right] = [{
             title: note.name,
             subtitle: [note.type, ' ']
         }, {
-            title: note.hasOwnProperty('author')? note.author.name: ' ',
-            subtitle: note.hasOwnProperty('author')? note.author.major: ' '
+            title: note.hasOwnProperty('author') ? note.author.name : ' ',
+            subtitle: note.hasOwnProperty('author') ? note.author.major : ' '
         }, {
             uri: note.link
         }]
-        return { left, middle, right }
+        console.log(note.link)
+        return {left, middle, right}
     })
     return await generateTemplateB(templateMap)
 }
