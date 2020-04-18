@@ -26,6 +26,7 @@ const generateNotesJSON = async (arr) => {
     )
 }
 
+// INPUT example: [ { title: subjectName, <assignments/notes>: <arr> }, … ]
 const generateBubbles = async (arr, type, callback, data = ['Subheading', 'Heading']) => {
     let [subjects, callbackParam] = [arr, null]
     switch (type) {
@@ -48,60 +49,53 @@ const generateBubbles = async (arr, type, callback, data = ['Subheading', 'Headi
     })
 }
 
-// INPUT: [ { title: subjectName, assignments: <arr> }, … ]
-const generateHomeworkBubbles = async (arr) => {
-    const subjects = sortByParam(getSubjectsSorted(arr), 'latest')
-    return await Promise.map(subjects, async (subject) => {
-        let bubble = clone(JSONfile('TemplateA'))
-
-        bubble.body.action.data = 'homework/body/' + subject.title // for logging
-        bubble.body.contents[0].text = 'Homework Solutions for'
-        bubble.body.contents[1].text = subject.title
-        bubble.body.contents = [...bubble.body.contents, ...(await generateTasksJSON(subject.assignments))]
-
-        return bubble
-    })
-}
-const generateNotesBubbles = async (arr) => {
-    return await Promise.map(arr, async (subject) => {
-        let bubble = clone(notesBubble)
-
-        bubble.body.action.data = 'notes/body/' + subject.title // for logging
-        bubble.body.contents[1].text = subject.title
-        bubble.body.contents = [...bubble.body.contents, ...(await generateEachNotesJSON(subject.notes))]
-
-        return bubble
-    })
-}
+const generateTemplateB = async (templateMap) => await Promise.map(templateMap, async (obj) => {
+    let json = clone(JSONfile('TemplateB'))
+    let [left, middle, right] = [...json.contents]
+    left.contents[0].text = obj.left.title
+    left.contents[1].contents[0].text = obj.left.subtitle[0]
+    left.contents[1].contents[1].text = obj.left.subtitle[1]
+    middle.contents[0].text = obj.middle.title
+    middle.contents[1].text = obj.middle.subtitle
+    right.action.uri = await shortenURL(obj.right.uri)
+    json.contents = [name, middle, right]
+    return json
+})
 
 const generateTasksJSON = async (assignments) => {
     const sorted = sortByParam(assignments, 'deadline')
-
-    return await Promise.map(sorted, async (task) => {
-        let json = clone(JSONfile('homeworkTasksJSON'))
-        let [name, btn] = [...json.contents]
+    const templateMap = await Promise.map(sorted, async task => {
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
         const status = isOverdue
             ? '✅'
             : getDeadlineFromDate(new Date(task.deadline)).toUpperCase() + ' at ' + getLocalTimeFromDate(new Date(task.deadline))
-        name.contents[0].text = task.name
-        name.contents[1].contents[1].text = status
-        btn.action.label = '-'
-        btn.action.uri = await shortenURL(task.link)
-        json.contents = [name, btn]
-        return json
+        const [ left, middle, right ] = [{
+            title: task.name,
+            subtitle: ['Due', status]
+        }, {
+            title: task.author.name,
+            subtitle: task.author.major
+        }, {
+            uri: task.link
+        }]
+        return { left, middle, right }
     })
+    return generateTemplateB(templateMap)
 }
+
 const generateEachNotesJSON = async (notes) => {
-    return await Promise.map(notes, async (task) => {
-        let json = clone(eachNotesJSON)
-        let [name, btn] = [...json.contents]
-        name.contents[0].text = task.name
-        btn.action.label = '-'
-        btn.action.uri = await shortenURL(task.link)
-        json.contents = [name, btn]
-        return json
+    const templateMap = await Promise.map(notes, async note => {
+        const [ left, middle, right ] = [{
+            title: note.name,
+            subtitle: [note.type, '']
+        }, {
+            title: note.hasOwnProperty('author')? note.author.name: '',
+            subtitle: note.hasOwnProperty('author')? note.author.major: ''
+        }, {
+            uri: note.link
+        }]
     })
+    return generateTemplateB(templateMap)
 }
 
 const sortByParam = (arr, param) => {

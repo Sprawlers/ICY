@@ -37,6 +37,28 @@
       ]
     },
     {
+      "type": "box",
+      "layout": "vertical",
+      "flex": 3,
+      "contents": [
+        {
+          "type": "text",
+          "text": "<Title text here>",
+          "align": "center",
+          "weight": "bold",
+          "color": "#FFFFFF"
+        },
+        {
+          "type": "text",
+          "text": "<Sub-title text here>",
+          "flex": 0,
+          "size": "sm",
+          "align": "center",
+          "color": "#FFFFFF"
+        }
+      ]
+    },
+    {
       "type": "image",
       "url": "https://sgp1.digitaloceanspaces.com/winnaries/icy/icons/download.png",
       "flex": 3,
