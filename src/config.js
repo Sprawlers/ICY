@@ -2,7 +2,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 if (process.env.NODE_ENV === 'development') {
 	const dotenv = require('dotenv')
-	const envFound = dotenv.config({ path: '../.env' })
+	const envFound = dotenv.config({ path: './.env' })
 	if (!envFound) throw new Error("⚠️  Couldn't find .env file")
 }
 
