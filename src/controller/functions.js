@@ -126,7 +126,7 @@ const sortByDateWithExpiry = (arr, param) => {
     arrCopy.sort((a, b) => {
         if(new Date(a[param]) - new Date(Date.now()) < 0) return 1
         if(new Date(b[param]) - new Date(Date.now()) < 0) return -1
-        return new Date(a[param] - b[param])
+        return new Date(a[param]) - new Date(b[param])
     })
     return arrCopy
 }
@@ -169,33 +169,20 @@ const generateSubjectList = (courses) => ({
 })
 
 const generateStats = async (hwArr, notesArr) => {
-    // DUPLICATED CODE NEEDS FIXING
-    let str = ''
-    str += '📕 HOMEWORK\n\n'
-
-    let map1 = await Promise.map(hwArr, async (course) => {
-        let mapped = await Promise.map(
-            course.assignments,
-            async (obj) => '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks'
-        )
-        return '▸ ' + course.title + ':\n' + mapped.join('\n')
-    })
-    str += map1.join('\n')
-
-    str += '\n\n🗒 NOTE\n\n'
-    let map2 = await Promise.map(notesArr, async (course) => {
-        let mapped = await Promise.map(
-            course.notes,
-            async (obj) => '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks'
-        )
-        return '▸ ' + course.title + ':\n' + mapped.join('\n')
-    })
-    str += map2.join('\n')
+    const hwLinks = await getClickedLinksStrings(hwArr, 'assignments')
+    const notesLinks = await getClickedLinksStrings(notesArr, 'notes')
     return {
         type: 'text',
-        text: str,
+        text: '📕 HOMEWORK\n\n' + hwLinks + '\n\n🗒 NOTE\n\n' + notesLinks,
     }
 }
+const getClickedLinksStrings = async (arr, param) => (await Promise.map(arr, async (course) => {
+    let mapped = (await Promise.map(
+        course[param],
+        async (obj) => '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks'
+    )).join('\n')
+    return '▸ ' + course.title + ':\n' + mapped.join('\n')
+})).join('\n')
 
 const shortenURL = async (URL) => {
     const response = await request.post({
