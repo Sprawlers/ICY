@@ -176,13 +176,16 @@ const generateStats = async (hwArr, notesArr) => {
         text: '📕 HOMEWORK\n\n' + hwLinks + '\n\n🗒 NOTE\n\n' + notesLinks,
     }
 }
-const getClickedLinksStrings = async (arr, param) => [...(await Promise.map(arr, async (course) => {
-    let mapped = [...(await Promise.map(
-        course[param],
-        async (obj) => '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks'
-    ))].join('\n')
-    return '▸ ' + course.title + ':\n' + mapped.join('\n')
-}))].join('\n')
+const getClickedLinksStrings = async (arr, param) => {
+    let mapped = (await Promise.map(arr, async (course) => {
+        let mapped = (await Promise.map(
+            course[param],
+            async (obj) => '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks'
+        ))
+        return '▸ ' + course.title + ':\n' + mapped.join('\n')
+    }))
+    return mapped.join('\n')
+}
 
 const shortenURL = async (URL) => {
     const response = await request.post({
