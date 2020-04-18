@@ -139,7 +139,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 		case 'Exam_duration':
 			{
 				const params = query.parameters.fields
-				console.log(params)
+				console.log(params.duration.structValue.fields)
 			}
 			break
 		case 'Course_id - yes':
