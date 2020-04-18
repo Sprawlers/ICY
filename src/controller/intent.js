@@ -21,11 +21,11 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 			break
 		case 'Feedback':
 			replyMsg.text = 'Feedback JSON'
-			await client.replyMessage(replyToken, JSONfile(feedback))
+			await client.replyMessage(replyToken, JSONfile('feedback'))
 			break
 		case 'Feedback_save':
 			replyMsg.text = 'Feedback confirm'
-			await client.replyMessage(replyToken, JSONfile(feedback_confirm))
+			await client.replyMessage(replyToken, JSONfile('feedback_confirm'))
 			break
 		case 'save_feedback - yes':
 			const adminID = await getAdminID()
@@ -39,11 +39,11 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 			}
 			//Multicast to all admin
 			await client.multicast(adminID, feedbackMsg)
-			await client.replyMessage(replyToken, JSONfile(feedback_submitted))
+			await client.replyMessage(replyToken, JSONfile('feedback_submitted'))
 			break
 		case 'save_feedback - no':
 			replyMsg.text = 'Feedback canceled'
-			await client.replyMessage(replyToken, JSONfile(feedback_canceled))
+			await client.replyMessage(replyToken, JSONfile('feedback_canceled'))
 			break
 		case 'Broadcast':
 			await clearContext(userID)

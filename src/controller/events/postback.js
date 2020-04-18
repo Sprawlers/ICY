@@ -1,6 +1,7 @@
 const { detectIntent, clearContext } = require('../dialogflow')
 const { generateHomeworkJSON, generateNotesJSON } = require('../functions')
 const { getAllHomework, getAllNotes } = require('../../model/functions')
+const { JSONfile } = require('../../json/JSONcontroller')
 
 const handlePostback = async (event, client, userObject) => {
 	//Initialize replyMsg and postbacklog
@@ -49,9 +50,8 @@ const handlePostback = async (event, client, userObject) => {
 					break
 				case 'feedback':
 					intentResponse = await detectIntent(userID, data[1], 'en-US')
-					const feedbackJSON = require('../../json/intent/feedback.json')
 					replyMsg.text = 'Feedback JSON'
-					await client.replyMessage(replyToken, feedbackJSON)
+					await client.replyMessage(replyToken, JSONfile('feedback'))
 					break
 				default:
 					replyMsg.text = data[1].toUpperCase() + ' function is not available yet.'
