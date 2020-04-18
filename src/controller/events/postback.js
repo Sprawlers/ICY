@@ -48,9 +48,9 @@ const handlePostback = async (event, client, userObject) => {
 					break
 				case 'feedback':
 					intentResponse = await detectIntent(userID, data[1], 'en-US')
-					query = intentResponse.queryResult
-					replyMsg.text = query.fulfillmentText
-					await client.replyMessage(event.replyToken, replyMsg)
+					const feedbackJSON = require('../../json/intent/feedback.json')
+					replyMsg.text = 'Feedback JSON'
+					await client.replyMessage(replyToken, feedbackJSON)
 					break
 				default:
 					replyMsg.text = data[1].toUpperCase() + ' function is not available yet.'
