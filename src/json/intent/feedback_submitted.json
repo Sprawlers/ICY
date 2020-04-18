@@ -1,0 +1,38 @@
+{
+	"type": "flex",
+	"altText": "You submitted a feedback",
+	"contents": {
+		"type": "bubble",
+		"direction": "ltr",
+		"body": {
+			"type": "box",
+			"layout": "baseline",
+			"spacing": "sm",
+			"contents": [
+				{
+					"type": "spacer",
+					"size": "md"
+				},
+				{
+					"type": "text",
+					"text": "🎉 Your feedback is",
+					"flex": 0,
+					"align": "center",
+					"weight": "regular",
+					"color": "#FFFFFF"
+				},
+				{
+					"type": "text",
+					"text": "submitted",
+					"weight": "bold",
+					"color": "#FFB400"
+				}
+			]
+		},
+		"styles": {
+			"body": {
+				"backgroundColor": "#344955"
+			}
+		}
+	}
+}

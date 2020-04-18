@@ -9,6 +9,7 @@ const handlePostback = async (event, client, userObject) => {
 	const postbacklog = { data: {} }
 	const postback = event.postback
 	const userID = userObject.userID
+	const replyToken = event.replyToken
 	let intentResponse = {}
 	let query = {}
 	//Split data from postback.data by '/' to make a decision
@@ -23,7 +24,7 @@ const handlePostback = async (event, client, userObject) => {
 			replyMsg.text = query.fulfillmentText
 			postbacklog.type = 'message'
 			postbacklog.data.bot = date.text
-			await client.replyMessage(event.replyToken, [date, replyMsg])
+			await client.replyMessage(replyToken, [date, replyMsg])
 			break
 		case 'examDate':
 			date.text = postback.params.datetime
@@ -32,7 +33,7 @@ const handlePostback = async (event, client, userObject) => {
 			replyMsg.text = query.fulfillmentText
 			postbacklog.type = 'message'
 			postbacklog.data.bot = replyMsg.text
-			await client.replyMessage(event.replyToken, replyMsg)
+			await client.replyMessage(replyToken, replyMsg)
 			break
 		case 'richmenu':
 			await clearContext(userID)
@@ -40,21 +41,21 @@ const handlePostback = async (event, client, userObject) => {
 				case 'homework':
 					//Generate reply JSON from homework collection
 					const payloadJSON = await generateHomeworkJSON(await getAllHomework())
-					await client.replyMessage(event.replyToken, payloadJSON)
+					await client.replyMessage(replyToken, payloadJSON)
 					break
 				case 'notes':
 					const notesList = await generateNotesJSON(await getAllNotes())
-					await client.replyMessage(event.replyToken, notesList)
+					await client.replyMessage(replyToken, notesList)
 					break
 				case 'feedback':
 					intentResponse = await detectIntent(userID, data[1], 'en-US')
-					query = intentResponse.queryResult
-					replyMsg.text = query.fulfillmentText
-					await client.replyMessage(event.replyToken, replyMsg)
+					const feedbackJSON = require('../../json/intent/feedback.json')
+					replyMsg.text = 'Feedback JSON'
+					await client.replyMessage(replyToken, feedbackJSON)
 					break
 				default:
 					replyMsg.text = data[1].toUpperCase() + ' function is not available yet.'
-					await client.replyMessage(event.replyToken, replyMsg)
+					await client.replyMessage(replyToken, replyMsg)
 					break
 			}
 			postbacklog.type = 'richmenu'
@@ -67,7 +68,7 @@ const handlePostback = async (event, client, userObject) => {
 					const assignmentJSON = await generateAssignments(await getAllHomework(), data[2])
 					postbacklog.type = 'button'
 					postbacklog.data.label = data[2] + ' Solution'
-					await client.replyMessage(event.replyToken, assignmentJSON)
+					await client.replyMessage(replyToken, assignmentJSON)
 					break
 				default:
 					postbacklog.type = 'empty'
