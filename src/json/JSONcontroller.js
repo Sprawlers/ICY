@@ -1,7 +1,7 @@
 const TemplateA = require('./TemplateA.json')
 const TemplateB = require('./TemplateB.json')
 const TemplateC = require('./TemplateC.json')
-const homeworkTasksJSON = require('/homeworkTasksJSON.json')
+const homeworkTasksJSON = require('./homeworkTasksJSON.json')
 
 const dict = {
     'TemplateA': TemplateA,
