@@ -21,6 +21,11 @@ const generateNotesJSON = async (arr) => {
         generateTemplateA(arr, 'notes', generateEachNotesJSON, ['notes/body', 'Notes and Texts for'])
     )
 }
+const generateRegularMessageJSON = msg => {
+    const json = clone(JSONfile('regular_message'))
+    json.altText = json.contents.body.contents[0].text = msg
+    return json
+}
 
 // INPUT example: [ { title: subjectName, <assignments/notes>: <arr> }, … ]
 const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Heading']) => {
@@ -221,6 +226,7 @@ const getClicksFromURL = async (URL) => {
 module.exports = {
     generateHomeworkJSON, // fix this
     generateNotesJSON,
+    generateRegularMessageJSON,
     generateSubjectList,
     getLocalFromUTC,
     generateStats,
