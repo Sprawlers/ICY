@@ -52,7 +52,7 @@
           "type": "text",
           "text": "<Sub-title text here>",
           "flex": 0,
-          "size": "sm",
+          "size": "xxs",
           "align": "center",
           "color": "#FFFFFF"
         }
