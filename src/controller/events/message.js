@@ -40,7 +40,12 @@ const handleMessage = async (event, client, userObject) => {
 	}
 
 	// detect intent and get intentResponse
-	const intentResponse = await detectIntent(userID, userMsg, 'en-US')
+	if (userMsg.length < 256) const intentResponse = await detectIntent(userID, userMsg, 'en-US')
+	else {
+		const intentResponse = await detectIntent(userID, 'Long message', 'en-US')
+		messagelog.bot = await handleIntent(intentResponse, userObject, client, replyToken, userMsg)
+		return messagelog
+	}
 
 	//handleIntent and return bot answer to messagelog.bot
 	messagelog.bot = await handleIntent(intentResponse, userObject, client, replyToken)

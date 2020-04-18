@@ -4,7 +4,7 @@ const { generateHomeworkJSON, generateNotesJSON, generateRegularMessageJSON } = 
 const { clearContext, detectIntent } = require('./dialogflow')
 const { JSONfile } = require('../json/JSONcontroller')
 
-const handleIntent = async (intentResponse, userObject, client, replyToken) => {
+const handleIntent = async (intentResponse, userObject, client, replyToken, userMsg = null) => {
 	const replyMsg = { type: 'text' }
 	//Initialize query from intentResponse
 	const query = intentResponse.queryResult
@@ -24,15 +24,12 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 			await client.replyMessage(replyToken, JSONfile('feedback'))
 			break
 		case 'Feedback_save':
-			replyMsg.text = 'Feedback confirm'
-			await client.replyMessage(replyToken, JSONfile('feedback_confirm'))
-			break
-		case 'save_feedback - yes':
 			const adminID = await getAdminID()
 			replyMsg.text = 'Feedback submitted'
 			const feedback = query.parameters.fields.details.stringValue
-			await addFeedback(userID, userObject.profileName, 'message', feedback)
-			//feedbackMsg to send to admin
+			userMsg
+				? await addFeedback(userID, userObject.profileName, 'message', userMsg)
+				: await addFeedback(userID, userObject.profileName, 'message', feedback)
 			const feedbackMsg = {
 				type: 'text',
 				text: 'Feedback from user: ' + feedback,
@@ -40,10 +37,6 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 			//Multicast to all admin
 			await client.multicast(adminID, feedbackMsg)
 			await client.replyMessage(replyToken, JSONfile('feedback_submitted'))
-			break
-		case 'save_feedback - no':
-			replyMsg.text = 'Feedback canceled'
-			await client.replyMessage(replyToken, JSONfile('feedback_canceled'))
 			break
 		case 'Broadcast':
 			await clearContext(userID)
