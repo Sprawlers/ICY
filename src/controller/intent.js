@@ -4,7 +4,7 @@ const { generateHomeworkJSON, generateNotesJSON, generateRegularMessageJSON } = 
 const { clearContext, detectIntent } = require('./dialogflow')
 const { JSONfile } = require('../json/JSONcontroller')
 
-const handleIntent = async (intentResponse, userObject, client, replyToken) => {
+const handleIntent = async (intentResponse, userObject, client, replyToken, userMsg = null) => {
 	const replyMsg = { type: 'text' }
 	//Initialize query from intentResponse
 	const query = intentResponse.queryResult
@@ -24,62 +24,52 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 			await client.replyMessage(replyToken, JSONfile('feedback'))
 			break
 		case 'Feedback_save':
-			replyMsg.text = 'Feedback confirm'
-			await client.replyMessage(replyToken, JSONfile('feedback_confirm'))
-			break
-		case 'save_feedback - yes':
 			const adminID = await getAdminID()
 			replyMsg.text = 'Feedback submitted'
-			const feedback = query.parameters.fields.details.stringValue
-			await addFeedback(userID, userObject.profileName, 'message', feedback)
-			//feedbackMsg to send to admin
+			let feedback = query.parameters.fields.details.stringValue
+			if (userMsg) {
+				await addFeedback(userID, userObject.profileName, 'message', userMsg)
+				feedback = userMsg
+			} else await addFeedback(userID, userObject.profileName, 'message', feedback)
 			const feedbackMsg = {
 				type: 'text',
-				text: 'Feedback from user: ' + feedback,
+				text: `Feedback from user, ${userObject.profileName}:\n` + feedback,
 			}
 			//Multicast to all admin
 			await client.multicast(adminID, feedbackMsg)
 			await client.replyMessage(replyToken, JSONfile('feedback_submitted'))
 			break
-		case 'save_feedback - no':
-			replyMsg.text = 'Feedback canceled'
-			await client.replyMessage(replyToken, JSONfile('feedback_canceled'))
-			break
 		case 'Broadcast':
 			await clearContext(userID)
 			replyMsg.text = "Sorry, I didn't get that!"
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Broadcast - yes':
 			replyMsg.text = query.fulfillmentText
 			const broadcast = query.parameters.fields.message.stringValue
-			const broadcastMsg = {
-				type: 'text',
-				text: broadcast,
-			}
 			//Broadcast to all users
-			await client.broadcast(broadcastMsg)
-			await client.replyMessage(replyToken, replyMsg)
+			await client.broadcast(generateRegularMessageJSON(broadcast))
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Homework_upload':
 			await clearContext(userID)
 			replyMsg.text = "Sorry, I didn't get that!"
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Notes_upload':
 			await clearContext(userID)
 			replyMsg.text = "Sorry, I didn't get that!"
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Exam_add':
 			await clearContext(userID)
 			replyMsg.text = "Sorry, I didn't get that!"
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Course_add':
 			await clearContext(userID)
 			replyMsg.text = "Sorry, I didn't get that!"
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Homework_subject':
 			replyMsg.text = query.fulfillmentText

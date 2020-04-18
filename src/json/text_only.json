@@ -1,0 +1,34 @@
+{
+	"type": "flex",
+	"altText": "We support only text message",
+	"contents": {
+		"type": "bubble",
+		"direction": "ltr",
+		"body": {
+			"type": "box",
+			"layout": "baseline",
+			"spacing": "sm",
+			"contents": [
+				{
+					"type": "text",
+					"text": "🤫 We support only",
+					"flex": 0,
+					"align": "center",
+					"weight": "regular",
+					"color": "#FFFFFF"
+				},
+				{
+					"type": "text",
+					"text": "text message",
+					"weight": "bold",
+					"color": "#FFB400"
+				}
+			]
+		},
+		"styles": {
+			"body": {
+				"backgroundColor": "#344955"
+			}
+		}
+	}
+}
