@@ -7,7 +7,7 @@ const handleAdmin = async (event, client, userObject) => {
 	const replyToken = event.replyToken
 	const userMsg = event.message.text
 	const replyMsg = { type: 'text' }
-	const adminCmd = 'Commands\n- /broadcast\n- /add hw\n- /add notes\n- /add exam\n- /add course\n- /stat\n- /clear\n- /help'
+	const adminCmd = 'Commands\n- /broadcast\n- /add hw\n- /add note\n- /add exam\n- /add course\n- /stat\n- /clear\n- /help'
 	const cmd = userMsg.substring(1)
 	const intentResponse = await detectIntent(userID, cmd, 'en-US')
 	const query = intentResponse.queryResult
@@ -21,7 +21,7 @@ const handleAdmin = async (event, client, userObject) => {
 			replyMsg.text = query.fulfillmentText
 			await client.replyMessage(replyToken, [generateRegularMessageJSON(replyMsg.text), subjectList])
 			break
-		case 'add notes':
+		case 'add note':
 			replyMsg.text = query.fulfillmentText
 			await client.replyMessage(replyToken, [generateRegularMessageJSON(replyMsg.text), subjectList])
 			break

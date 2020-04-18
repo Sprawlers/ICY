@@ -48,38 +48,34 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 		case 'Broadcast':
 			await clearContext(userID)
 			replyMsg.text = "Sorry, I didn't get that!"
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Broadcast - yes':
 			replyMsg.text = query.fulfillmentText
 			const broadcast = query.parameters.fields.message.stringValue
-			const broadcastMsg = {
-				type: 'text',
-				text: broadcast,
-			}
 			//Broadcast to all users
-			await client.broadcast(broadcastMsg)
-			await client.replyMessage(replyToken, replyMsg)
+			await client.broadcast(generateRegularMessageJSON(broadcast))
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Homework_upload':
 			await clearContext(userID)
 			replyMsg.text = "Sorry, I didn't get that!"
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Notes_upload':
 			await clearContext(userID)
 			replyMsg.text = "Sorry, I didn't get that!"
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Exam_add':
 			await clearContext(userID)
 			replyMsg.text = "Sorry, I didn't get that!"
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Course_add':
 			await clearContext(userID)
 			replyMsg.text = "Sorry, I didn't get that!"
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 		case 'Homework_subject':
 			replyMsg.text = query.fulfillmentText
