@@ -34,8 +34,6 @@ const generateExamMessageJSON = arr => {
 }
 const generateEachExamsJSON = arr => arr.map(obj => {
     const json = clone(JSONfile('singleExam'))
-    console.log("DEBUG")
-    console.log(json)
     let [left, right] = json.contents
     left.contents[0].text = obj.title
     left.contents[1].text = obj.name

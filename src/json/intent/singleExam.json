@@ -16,6 +16,7 @@
         {
           "type": "text",
           "text": "Second Lab Test",
+          "wrap": true,
           "flex": 3,
           "color": "#FFFFFF"
         }
