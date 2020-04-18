@@ -27,14 +27,12 @@ const generateNotesJSON = async (arr) => {
 }
 
 const generateBubbles = async (arr, type, callback, data = ['Subheading', 'Heading']) => {
-    let [ subjects, callbackParam ] = [[], null]
+    let [subjects, callbackParam] = [arr, null]
     switch (type) {
         case 'hw':
-            subjects = sortByParam(getSubjectsSorted(arr), 'latest')
-            callbackParam = "assignments"
+            [subjects, callbackParam] = [sortByParam(getSubjectsSorted(arr), 'latest'), "assignments"]
             break
         case 'notes':
-            subjects = arr
             callbackParam = "notes"
             break
     }
@@ -46,6 +44,8 @@ const generateBubbles = async (arr, type, callback, data = ['Subheading', 'Headi
         bubble.body.contents[1].text = subject.title
         bubble.body.contents = [...bubble.body.contents, ...(await callback(subject[callbackParam]))]
 
+        console.log("DEBUG bubble")
+        console.log(bubble)
         return bubble
     })
 }
