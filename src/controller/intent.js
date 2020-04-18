@@ -1,6 +1,6 @@
 const moment = require('moment')
 const { getAllHomework, getAdminID, addFeedback, addHomework, addNotes, addExam, addCourse, getAllNotes, getAllExams } = require('../model/functions')
-const { generateHomeworkJSON, generateNotesJSON, generateRegularMessageJSON } = require('./functions')
+const { generateHomeworkJSON, generateNotesJSON, generateRegularMessageJSON, generateExamMessageJSON } = require('./functions')
 const { clearContext, detectIntent } = require('./dialogflow')
 const { JSONfile } = require('../json/JSONcontroller')
 
@@ -27,6 +27,9 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 			await client.replyMessage(replyToken, notesList)
 			break
 		case 'Exams':
+			const examJSON = generateExamMessageJSON(await getAllExams())
+			replyMsg.text = 'Exam JSON'
+			await client.replyMessage(replyToken, examJSON)
 			break
 		case 'Feedback':
 			replyMsg.text = 'Feedback JSON'
