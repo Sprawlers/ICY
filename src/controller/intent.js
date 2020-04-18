@@ -19,6 +19,14 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 			replyMsg.text = 'Homework Carousel'
 			await client.replyMessage(replyToken, homeworkJSON)
 			break
+		case 'Notes':
+			//Get all courses from courses collection and generate notesList from courses
+			replyMsg.text = 'Notes list'
+			const notesList = await generateNotesJSON(await getAllNotes())
+			await client.replyMessage(replyToken, notesList)
+			break
+		case 'Exams':
+			break
 		case 'Feedback':
 			replyMsg.text = 'Feedback JSON'
 			await client.replyMessage(replyToken, JSONfile('feedback'))
@@ -128,6 +136,12 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 				await client.replyMessage(replyToken, replyMsg)
 			}
 			break
+		case 'Exam_duration':
+			{
+				const params = query.parameters.fields
+				console.log(params)
+			}
+			break
 		case 'Course_id - yes':
 			{
 				const params = query.parameters.fields
@@ -152,7 +166,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 				await client.replyMessage(replyToken, replyMsg)
 			}
 			break
-		case 'Exam_date - yes':
+		case 'Exam_duration - yes':
 			{
 				const params = query.parameters.fields
 				const subject = params.subject.stringValue
@@ -176,12 +190,6 @@ const handleIntent = async (intentResponse, userObject, client, replyToken, user
 				await addNotes(subject, filename, url, type, authorName, authorMajor)
 				await client.replyMessage(replyToken, replyMsg)
 			}
-			break
-		case 'Notes':
-			//Get all courses from courses collection and generate notesList from courses
-			replyMsg.text = 'Notes list'
-			const notesList = await generateNotesJSON(await getAllNotes())
-			await client.replyMessage(replyToken, notesList)
 			break
 		default:
 			replyMsg.text = query.fulfillmentText
