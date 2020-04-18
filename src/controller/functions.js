@@ -41,15 +41,18 @@ const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Hea
         bubble.body.contents[1].text = subject.title
         switch (type) {
             case 'hw':
-                await bubble.body.contents.push(
+                bubble.body.contents = [
+                    ...bubble.body.contents,
                     ...(await callback(subject[callbackParam]))
-                )
+                ]
                 break
             case 'notes':
-                await bubble.body.contents.push(
+                bubble.body.contents = [
+                    ...bubble.body.contents,
                     ...(await callback(subject[callbackParam].filter(task => task.type === "Notes"))),
                     {type: 'separator'},
-                    ...(await callback(subject[callbackParam].filter(task => task.type === "Textbook"))))
+                    ...(await callback(subject[callbackParam].filter(task => task.type === "Textbook")))
+                ]
                 break
         }
 
