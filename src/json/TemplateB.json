@@ -21,7 +21,7 @@
               "type": "text",
               "text": "<White sub-title text here>",
               "flex": 0,
-              "size": "sm",
+              "size": "xxs",
               "color": "#FFFFFF"
             },
             {
@@ -29,7 +29,7 @@
               "text": "<Yellow sub-title text here>",
               "flex": 0,
               "margin": "sm",
-              "size": "sm",
+              "size": "xxs",
               "color": "#FBB400"
             }
           ]
