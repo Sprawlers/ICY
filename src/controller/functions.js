@@ -26,6 +26,22 @@ const generateRegularMessageJSON = msg => {
     json.altText = json.contents.body.contents[0].text = msg
     return json
 }
+const generateExamMessageJSON = arr => {
+    const sorted = sortByParam(arr, 'date')
+    const json = clone(JSONfile('exams'))
+    json.contents.body.contents = [...json.contents.body.contents, ...generateEachExamsJSON(sorted)]
+    return json
+}
+const generateEachExamsJSON = arr => arr.map(obj => {
+    const json = clone(JSONfile('singleExam'))
+    let [left, right] = json.contents
+    left[0].contents.text = obj.title
+    left[1].contents.text = obj.name
+    right[0].contents.text = getDeadlineFromDate(new Date(obj.date))
+    right[1].contents.text = getLocalTimeFromDate(new Date(obj.date)) + ' (' + obj.duration + 'm)'
+    json.contents = [left, right]
+    return json
+})
 
 // INPUT example: [ { title: subjectName, <assignments/notes>: <arr> }, … ]
 const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Heading']) => {
@@ -217,6 +233,7 @@ module.exports = {
     generateHomeworkJSON, // fix this
     generateNotesJSON,
     generateRegularMessageJSON,
+    generateExamMessageJSON,
     generateSubjectList,
     getLocalFromUTC,
     generateStats,

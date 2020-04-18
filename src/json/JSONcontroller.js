@@ -6,11 +6,15 @@ const feedback_confirm = require('./intent/feedback_confirm.json')
 const feedback_submitted = require('./intent/feedback_submitted.json')
 const regular_message = require('./intent/regular_message.json')
 const text_only = require('./text_only.json')
+const exams = require('./intent/exams.json')
+const singleExam = require('./intent/singleExam.json')
 
 // Refer to image of each template in images folder
 const dict = {
 	TemplateA,
 	TemplateB,
+	exams,
+	singleExam,
 	feedback,
 	feedback_canceled,
 	feedback_confirm,
