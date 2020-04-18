@@ -10,7 +10,7 @@ const Note = require('./schema/Note')
 // Gets all homework documents, called with hw()
 async function getAllHomework() {
 	let obj = await Course.find({}, { _id: 0, title: 1, assignments: 1 })
-	let newObj = []
+	let arr = []
 	for (let i = 0; i < obj.length; i++) {
 		let subject = obj[i]
 		if (subject.assignments.length) {
@@ -19,16 +19,16 @@ async function getAllHomework() {
 				if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { assignments: { $in: [subject.assignments[j]] } } })
 				else subject.assignments[j] = data[0]
 			}
-			newObj.push(subject)
+			arr.push(subject)
 		}
 	}
-	console.log(newObj)
-	return newObj
+	console.log(arr)
+	return arr
 }
 
 async function getAllNotes() {
 	let obj = await Course.find({}, { _id: 0, title: 1, notes: 1 })
-	let newObj = []
+	let arr = []
 	for (let i = 0; i < obj.length; i++) {
 		let subject = obj[i]
 		if (subject.notes.length) {
@@ -37,29 +37,32 @@ async function getAllNotes() {
 				if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { notes: { $in: [subject.notes[j]] } } })
 				else subject.notes[j] = data[0]
 			}
-			newObj.push(subject)
+			arr.push(subject)
 		}
 	}
-	console.log(newObj)
-	return newObj
+	console.log(arr)
+	return arr
 }
 
 async function getAllExams() {
 	let obj = await Coursefind({}, { _id: 0, title: 1, examDates: 1 })
-	let newObj = []
+	let arr = []
 	for (let i = 0; i < obj.length; i++) {
 		let subject = obj[i]
 		if (subject.examDates.length) {
 			for (let j = 0; j < subject.examDates.length; j++) {
 				let data = await Exam.find({ _id: subject.examDates[j] }, { _id: 0 })
 				if (!data.length) await Course.updateOne({ title: subject.title }, { $pull: { examDates: { $in: [subject.examDates[j]] } } })
-				else subject.examsDates[j] = data[0]
+				else {
+					let newObj = data[0]
+					newObj.title = subject.title
+					arr.push(newObj)
+				}
 			}
-			newObj.push(subject)
 		}
 	}
-	console.log(newObj)
-	return newObj
+	console.log(arr)
+	return arr
 }
 
 function getUserByID(userID) {
@@ -113,9 +116,7 @@ async function addHomework(subject, deadline, name, link, authorName, authorMajo
 }
 
 async function addExam(subject, name, date, duration) {
-	duration *= 60 * 1000
 	const expireAt = date
-	console.log(subject, name, date, duration, expireAt)
 	let obj = await Exam.create({ name, date, duration, expireAt })
 	return Course.findOneAndUpdate({ title: subject }, { $push: { examDates: obj._id } }, { upsert: true })
 }
