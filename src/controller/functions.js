@@ -53,7 +53,7 @@ const generateTemplateB = async (templateMap) => await Promise.map(templateMap, 
     middle.contents[0].text = obj.middle.title
     middle.contents[1].text = obj.middle.subtitle
     right.action.uri = await shortenURL(obj.right.uri)
-    json.contents = [name, middle, right]
+    json.contents = [left, middle, right]
     return json
 })
 
