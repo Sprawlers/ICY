@@ -59,9 +59,7 @@ const generateTemplateB = async (templateMap) => await Promise.map(templateMap, 
 
 const generateTasksJSON = async (assignments) => {
     const sorted = sortByParam(assignments, 'deadline')
-    const templateMap = await Promise.map(sorted, async task => {
-        console.log("DEBUG")
-        console.log(task)
+    const templateMap = sorted.map(task => {
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
         const status = isOverdue
             ? '✅'
@@ -77,10 +75,10 @@ const generateTasksJSON = async (assignments) => {
         }]
         return { left, middle, right }
     })
-    return generateTemplateB(templateMap)
+    return await generateTemplateB(templateMap)
 }
 const generateEachNotesJSON = async (notes) => {
-    const templateMap = await Promise.map(notes, async note => {
+    const templateMap = notes.map(note => {
         const [ left, middle, right ] = [{
             title: note.name,
             subtitle: [note.type, '']
@@ -90,8 +88,9 @@ const generateEachNotesJSON = async (notes) => {
         }, {
             uri: note.link
         }]
+        return { left, middle, right }
     })
-    return generateTemplateB(templateMap)
+    return await generateTemplateB(templateMap)
 }
 
 const sortByParam = (arr, param) => {
