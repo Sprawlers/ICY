@@ -116,13 +116,13 @@ const generateTasksJSON = async (assignments) => {
 const generateEachNotesJSON = async (notes) => {
     const templateMap = notes.map(note => {
         console.log("DEBUG INIT")
-        console.log(note.hasOwnProperty("author"))
+        console.log("author" in note)
         const [left, middle, right] = [{
             title: note.name,
             subtitle: [note.type, ' ']
         }, {
-            title: note.hasOwnProperty("author") ? note.author.name : ' ',
-            subtitle: note.hasOwnProperty("author") ? note.author.major : ' '
+            title: "author" in note ? note.author.name : ' ',
+            subtitle: "author" in note ? note.author.major : ' '
         }, {
             uri: note.link
         }]
