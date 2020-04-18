@@ -1,7 +1,8 @@
 const moment = require('moment')
 const { getAllHomework, getAdminID, addFeedback, addHomework, addNotes, addExam, addCourse, getAllNotes } = require('../model/functions')
-const { generateHomeworkJSON, generateNotesJSON } = require('./functions')
+const { generateHomeworkJSON, generateNotesJSON, generateRegularMessageJSON } = require('./functions')
 const { clearContext, detectIntent } = require('./dialogflow')
+const { JSONfile } = require('../json/JSONcontroller')
 
 const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 	const replyMsg = { type: 'text' }
@@ -12,14 +13,6 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 	console.log(query)
 	const userID = userObject.userID
 	switch (intent) {
-		case 'Default Welcome Intent':
-			replyMsg.text = query.fulfillmentText
-			await client.replyMessage(replyToken, replyMsg)
-			break
-		case 'Default Fallback Intent':
-			replyMsg.text = query.fulfillmentText
-			await client.replyMessage(replyToken, replyMsg)
-			break
 		case 'Homework':
 			//Generate reply JSON from homework collection
 			const homeworkJSON = await generateHomeworkJSON(await getAllHomework())
@@ -27,19 +20,16 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 			await client.replyMessage(replyToken, homeworkJSON)
 			break
 		case 'Feedback':
-			const feedbackJSON = require('../json/intent/feedback.json')
 			replyMsg.text = 'Feedback JSON'
-			await client.replyMessage(replyToken, feedbackJSON)
+			await client.replyMessage(replyToken, JSONfile(feedback))
 			break
 		case 'Feedback_save':
-			const feedbackConfirmJSON = require('../json/intent/feedback_confirm.json')
 			replyMsg.text = 'Feedback confirm'
-			await client.replyMessage(replyToken, feedbackConfirmJSON)
+			await client.replyMessage(replyToken, JSONfile(feedback_confirm))
 			break
 		case 'save_feedback - yes':
 			const adminID = await getAdminID()
 			replyMsg.text = 'Feedback submitted'
-			const feedbackSubmittedJSON = require('../json/intent/feedback_submitted.json')
 			const feedback = query.parameters.fields.details.stringValue
 			await addFeedback(userID, userObject.profileName, 'message', feedback)
 			//feedbackMsg to send to admin
@@ -49,12 +39,11 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 			}
 			//Multicast to all admin
 			await client.multicast(adminID, feedbackMsg)
-			await client.replyMessage(replyToken, feedbackSubmittedJSON)
+			await client.replyMessage(replyToken, JSONfile(feedback_submitted))
 			break
 		case 'save_feedback - no':
-			const feedbackCanceledJSON = require('../json/intent/feedback_canceled.json')
 			replyMsg.text = 'Feedback canceled'
-			await client.replyMessage(replyToken, feedbackCanceledJSON)
+			await client.replyMessage(replyToken, JSONfile(feedback_canceled))
 			break
 		case 'Broadcast':
 			await clearContext(userID)
@@ -206,7 +195,7 @@ const handleIntent = async (intentResponse, userObject, client, replyToken) => {
 			break
 		default:
 			replyMsg.text = query.fulfillmentText
-			await client.replyMessage(replyToken, replyMsg)
+			await client.replyMessage(replyToken, generateRegularMessageJSON(replyMsg.text))
 			break
 	}
 	return replyMsg.text
