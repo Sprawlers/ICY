@@ -17,7 +17,7 @@ const generateCarousel = async (altText, bubbles) => ({
 
 const generateHomeworkJSON = async (arr) => (
     await generateCarousel('homework',
-        generateBubbles(arr, 'homework', generateTasksJSON, ['homework/body', 'Homework Solutions for'])
+        generateBubbles(arr, 'hw', generateTasksJSON, ['homework/body', 'Homework Solutions for'])
     )
 )
 const generateNotesJSON = async (arr) => {
@@ -30,20 +30,14 @@ const generateBubbles = async (arr, type, callback, data = ['Subheading', 'Headi
     let [subjects, callbackParam] = [arr, null]
     switch (type) {
         case 'hw':
-            console.log("DEBUG SWITCH")
-                console.log(arr)
-                [subjects, callbackParam] = [sortByParam(getSubjectsSorted(arr), 'latest'), "assignments"]
+            [subjects, callbackParam] = [sortByParam(getSubjectsSorted(arr), 'latest'), "assignments"]
             break
         case 'notes':
             callbackParam = "notes"
             break
     }
-    return await Promise.map(subjects, async (subject, data, callbackParam) => {
+    return await Promise.map(subjects, async (subject) => {
         let bubble = clone(JSONfile('TemplateA'))
-
-        console.log("DEBUG")
-        console.log(data)
-        console.log(callbackParam)
 
         bubble.body.action.data = data[0] + subject.title // for logging
         bubble.body.contents[0].text = data[1]
