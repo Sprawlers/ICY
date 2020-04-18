@@ -37,10 +37,10 @@ const generateEachExamsJSON = arr => arr.map(obj => {
     console.log("DEBUG")
     console.log(json)
     let [left, right] = json.contents
-    left[0].contents.text = obj.title
-    left[1].contents.text = obj.name
-    right[0].contents.text = getDeadlineFromDate(new Date(obj.date))
-    right[1].contents.text = getLocalTimeFromDate(new Date(obj.date)) + ' (' + obj.duration + 'm)'
+    left.contents[0].text = obj.title
+    left.contents[1].text = obj.name
+    right.contents[0].text = getDeadlineFromDate(new Date(obj.date))
+    right.contents[1].text = getLocalTimeFromDate(new Date(obj.date)) + ' (' + obj.duration + 'm)'
     json.contents = [left, right]
     return json
 })
