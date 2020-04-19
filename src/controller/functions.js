@@ -13,12 +13,12 @@ const generateCarousel = async (altText, bubbles) => ({
 
 const generateHomeworkJSON = async (arr) => {
     return await generateCarousel('Homework',
-        generateTemplateA(arr, 'hw', generateTasksJSON, ['homework/body', 'Homework Solutions for'])
+        generateTemplateA(arr, 'hw', generateTasksJSON, ['homework/', 'Homework Solutions for'])
     )
 }
 const generateNotesJSON = async (arr) => {
     return await generateCarousel('Notes',
-        generateTemplateA(arr, 'notes', generateEachNotesJSON, ['notes/body', 'Notes and Texts for'])
+        generateTemplateA(arr, 'notes', generateEachNotesJSON, ['notes/', 'Notes and Texts for'])
     )
 }
 const generateRegularMessageJSON = msg => {
@@ -61,9 +61,10 @@ const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Hea
     return await Promise.map(subjects, async (subject) => {
         let bubble = clone(JSONfile('TemplateA'))
 
-        bubble.body.action.data = data[0] + '/' + subject.title // for logging
         bubble.body.contents[0].text = data[1]
+        bubble.body.contents[0].action.data = data[0] + 'header/' + subject.title
         bubble.body.contents[1].text = subject.title
+        bubble.body.contents[1].action.data = data[0] + 'subheader/' + subject.title
         switch (type) {
             case 'hw':
                 bubble.body.contents = [
@@ -80,8 +81,10 @@ const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Hea
         return bubble
     })
 }
-const generateTemplateB = async (templateMap) => await Promise.map(templateMap, async (obj) => {
+const generateTemplateB = async (templateMap, data) => await Promise.map(templateMap, async (obj) => {
     let json = clone(JSONfile('TemplateB'))
+    json.contents[0].action.data = data + '/name/' + obj.left.title
+    json.contents[1].action.data = data + '/author/' + obj.middle.title
     let [left, middle, right] = [...json.contents]
     left.contents[0].text = obj.left.title
     left.contents[1].contents[0].text = obj.left.subtitle[0]
@@ -111,7 +114,7 @@ const generateTasksJSON = async (assignments) => {
         }]
         return {left, middle, right}
     })
-    return await generateTemplateB(templateMap)
+    return await generateTemplateB(templateMap, 'homework')
 }
 const generateEachNotesJSON = async (notes) => {
     const templateMap = notes.map(note => {
@@ -126,7 +129,7 @@ const generateEachNotesJSON = async (notes) => {
         }]
         return {left, middle, right}
     })
-    return await generateTemplateB(templateMap)
+    return await generateTemplateB(templateMap, 'notes')
 }
 
 const sortByParam = (arr, param) => {
