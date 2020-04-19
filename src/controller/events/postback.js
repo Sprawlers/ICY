@@ -70,7 +70,7 @@ const handlePostback = async (event, client, userObject) => {
 			postbacklog.type = 'click'
 			postbacklog.data.function = data[0]
 			postbacklog.data.area = data[1]
-			postbacklog.data.subject = data[2]
+			postbacklog.data.label = data[2]
 			break
 	}
 	return postbacklog
