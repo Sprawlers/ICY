@@ -6,6 +6,11 @@
       "type": "box",
       "layout": "vertical",
       "flex": 6,
+      "action": {
+        "type": "postback",
+        "label": "body",
+        "data": "<Postback data here>"
+      },
       "contents": [
         {
           "type": "text",
@@ -40,6 +45,11 @@
       "type": "box",
       "layout": "vertical",
       "flex": 3,
+      "action": {
+        "type": "postback",
+        "label": "body",
+        "data": "<Postback data here>"
+      },
       "contents": [
         {
           "type": "text",

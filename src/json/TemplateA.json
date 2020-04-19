@@ -13,14 +13,24 @@
       {
         "type": "text",
         "text": "<Heading text here>",
-        "color": "#FFFFFF"
+        "color": "#FFFFFF",
+        "action": {
+          "type": "postback",
+          "label": "body",
+          "data": "<Postback data here>"
+        }
       },
       {
         "type": "text",
         "text": "<Sub-heading text here>",
         "size": "lg",
         "weight": "bold",
-        "color": "#FBB400"
+        "color": "#FBB400",
+        "action": {
+          "type": "postback",
+          "label": "body",
+          "data": "<Postback data here>"
+        }
       },
       {
         "type": "separator"

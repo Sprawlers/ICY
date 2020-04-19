@@ -1,9 +1,7 @@
-const moment = require('moment-timezone')
 const Promise = require('bluebird')
-const request = require('request-promise')
-const config = require('../config')
 const flexMessage = require('../json/flexTemplate.json')
 const {JSONfile} = require('../json/JSONcontroller')
+const util = require('./utility')
 
 const generateCarousel = async (altText, bubbles) => ({
     ...flexMessage,
@@ -13,35 +11,35 @@ const generateCarousel = async (altText, bubbles) => ({
 
 const generateHomeworkJSON = async (arr) => {
     return await generateCarousel('Homework',
-        generateTemplateA(arr, 'hw', generateTasksJSON, ['homework/body', 'Homework Solutions for'])
+        generateTemplateA(arr, 'hw', generateTasksJSON, ['homework/', 'Homework Solutions for'])
     )
 }
 const generateNotesJSON = async (arr) => {
     return await generateCarousel('Notes',
-        generateTemplateA(arr, 'notes', generateEachNotesJSON, ['notes/body', 'Notes and Texts for'])
+        generateTemplateA(arr, 'notes', generateEachNotesJSON, ['notes/', 'Notes and Texts for'])
     )
 }
 const generateRegularMessageJSON = msg => {
-    const json = clone(JSONfile('regular_message'))
+    const json = util.clone(JSONfile('regular_message'))
     json.altText = json.contents.body.contents[0].text = msg
     return json
 }
 const generateExamMessageJSON = arr => {
-    const sorted = sortByParam(arr, 'date')
-    const json = clone(JSONfile('exams'))
+    const sorted = util.sortByParam(arr, 'date')
+    const json = util.clone(JSONfile('exams'))
     json.contents.body.contents = [...json.contents.body.contents, ...generateEachExamsJSON(sorted)]
     return json
 }
 const generateEachExamsJSON = arr => arr.map(obj => {
-    const json = clone(JSONfile('singleExam'))
+    const json = util.clone(JSONfile('singleExam'))
     let [left, right] = json.contents
-    let time = getLocalTimeFromDate(new Date(obj.date))
+    let time = util.getLocalTimeFromDate(new Date(obj.date))
     if (new Date(obj.date).getUTCHours() === 0 && new Date(obj.date).getUTCMinutes() === 0)
         time = "TBA"
     const duration = (obj.duration === 0)?'':' (' + obj.duration + 'm)'
     left.contents[0].text = obj.title
     left.contents[1].text = obj.name
-    right.contents[0].text = getDeadlineFromDate(new Date(obj.date))
+    right.contents[0].text = util.getDeadlineFromDate(new Date(obj.date))
     right.contents[1].text = time + duration
     json.contents = [left, right]
     return json
@@ -52,18 +50,19 @@ const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Hea
     let [subjects, callbackParam] = [arr, null]
     switch (type) {
         case 'hw':
-            [subjects, callbackParam] = [sortByParam(getSubjectsSorted(arr), 'latest'), "assignments"]
+            [subjects, callbackParam] = [util.sortByParam(getSubjectsSorted(arr), 'latest'), "assignments"]
             break
         case 'notes':
             callbackParam = "notes"
             break
     }
     return await Promise.map(subjects, async (subject) => {
-        let bubble = clone(JSONfile('TemplateA'))
+        let bubble = util.clone(JSONfile('TemplateA'))
 
-        bubble.body.action.data = data[0] + '/' + subject.title // for logging
         bubble.body.contents[0].text = data[1]
+        bubble.body.contents[0].action.data = data[0] + 'header/' + subject.title
         bubble.body.contents[1].text = subject.title
+        bubble.body.contents[1].action.data = data[0] + 'subheader/' + subject.title
         switch (type) {
             case 'hw':
                 bubble.body.contents = [
@@ -80,15 +79,17 @@ const generateTemplateA = async (arr, type, callback, data = ['Subheading', 'Hea
         return bubble
     })
 }
-const generateTemplateB = async (templateMap) => await Promise.map(templateMap, async (obj) => {
-    let json = clone(JSONfile('TemplateB'))
+const generateTemplateB = async (templateMap, data) => await Promise.map(templateMap, async (obj) => {
+    let json = util.clone(JSONfile('TemplateB'))
+    json.contents[0].action.data = data + '/name/' + obj.left.title
+    json.contents[1].action.data = data + '/author/' + obj.middle.title
     let [left, middle, right] = [...json.contents]
     left.contents[0].text = obj.left.title
     left.contents[1].contents[0].text = obj.left.subtitle[0]
     left.contents[1].contents[1].text = obj.left.subtitle[1]
     middle.contents[0].text = obj.middle.title
     middle.contents[1].text = obj.middle.subtitle
-    right.action.uri = await shortenURL(obj.right.uri)
+    right.action.uri = await util.shortenURL(obj.right.uri)
     json.contents = [left, middle, right]
     return json
 })
@@ -99,7 +100,7 @@ const generateTasksJSON = async (assignments) => {
         const isOverdue = new Date(task.deadline) - new Date(Date.now()) < 0
         const status = isOverdue
             ? '✅'
-            : getDeadlineFromDate(new Date(task.deadline)).toUpperCase() + ' at ' + getLocalTimeFromDate(new Date(task.deadline))
+            : util.getDeadlineFromDate(new Date(task.deadline)).toUpperCase() + ' at ' + util.getLocalTimeFromDate(new Date(task.deadline))
         const [left, middle, right] = [{
             title: task.name,
             subtitle: ['Due', status]
@@ -111,7 +112,7 @@ const generateTasksJSON = async (assignments) => {
         }]
         return {left, middle, right}
     })
-    return await generateTemplateB(templateMap)
+    return await generateTemplateB(templateMap, 'homework')
 }
 const generateEachNotesJSON = async (notes) => {
     const templateMap = notes.map(note => {
@@ -126,20 +127,9 @@ const generateEachNotesJSON = async (notes) => {
         }]
         return {left, middle, right}
     })
-    return await generateTemplateB(templateMap)
+    return await generateTemplateB(templateMap, 'notes')
 }
 
-const sortByParam = (arr, param) => {
-    const arrCopy = [...arr]
-    arrCopy.sort((a, b) => {
-        if (!a[param]) return 1
-        let dateA = new Date(a[param])
-        if (!b[param]) return -1
-        let dateB = new Date(b[param])
-        return dateA - dateB
-    })
-    return arrCopy
-}
 const sortByDateWithExpiry = (arr, param) => {
     const arrCopy = [...arr]
     arrCopy.sort((a, b) => {
@@ -150,32 +140,9 @@ const sortByDateWithExpiry = (arr, param) => {
     return arrCopy
 }
 
-const getDeadlineFromDate = (dateTimeObject) => {
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    return monthNames[dateTimeObject.getMonth()] + ' ' + dateTimeObject.getDate()
-} // format "{month} {day}"
-const getLocalTimeFromDate = (dateTimeObject) => moment(dateTimeObject).tz('Asia/Bangkok').format('HH:mm')
-const getLocalFromUTC = (UTCDateTime) => moment(UTCDateTime).tz('Asia/Bangkok')
-
-const clone = (obj) => {
-    if (obj === null || typeof obj !== 'object' || 'isActiveClone' in obj) return obj
-
-    const temp = obj instanceof Date ? new obj.constructor() : obj.constructor()
-
-    Object.keys(obj).forEach((key) => {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-            obj.isActiveClone = null
-            temp[key] = clone(obj[key])
-            delete obj.isActiveClone
-        }
-    })
-
-    return temp
-} // deep clone
-
 const getSubjectsSorted = (arr) =>
     arr.map((subject) => {
-        const sorted = sortByParam(subject.assignments, 'deadline').filter((task) => new Date(task.deadline) - new Date(Date.now()) > 0)
+        const sorted = util.sortByParam(subject.assignments, 'deadline').filter((task) => new Date(task.deadline) - new Date(Date.now()) > 0)
         return {
             title: subject.title,
             assignments: subject.assignments,
@@ -199,36 +166,11 @@ const getClickedLinksStrings = async (arr, param) => {
     let mapped = (await Promise.map(arr, async (course) => {
         let mapped = (await Promise.map(
             course[param],
-            async (obj) => '- "' + obj.name + '": ' + (await getClicksFromURL(await shortenURL(obj.link))) + ' clicks'
+            async (obj) => '- "' + obj.name + '": ' + (await util.getClicksFromURL(await util.shortenURL(obj.link))) + ' clicks'
         ))
         return '▸ ' + course.title + ':\n' + mapped.join('\n')
     }))
     return mapped.join('\n')
-}
-
-const shortenURL = async (URL) => {
-    const response = await request.post({
-        uri: 'https://api-ssl.bitly.com/v4/shorten',
-        headers: {
-            Authorization: `Bearer ${config.bitly_token}`,
-        },
-        body: {
-            long_url: URL,
-        },
-        json: true,
-    })
-    return response.link
-}
-const getClicksFromURL = async (URL) => {
-    URL = URL.replace(/(^\w+:|^)\/\//, '')
-    let response = await request.get({
-        uri: `https://api-ssl.bitly.com/v4/bitlinks/${URL}/clicks/summary`,
-        headers: {
-            Authorization: `Bearer ${config.bitly_token}`,
-        },
-        json: true,
-    })
-    return response.total_clicks
 }
 
 // Function exports
@@ -238,6 +180,6 @@ module.exports = {
     generateRegularMessageJSON,
     generateExamMessageJSON,
     generateSubjectList,
-    getLocalFromUTC,
+    getLocalFromUTC: util.getLocalFromUTC,
     generateStats,
 }
