@@ -6,7 +6,7 @@
   "dependencies": {
     "@line/bot-sdk": "^6.8.4",
     "actions-on-google": "^2.12.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "dialogflow": "^1.2.0",
